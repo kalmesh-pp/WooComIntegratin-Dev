@@ -1,0 +1,9 @@
+{
+	"name": "WooCommerceIntegrationDataFactoryDev",
+	"location": "centralus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "21087d3c-a0ad-459e-b961-55a5c7381e45",
+		"tenantId": "69509ee5-683c-4b73-8899-77fce74aaafa"
+	}
+}
