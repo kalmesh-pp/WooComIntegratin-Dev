@@ -1,7 +1,0 @@
-{
-	"name": "KalmeshPCintegrationRuntime",
-	"properties": {
-		"type": "SelfHosted",
-		"description": "KalmeshPCintegrationRuntime"
-	}
-}
