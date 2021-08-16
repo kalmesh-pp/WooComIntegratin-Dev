@@ -1,0 +1,6 @@
+{
+	"name": "KalmeshPC-IntegrationRuntime",
+	"properties": {
+		"type": "SelfHosted"
+	}
+}
