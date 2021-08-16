@@ -1,0 +1,18 @@
+{
+	"name": "CustomerDataSet",
+	"properties": {
+		"description": "Get Customer data from this dataset",
+		"linkedServiceName": {
+			"referenceName": "WabashValley WooCommerce FTP server",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Xml",
+		"typeProperties": {
+			"location": {
+				"type": "FtpServerLocation",
+				"fileName": "wv-customers-test.xml"
+			}
+		}
+	}
+}
