@@ -1,0 +1,16 @@
+{
+	"name": "KalmeshPC_SQLserver",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "SqlServer",
+		"typeProperties": {
+			"connectionString": "integrated security=False;data source=KALMESH-PC;initial catalog=WooComLocalDevDB;user id=sa",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJjYWM4OGUzNi1lNTRkLTRhNWMtOGUyMy01ZmQ4NzE1NmVhNmEiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "KalmeshPC-IntegrationRuntime",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
