@@ -6,15 +6,18 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "SourceOrderDataset",
+						"referenceName": "SourceCustomerDataset",
 						"type": "DatasetReference"
 					},
+					"name": "CustomerSource"
+				},
+				{
 					"name": "source1"
 				}
 			],
 			"sinks": [],
 			"transformations": [],
-			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tvalidationMode: 'none',\n\tnamespaces: true) ~> source1"
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: true,\n\tmoveFiles: ['',''],\n\tvalidationMode: 'none',\n\tnamespaces: true) ~> CustomerSource\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false) ~> source1"
 		}
 	}
 }
