@@ -50,8 +50,7 @@
 									"path": "$['Customers']['Customer']['Customer_ID']"
 								},
 								"sink": {
-									"name": "WC_CustomerId",
-									"type": "String"
+									"name": "ID"
 								}
 							},
 							{
