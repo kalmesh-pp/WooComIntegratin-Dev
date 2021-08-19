@@ -9,7 +9,8 @@
 		"type": "Xml",
 		"typeProperties": {
 			"location": {
-				"type": "FtpServerLocation"
+				"type": "FtpServerLocation",
+				"fileName": "wv-orders-test.xml"
 			}
 		}
 	}
