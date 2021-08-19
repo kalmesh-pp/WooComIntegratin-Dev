@@ -231,7 +231,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderQuery": "select CASE WHEN MAX(ID) is NULL THEN 0 ELSE MAX(ID) END as __ID from  BillingCustomer",
+						"sqlReaderQuery": "select CASE WHEN MAX(ID) IS NULL THEN 1 ELSE MAX(ID)+1 END as __ID from  BillingCustomer",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
