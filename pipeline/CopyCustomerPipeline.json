@@ -50,15 +50,8 @@
 									"path": "$['Customers']['Customer']['Customer_ID']"
 								},
 								"sink": {
-									"name": "WC_CustomerId"
-								}
-							},
-							{
-								"source": {
-									"path": "$['Customers']['Customer']['Customer_ID']"
-								},
-								"sink": {
-									"name": "ID"
+									"name": "WC_CustomerId",
+									"type": "String"
 								}
 							},
 							{
@@ -206,6 +199,7 @@
 								}
 							}
 						],
+						"collectionReference": "",
 						"mapComplexValuesToString": true
 					}
 				},
