@@ -297,6 +297,126 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/MaxOfBillingCustomerID')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "KalmeshPC_SQLserver",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "WC_CustomerId",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WC_TermsCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WC_ShipCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WC_Salesman",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WC_TaxCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WC_PriceCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WC_BillToID",
+						"type": "varchar"
+					},
+					{
+						"name": "WC_BillingFirstName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WC_BillingLastName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WC_BillingCompany",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WC_BillingAddress",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WC_BillingCity",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WC_BillingState",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WC_BillingPostcode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WC_BillingCountry",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WC_BillingEmail",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WC_BillingPhone",
+						"type": "nvarchar"
+					},
+					{
+						"name": "QueueStatusID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "CreatedBy",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Created_Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "ModifyBy",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Modified_Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "BillingCustomer"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/KalmeshPC_SQLserver')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/CopyCustomerPipeline')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -350,15 +470,8 @@
 											"path": "$['Customers']['Customer']['Customer_ID']"
 										},
 										"sink": {
-											"name": "WC_CustomerId"
-										}
-									},
-									{
-										"source": {
-											"path": "$['Customers']['Customer']['Customer_ID']"
-										},
-										"sink": {
-											"name": "ID"
+											"name": "WC_CustomerId",
+											"type": "String"
 										}
 									},
 									{
@@ -506,6 +619,7 @@
 										}
 									}
 								],
+								"collectionReference": "",
 								"mapComplexValuesToString": true
 							}
 						},
@@ -523,13 +637,40 @@
 								"parameters": {}
 							}
 						]
+					},
+					{
+						"name": "lookUp_BillingCustomer_MAX_ID",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"sqlReaderQuery": "select CASE WHEN MAX(ID) is NULL THEN 0 ELSE MAX(ID) END as __ID from  BillingCustomer",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "MaxOfBillingCustomerID",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
 					}
 				],
 				"annotations": []
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/SourceCustomerDataset')]",
-				"[concat(variables('factoryId'), '/datasets/DestinationDataset_vk8')]"
+				"[concat(variables('factoryId'), '/datasets/DestinationDataset_vk8')]",
+				"[concat(variables('factoryId'), '/datasets/MaxOfBillingCustomerID')]"
 			]
 		}
 	]

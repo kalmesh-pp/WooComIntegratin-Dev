@@ -6,296 +6,12 @@
 			"type": "string",
 			"metadata": "Data Factory name",
 			"defaultValue": "WooCommerceIntegrationDataFactoryDev"
-		},
-		"WabashValley WooCommerce FTP server_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'WabashValley WooCommerce FTP server'"
-		},
-		"WooComOutputFTP_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'WooComOutputFTP'"
-		},
-		"KalmeshPC_SQLserver_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'KalmeshPC_SQLserver'"
-		},
-		"WabashValley WooCommerce FTP server_properties_typeProperties_host": {
-			"type": "string",
-			"defaultValue": "108.178.23.138"
-		},
-		"WabashValley WooCommerce FTP server_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "syteline@wabashvalley.com"
-		},
-		"WooComOutputFTP_properties_typeProperties_host": {
-			"type": "string",
-			"defaultValue": "108.178.23.138"
-		},
-		"WooComOutputFTP_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "syteline@wabashvalley.com"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
-		{
-			"name": "[concat(parameters('factoryName'), '/WabashValley WooCommerce FTP server')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "108.178.23.138",
-				"annotations": [],
-				"type": "FtpServer",
-				"typeProperties": {
-					"host": "[parameters('WabashValley WooCommerce FTP server_properties_typeProperties_host')]",
-					"port": 21,
-					"enableSsl": false,
-					"enableServerCertificateValidation": false,
-					"authenticationType": "Basic",
-					"userName": "[parameters('WabashValley WooCommerce FTP server_properties_typeProperties_userName')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('WabashValley WooCommerce FTP server_password')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/WooComOutputFTP')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "FtpServer",
-				"typeProperties": {
-					"host": "[parameters('WooComOutputFTP_properties_typeProperties_host')]",
-					"port": 21,
-					"enableSsl": false,
-					"enableServerCertificateValidation": false,
-					"authenticationType": "Basic",
-					"userName": "[parameters('WooComOutputFTP_properties_typeProperties_userName')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('WooComOutputFTP_password')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/KalmeshPC-IntegrationRuntime')]",
-			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "SelfHosted",
-				"typeProperties": {}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SourceCustomerDataset')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "WabashValley WooCommerce FTP server",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Xml",
-				"typeProperties": {
-					"location": {
-						"type": "FtpServerLocation",
-						"fileName": "wv-customers-test.xml"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/WabashValley WooCommerce FTP server')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/KalmeshPC_SQLserver')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "SqlServer",
-				"typeProperties": {
-					"connectionString": "[parameters('KalmeshPC_SQLserver_connectionString')]"
-				},
-				"connectVia": {
-					"referenceName": "KalmeshPC-IntegrationRuntime",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/KalmeshPC-IntegrationRuntime')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DestinationDataset_vk8')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "KalmeshPC_SQLserver",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "SqlServerTable",
-				"schema": [
-					{
-						"name": "ModifyBy",
-						"type": "nvarchar",
-						"precision": 0,
-						"scale": 0
-					},
-					{
-						"name": "Modified_Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "WC_BillingCountry",
-						"type": "nvarchar",
-						"precision": 0,
-						"scale": 0
-					},
-					{
-						"name": "WC_BillingEmail",
-						"type": "nvarchar",
-						"precision": 0,
-						"scale": 0
-					},
-					{
-						"name": "WC_BillingPhone",
-						"type": "nvarchar",
-						"precision": 0,
-						"scale": 0
-					},
-					{
-						"name": "QueueStatusID",
-						"type": "int",
-						"precision": 10,
-						"scale": 0
-					},
-					{
-						"name": "CreatedBy",
-						"type": "nvarchar",
-						"precision": 0,
-						"scale": 0
-					},
-					{
-						"name": "Created_Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "WC_BillingLastName",
-						"type": "nvarchar",
-						"precision": 0,
-						"scale": 0
-					},
-					{
-						"name": "WC_BillingCompany",
-						"type": "nvarchar",
-						"precision": 0,
-						"scale": 0
-					},
-					{
-						"name": "WC_BillingAddress",
-						"type": "nvarchar",
-						"precision": 0,
-						"scale": 0
-					},
-					{
-						"name": "WC_BillingCity",
-						"type": "nvarchar",
-						"precision": 0,
-						"scale": 0
-					},
-					{
-						"name": "WC_BillingState",
-						"type": "nvarchar",
-						"precision": 0,
-						"scale": 0
-					},
-					{
-						"name": "WC_BillingPostcode",
-						"type": "nvarchar",
-						"precision": 0,
-						"scale": 0
-					},
-					{
-						"name": "WC_ShipCode",
-						"type": "nvarchar",
-						"precision": 0,
-						"scale": 0
-					},
-					{
-						"name": "WC_Salesman",
-						"type": "nvarchar",
-						"precision": 0,
-						"scale": 0
-					},
-					{
-						"name": "WC_TaxCode",
-						"type": "nvarchar",
-						"precision": 0,
-						"scale": 0
-					},
-					{
-						"name": "WC_PriceCode",
-						"type": "nvarchar",
-						"precision": 0,
-						"scale": 0
-					},
-					{
-						"name": "WC_BillToID",
-						"type": "varchar",
-						"precision": 0,
-						"scale": 0
-					},
-					{
-						"name": "WC_BillingFirstName",
-						"type": "nvarchar",
-						"precision": 0,
-						"scale": 0
-					},
-					{
-						"name": "ID",
-						"type": "int",
-						"precision": 10,
-						"scale": 0
-					},
-					{
-						"name": "WC_CustomerId",
-						"type": "nvarchar",
-						"precision": 0,
-						"scale": 0
-					},
-					{
-						"name": "WC_TermsCode",
-						"type": "nvarchar",
-						"precision": 0,
-						"scale": 0
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "BillingCustomer"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/KalmeshPC_SQLserver')]"
-			]
-		},
 		{
 			"name": "[concat(parameters('factoryName'), '/MaxOfBillingCustomerID')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
@@ -412,9 +128,7 @@
 					"table": "BillingCustomer"
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/KalmeshPC_SQLserver')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/CopyCustomerPipeline')]",
@@ -626,15 +340,13 @@
 						"inputs": [
 							{
 								"referenceName": "SourceCustomerDataset",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						],
 						"outputs": [
 							{
 								"referenceName": "DestinationDataset_vk8",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						]
 					},
@@ -659,8 +371,7 @@
 							},
 							"dataset": {
 								"referenceName": "MaxOfBillingCustomerID",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						}
 					}
@@ -668,8 +379,6 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/SourceCustomerDataset')]",
-				"[concat(variables('factoryId'), '/datasets/DestinationDataset_vk8')]",
 				"[concat(variables('factoryId'), '/datasets/MaxOfBillingCustomerID')]"
 			]
 		}
