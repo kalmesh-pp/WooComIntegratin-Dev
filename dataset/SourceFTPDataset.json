@@ -1,0 +1,16 @@
+{
+	"name": "SourceFTPDataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "WabashValley WooCommerce FTP server",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Xml",
+		"typeProperties": {
+			"location": {
+				"type": "FtpServerLocation"
+			}
+		}
+	}
+}
