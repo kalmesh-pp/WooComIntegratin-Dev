@@ -1,5 +1,5 @@
 {
-	"name": "SourceFTPDataset",
+	"name": "SourceOrderDataset",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "WabashValley WooCommerce FTP server",
