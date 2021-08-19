@@ -47,7 +47,7 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "Copy_vk8",
+						"name": "CopyCustomerXMLData",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
