@@ -17,6 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
+						"sqlReaderQuery": "SELECT [SytelineOrderNumber], [SytelineTrackingNumber], [SytelineShipCode], [SytelineCarrierName], [SytelineOrderStatus], [SytelineActualShipDate], [SyncupDate], [SyncupRequired] FROM [Order] where SyncupRequired=1",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
