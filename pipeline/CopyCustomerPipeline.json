@@ -38,7 +38,8 @@
 						}
 					},
 					"sink": {
-						"type": "SqlServerSink"
+						"type": "SqlServerSink",
+						"preCopyScript": "truncate table dbo.BillingCustomer"
 					},
 					"enableStaging": false,
 					"enableSkipIncompatibleRow": true,
