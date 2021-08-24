@@ -37,7 +37,8 @@
 						}
 					},
 					"sink": {
-						"type": "SqlServerSink"
+						"type": "SqlServerSink",
+						"preCopyScript": "truncate table Temp_BillingCustomer"
 					},
 					"enableStaging": false,
 					"translator": {
