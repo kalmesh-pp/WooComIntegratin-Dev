@@ -1618,7 +1618,7 @@
 							},
 							"sink": {
 								"type": "SqlServerSink",
-								"preCopyScript": "truncate table Temp_BillingCustomer"
+								"preCopyScript": "truncate table dbo.Temp_BillingCustomer"
 							},
 							"enableStaging": false,
 							"translator": {
