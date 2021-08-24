@@ -358,7 +358,7 @@
 								"mappings": [
 									{
 										"source": {
-											"path": "[['Customer_ID']"
+											"path": "$['Customers']['Customer'][0]['Customer_ID']"
 										},
 										"sink": {
 											"name": "WC_CustomerId",
@@ -367,7 +367,7 @@
 									},
 									{
 										"source": {
-											"path": "[['Terms_Code']"
+											"path": "$['Customers']['Customer'][0]['Terms_Code']"
 										},
 										"sink": {
 											"name": "WC_TermsCode",
@@ -376,7 +376,7 @@
 									},
 									{
 										"source": {
-											"path": "[['Ship_Code']"
+											"path": "$['Customers']['Customer'][0]['Ship_Code']"
 										},
 										"sink": {
 											"name": "WC_ShipCode",
@@ -385,7 +385,7 @@
 									},
 									{
 										"source": {
-											"path": "[['Salesman']"
+											"path": "$['Customers']['Customer'][0]['Salesman']"
 										},
 										"sink": {
 											"name": "WC_Salesman",
@@ -394,7 +394,7 @@
 									},
 									{
 										"source": {
-											"path": "[['Tax_Code']"
+											"path": "$['Customers']['Customer'][0]['Tax_Code']"
 										},
 										"sink": {
 											"name": "WC_TaxCode",
@@ -403,7 +403,7 @@
 									},
 									{
 										"source": {
-											"path": "[['Price_Code']"
+											"path": "$['Customers']['Customer'][0]['Price_Code']"
 										},
 										"sink": {
 											"name": "WC_PriceCode",
@@ -412,7 +412,7 @@
 									},
 									{
 										"source": {
-											"path": "[['Billing']['Bill_To_ID']"
+											"path": "$['Customers']['Customer'][0]['Billing']['Bill_To_ID']"
 										},
 										"sink": {
 											"name": "WC_BillToID",
@@ -421,7 +421,7 @@
 									},
 									{
 										"source": {
-											"path": "[['Billing']['Billing_First_Name']"
+											"path": "$['Customers']['Customer'][0]['Billing']['Billing_First_Name']"
 										},
 										"sink": {
 											"name": "WC_BillingFirstName",
@@ -430,7 +430,7 @@
 									},
 									{
 										"source": {
-											"path": "[['Billing']['Billing_Last_Name']"
+											"path": "$['Customers']['Customer'][0]['Billing']['Billing_Last_Name']"
 										},
 										"sink": {
 											"name": "WC_BillingLastName",
@@ -439,7 +439,7 @@
 									},
 									{
 										"source": {
-											"path": "[['Billing']['Billing_Company']"
+											"path": "$['Customers']['Customer'][0]['Billing']['Billing_Company']"
 										},
 										"sink": {
 											"name": "WC_BillingCompany",
@@ -448,7 +448,7 @@
 									},
 									{
 										"source": {
-											"path": "[['Billing']['Billing_Address_1']"
+											"path": "$['Customers']['Customer'][0]['Billing']['Billing_Address_1']"
 										},
 										"sink": {
 											"name": "WC_BillingAddress",
@@ -457,7 +457,7 @@
 									},
 									{
 										"source": {
-											"path": "[['Billing']['Billing_State']"
+											"path": "$['Customers']['Customer'][0]['Billing']['Billing_State']"
 										},
 										"sink": {
 											"name": "WC_BillingState",
@@ -466,7 +466,7 @@
 									},
 									{
 										"source": {
-											"path": "[['Billing']['Billing_Postcode']"
+											"path": "$['Customers']['Customer'][0]['Billing']['Billing_Postcode']"
 										},
 										"sink": {
 											"name": "WC_BillingPostcode",
@@ -475,7 +475,7 @@
 									},
 									{
 										"source": {
-											"path": "[['Billing']['Billing_Country']"
+											"path": "$['Customers']['Customer'][0]['Billing']['Billing_Country']"
 										},
 										"sink": {
 											"name": "WC_BillingCountry",
@@ -484,7 +484,7 @@
 									},
 									{
 										"source": {
-											"path": "[['Billing']['Billing_Email']"
+											"path": "$['Customers']['Customer'][0]['Billing']['Billing_Email']"
 										},
 										"sink": {
 											"name": "WC_BillingEmail",
@@ -493,7 +493,7 @@
 									},
 									{
 										"source": {
-											"path": "[['Billing']['Billing_Phone']"
+											"path": "$['Customers']['Customer'][0]['Billing']['Billing_Phone']"
 										},
 										"sink": {
 											"name": "WC_BillingPhone",
@@ -501,7 +501,8 @@
 										}
 									}
 								],
-								"collectionReference": "$['Customers']['Customer']"
+								"collectionReference": "",
+								"mapComplexValuesToString": true
 							}
 						},
 						"inputs": [
@@ -1285,6 +1286,49 @@
 				"typeProperties": {}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TestCustomerFTP_xml')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "WabashValley WooCommerce FTP server",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Xml",
+				"typeProperties": {
+					"location": {
+						"type": "FtpServerLocation",
+						"fileName": "wv-customers-test.xml"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/WabashValley WooCommerce FTP server')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SqlServerTable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "KalmeshPC_SQLserver",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "Temp_BillingCustomer"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/KalmeshPC_SQLserver')]"
+			]
 		}
 	]
 }
