@@ -1,0 +1,17 @@
+{
+	"name": "SourceDataset_hiw",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SFTP_WooComStaging",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Xml",
+		"typeProperties": {
+			"location": {
+				"type": "SftpLocation",
+				"fileName": "customer-export.xml"
+			}
+		}
+	}
+}
