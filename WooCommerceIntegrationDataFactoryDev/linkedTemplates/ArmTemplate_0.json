@@ -404,7 +404,7 @@
 				],
 				"typeProperties": {
 					"schema": "dbo",
-					"table": "Temp_BillingCustomer"
+					"table": "Temp_BillingCustomer_XML"
 				}
 			},
 			"dependsOn": [
@@ -1132,7 +1132,8 @@
 								}
 							},
 							"sink": {
-								"type": "SqlServerSink"
+								"type": "SqlServerSink",
+								"preCopyScript": "truncate table dbo.BillingCustomer"
 							},
 							"enableStaging": false,
 							"enableSkipIncompatibleRow": true,
@@ -1371,7 +1372,7 @@
 							},
 							{
 								"name": "Destination",
-								"value": "dbo.Temp_BillingCustomer"
+								"value": "dbo.Temp_BillingCustomer_XML"
 							}
 						],
 						"typeProperties": {
@@ -1389,7 +1390,7 @@
 							},
 							"sink": {
 								"type": "SqlServerSink",
-								"preCopyScript": "truncate table Temp_BillingCustomer"
+								"preCopyScript": "truncate table dbo.Temp_BillingCustomer_XML"
 							},
 							"enableStaging": false,
 							"translator": {
@@ -1496,6 +1497,24 @@
 									},
 									{
 										"source": {
+											"path": "[['Billing']['Billing_Address_2']"
+										},
+										"sink": {
+											"name": "WC_BillingAddress2",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Billing']['Billing_City']"
+										},
+										"sink": {
+											"name": "WC_BillingCity",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
 											"path": "[['Billing']['Billing_State']"
 										},
 										"sink": {
@@ -1541,10 +1560,10 @@
 									},
 									{
 										"source": {
-											"path": "[['Billing']['Billing_City']"
+											"path": "[['Shipping']"
 										},
 										"sink": {
-											"name": "WC_BillingCity",
+											"name": "XML_shipping",
 											"type": "String"
 										}
 									}
