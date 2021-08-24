@@ -151,7 +151,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/SourceDataset_hiw')]",
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_SFTP')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -236,7 +236,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DestinationDataset_hiw')]",
+			"name": "[concat(parameters('factoryName'), '/DestinationDataset_SQLLocal')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -1152,7 +1152,8 @@
 								}
 							},
 							"sink": {
-								"type": "SqlServerSink"
+								"type": "SqlServerSink",
+								"preCopyScript": "truncate table Temp_BillingCustomer"
 							},
 							"enableStaging": false,
 							"translator": {
@@ -1309,14 +1310,14 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "SourceDataset_hiw",
+								"referenceName": "SourceDataset_SFTP",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
 						],
 						"outputs": [
 							{
-								"referenceName": "DestinationDataset_hiw",
+								"referenceName": "DestinationDataset_SQLLocal",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -1326,8 +1327,8 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/SourceDataset_hiw')]",
-				"[concat(variables('factoryId'), '/datasets/DestinationDataset_hiw')]"
+				"[concat(variables('factoryId'), '/datasets/SourceDataset_SFTP')]",
+				"[concat(variables('factoryId'), '/datasets/DestinationDataset_SQLLocal')]"
 			]
 		}
 	]
