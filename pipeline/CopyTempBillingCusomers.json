@@ -187,6 +187,15 @@
 									"name": "WC_BillingPhone",
 									"type": "String"
 								}
+							},
+							{
+								"source": {
+									"path": "['Billing']['Billing_City']"
+								},
+								"sink": {
+									"name": "WC_BillingCity",
+									"type": "String"
+								}
 							}
 						],
 						"collectionReference": "$['Customers']['Customer']",
