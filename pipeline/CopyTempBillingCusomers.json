@@ -126,15 +126,6 @@
 									"name": "WC_BillingLastName",
 									"type": "String"
 								}
-							},
-							{
-								"source": {
-									"path": "['Billing']['Billing_Company']"
-								},
-								"sink": {
-									"name": "WC_BillingCompany",
-									"type": "String"
-								}
 							}
 						],
 						"collectionReference": "$['Customers']['Customer']",
