@@ -316,7 +316,7 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "Copy_hiw",
+						"name": "SFTP to tempCustomer",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -452,15 +452,6 @@
 										},
 										"sink": {
 											"name": "WC_BillingAddress",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Billing']['Billing_City']"
-										},
-										"sink": {
-											"name": "WC_BillingState",
 											"type": "String"
 										}
 									},
