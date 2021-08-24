@@ -20,7 +20,7 @@
 					},
 					{
 						"name": "Destination",
-						"value": "dbo.Temp_BillingCustomer"
+						"value": "dbo.Temp_BillingCustomer_XML"
 					}
 				],
 				"typeProperties": {
