@@ -42,7 +42,7 @@
 						"type": "SqlServerSink",
 						"preCopyScript": "truncate table dbo.Temp_BillingCustomer_XML"
 					},
-					"enableStaging": true,
+					"enableStaging": false,
 					"translator": {
 						"type": "TabularTranslator",
 						"mappings": [
