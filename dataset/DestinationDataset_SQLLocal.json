@@ -143,7 +143,7 @@
 		],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "Temp_BillingCustomer"
+			"table": "Temp_BillingCustomer_XML"
 		}
 	}
 }
