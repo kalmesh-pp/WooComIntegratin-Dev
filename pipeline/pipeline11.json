@@ -1,5 +1,5 @@
 {
-	"name": "Test",
+	"name": "pipeline11",
 	"properties": {
 		"activities": [
 			{
@@ -47,19 +47,6 @@
 						"type": "DatasetReference"
 					}
 				]
-			},
-			{
-				"name": "ForEach1",
-				"type": "ForEach",
-				"dependsOn": [
-					{
-						"activity": "Copy data1",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": []
 			}
 		],
 		"annotations": []
