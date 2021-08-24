@@ -1,0 +1,20 @@
+{
+	"name": "StagingParquet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SFTP_WooComStaging",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "SftpLocation",
+				"fileName": "file.parquet",
+				"folderPath": "/dataflow"
+			},
+			"compressionCodec": "none"
+		},
+		"schema": []
+	}
+}
