@@ -41,7 +41,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "SqlServerTable1",
+						"referenceName": "SqlServerTableTemp_BillingCustomer",
 						"type": "DatasetReference"
 					}
 				]
