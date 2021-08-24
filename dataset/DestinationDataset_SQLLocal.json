@@ -1,5 +1,5 @@
 {
-	"name": "DestinationDataset_hiw",
+	"name": "DestinationDataset_SQLLocal",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "KalmeshPC_SQLserver",

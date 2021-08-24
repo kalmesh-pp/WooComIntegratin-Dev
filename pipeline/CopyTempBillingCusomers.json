@@ -200,7 +200,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "DestinationDataset_hiw",
+						"referenceName": "DestinationDataset_SQLLocal",
 						"type": "DatasetReference"
 					}
 				]
