@@ -1,0 +1,17 @@
+{
+	"name": "OrderXMLInputSFTP",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SFTP_WooComStaging",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Xml",
+		"typeProperties": {
+			"location": {
+				"type": "SftpLocation",
+				"fileName": "order-export.xml"
+			}
+		}
+	}
+}

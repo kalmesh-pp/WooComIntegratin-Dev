@@ -1,0 +1,166 @@
+{
+	"name": "ReadOrderSFTP",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "XmlSource",
+						"storeSettings": {
+							"type": "SftpReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "XmlReadSettings",
+							"validationMode": "none",
+							"namespaces": true
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "['Order_Number']"
+								},
+								"sink": {
+									"name": "WC_OrderID",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['Order_Date']"
+								},
+								"sink": {
+									"name": "WC_Order_Date",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"path": "['Customer_Note']"
+								},
+								"sink": {
+									"name": "WC_Note",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['Bill_To_ID']"
+								},
+								"sink": {
+									"name": "WC_CustomerBillToID",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['Ship_To_ID']"
+								},
+								"sink": {
+									"name": "WC_CustomerShipToID",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['Ship_Code']"
+								},
+								"sink": {
+									"name": "WC_ShipCode",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['Salesman']"
+								},
+								"sink": {
+									"name": "WC_Slsman",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['Uf_Order_Code']"
+								},
+								"sink": {
+									"name": "WC_OrderCode",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['Billing_Email']"
+								},
+								"sink": {
+									"name": "WC_Sold_to_Email",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['Payment_Method_Title']"
+								},
+								"sink": {
+									"name": "WC_PaymentMethod",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['Order_Subtotal']"
+								},
+								"sink": {
+									"name": "WC_OrderSubTotal",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "['Shipping_Method_Title']"
+								},
+								"sink": {
+									"name": "WC_Shipping_Method_Title",
+									"type": "String"
+								}
+							}
+						],
+						"collectionReference": "$['Orders']['Order']"
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "OrderXMLInputSFTP",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "SqlServerOrderTable",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
