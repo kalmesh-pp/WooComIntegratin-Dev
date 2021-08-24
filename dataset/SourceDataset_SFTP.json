@@ -1,5 +1,5 @@
 {
-	"name": "SourceDataset_hiw",
+	"name": "SourceDataset_SFTP",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "SFTP_WooComStaging",

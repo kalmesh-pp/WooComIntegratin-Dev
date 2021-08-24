@@ -194,7 +194,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "SourceDataset_hiw",
+						"referenceName": "SourceDataset_SFTP",
 						"type": "DatasetReference"
 					}
 				],
