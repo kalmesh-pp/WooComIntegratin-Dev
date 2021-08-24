@@ -1160,7 +1160,7 @@
 								"mappings": [
 									{
 										"source": {
-											"path": "$['Customers']['Customer'][0]['Customer_ID']"
+											"path": "[['Customer_ID']"
 										},
 										"sink": {
 											"name": "WC_CustomerId",
@@ -1169,7 +1169,7 @@
 									},
 									{
 										"source": {
-											"path": "$['Customers']['Customer'][0]['Terms_Code']"
+											"path": "[['Terms_Code']"
 										},
 										"sink": {
 											"name": "WC_TermsCode",
@@ -1178,7 +1178,7 @@
 									},
 									{
 										"source": {
-											"path": "$['Customers']['Customer'][0]['Ship_Code']"
+											"path": "[['Ship_Code']"
 										},
 										"sink": {
 											"name": "WC_ShipCode",
@@ -1187,7 +1187,7 @@
 									},
 									{
 										"source": {
-											"path": "$['Customers']['Customer'][0]['Salesman']"
+											"path": "[['Salesman']"
 										},
 										"sink": {
 											"name": "WC_Salesman",
@@ -1196,7 +1196,7 @@
 									},
 									{
 										"source": {
-											"path": "$['Customers']['Customer'][0]['Tax_Code']"
+											"path": "[['Tax_Code']"
 										},
 										"sink": {
 											"name": "WC_TaxCode",
@@ -1205,7 +1205,7 @@
 									},
 									{
 										"source": {
-											"path": "$['Customers']['Customer'][0]['Price_Code']"
+											"path": "[['Price_Code']"
 										},
 										"sink": {
 											"name": "WC_PriceCode",
@@ -1214,7 +1214,7 @@
 									},
 									{
 										"source": {
-											"path": "$['Customers']['Customer'][0]['Billing']['Bill_To_ID']"
+											"path": "[['Billing']['Bill_To_ID']"
 										},
 										"sink": {
 											"name": "WC_BillToID",
@@ -1223,7 +1223,7 @@
 									},
 									{
 										"source": {
-											"path": "$['Customers']['Customer'][0]['Billing']['Billing_First_Name']"
+											"path": "[['Billing']['Billing_First_Name']"
 										},
 										"sink": {
 											"name": "WC_BillingFirstName",
@@ -1232,7 +1232,7 @@
 									},
 									{
 										"source": {
-											"path": "$['Customers']['Customer'][0]['Billing']['Billing_Last_Name']"
+											"path": "[['Billing']['Billing_Last_Name']"
 										},
 										"sink": {
 											"name": "WC_BillingLastName",
@@ -1241,7 +1241,7 @@
 									},
 									{
 										"source": {
-											"path": "$['Customers']['Customer'][0]['Billing']['Billing_Company']"
+											"path": "[['Billing']['Billing_Company']"
 										},
 										"sink": {
 											"name": "WC_BillingCompany",
@@ -1250,7 +1250,7 @@
 									},
 									{
 										"source": {
-											"path": "$['Customers']['Customer'][0]['Billing']['Billing_Address_1']"
+											"path": "[['Billing']['Billing_Address_1']"
 										},
 										"sink": {
 											"name": "WC_BillingAddress",
@@ -1259,7 +1259,7 @@
 									},
 									{
 										"source": {
-											"path": "$['Customers']['Customer'][0]['Billing']['Billing_State']"
+											"path": "[['Billing']['Billing_State']"
 										},
 										"sink": {
 											"name": "WC_BillingState",
@@ -1268,7 +1268,7 @@
 									},
 									{
 										"source": {
-											"path": "$['Customers']['Customer'][0]['Billing']['Billing_Postcode']"
+											"path": "[['Billing']['Billing_Postcode']"
 										},
 										"sink": {
 											"name": "WC_BillingPostcode",
@@ -1277,7 +1277,7 @@
 									},
 									{
 										"source": {
-											"path": "$['Customers']['Customer'][0]['Billing']['Billing_Country']"
+											"path": "[['Billing']['Billing_Country']"
 										},
 										"sink": {
 											"name": "WC_BillingCountry",
@@ -1286,7 +1286,7 @@
 									},
 									{
 										"source": {
-											"path": "$['Customers']['Customer'][0]['Billing']['Billing_Email']"
+											"path": "[['Billing']['Billing_Email']"
 										},
 										"sink": {
 											"name": "WC_BillingEmail",
@@ -1295,7 +1295,7 @@
 									},
 									{
 										"source": {
-											"path": "$['Customers']['Customer'][0]['Billing']['Billing_Phone']"
+											"path": "[['Billing']['Billing_Phone']"
 										},
 										"sink": {
 											"name": "WC_BillingPhone",
@@ -1303,7 +1303,7 @@
 										}
 									}
 								],
-								"collectionReference": "",
+								"collectionReference": "$['Customers']['Customer']",
 								"mapComplexValuesToString": true
 							}
 						},
