@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'KalmeshPC_SQLserver'"
 		},
+		"SFTP_WooComStaging_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'SFTP_WooComStaging'"
+		},
 		"WabashValley WooCommerce FTP server_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'WabashValley WooCommerce FTP server'"
@@ -18,6 +22,14 @@
 		"WooComOutputFTP_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'WooComOutputFTP'"
+		},
+		"SFTP_WooComStaging_properties_typeProperties_host": {
+			"type": "string",
+			"defaultValue": "wabashstaging.sftp.wpengine.com"
+		},
+		"SFTP_WooComStaging_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "wabashstaging-syteline"
 		},
 		"WabashValley WooCommerce FTP server_properties_typeProperties_host": {
 			"type": "string",
@@ -62,6 +74,9 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"SFTP_WooComStaging_password": {
+						"value": "[parameters('SFTP_WooComStaging_password')]"
+					},
 					"WabashValley WooCommerce FTP server_password": {
 						"value": "[parameters('WabashValley WooCommerce FTP server_password')]"
 					},
@@ -70,6 +85,12 @@
 					},
 					"KalmeshPC_SQLserver_connectionString": {
 						"value": "[parameters('KalmeshPC_SQLserver_connectionString')]"
+					},
+					"SFTP_WooComStaging_properties_typeProperties_host": {
+						"value": "[parameters('SFTP_WooComStaging_properties_typeProperties_host')]"
+					},
+					"SFTP_WooComStaging_properties_typeProperties_userName": {
+						"value": "[parameters('SFTP_WooComStaging_properties_typeProperties_userName')]"
 					},
 					"WabashValley WooCommerce FTP server_properties_typeProperties_host": {
 						"value": "[parameters('WabashValley WooCommerce FTP server_properties_typeProperties_host')]"
