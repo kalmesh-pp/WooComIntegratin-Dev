@@ -198,6 +198,15 @@
 									"name": "WC_BillingPhone",
 									"type": "String"
 								}
+							},
+							{
+								"source": {
+									"path": "['Shipping']"
+								},
+								"sink": {
+									"name": "XML_shipping",
+									"type": "String"
+								}
 							}
 						],
 						"collectionReference": "$['Customers']['Customer']",
