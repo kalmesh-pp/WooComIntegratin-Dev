@@ -204,7 +204,7 @@
 									"path": "['Shipping']"
 								},
 								"sink": {
-									"name": "XML_shipping",
+									"name": "JSON_Shipping",
 									"type": "String"
 								}
 							}
