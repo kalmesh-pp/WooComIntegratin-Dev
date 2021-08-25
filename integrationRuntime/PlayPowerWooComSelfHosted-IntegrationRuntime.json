@@ -1,0 +1,7 @@
+{
+	"name": "PlayPowerWooComSelfHosted-IntegrationRuntime",
+	"properties": {
+		"type": "SelfHosted",
+		"description": "Play Power WooCom Self Hosted-Integration Runtime"
+	}
+}
