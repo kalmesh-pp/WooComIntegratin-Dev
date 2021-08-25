@@ -38,7 +38,7 @@
 					},
 					"sink": {
 						"type": "SqlServerSink",
-						"preCopyScript": "truncate table dbo.Temp_BillingCustomer_XML"
+						"preCopyScript": "truncate table dbo.Temp_BillingCustomer"
 					},
 					"enableStaging": false,
 					"translator": {
