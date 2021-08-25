@@ -187,6 +187,15 @@
 									"name": "WC_BillingCity",
 									"type": "String"
 								}
+							},
+							{
+								"source": {
+									"path": "['Shipping']"
+								},
+								"sink": {
+									"name": "JSON_Shipping",
+									"type": "String"
+								}
 							}
 						],
 						"collectionReference": "$['Customers']['Customer']",
