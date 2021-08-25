@@ -218,7 +218,14 @@
 			{
 				"name": "UpdateCustomerAndShipToTable",
 				"type": "SqlServerStoredProcedure",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "SFTP to tempCustomer",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -227,6 +234,9 @@
 					"secureInput": false
 				},
 				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[UpdateCustomerAndShipTo]"
+				},
 				"linkedServiceName": {
 					"referenceName": "KalmeshPC_SQLserver",
 					"type": "LinkedServiceReference"
