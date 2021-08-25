@@ -210,10 +210,27 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "SqlServerTableTemp_BillingCustomer_XML",
+						"referenceName": "SqlServerTableTemp_BillingCustomer_xml",
 						"type": "DatasetReference"
 					}
 				]
+			},
+			{
+				"name": "UpdateCustomerAndShipToTable",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "KalmeshPC_SQLserver",
+					"type": "LinkedServiceReference"
+				}
 			}
 		],
 		"annotations": []

@@ -1,5 +1,5 @@
 {
-	"name": "SqlServerTableTemp_BillingCustomer_XML",
+	"name": "SqlServerTableTemp_BillingCustomer_xml",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "KalmeshPC_SQLserver",
@@ -87,7 +87,7 @@
 		],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "Temp_BillingCustomer_XML"
+			"table": "Temp_BillingCustomer"
 		}
 	}
 }
