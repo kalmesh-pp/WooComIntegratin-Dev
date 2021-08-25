@@ -1,0 +1,16 @@
+{
+	"name": "PP_PPMONWOOCOMSQL1_SQLServer",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "SqlServer",
+		"typeProperties": {
+			"connectionString": "integrated security=False;data source=PPMONWOOCOMSQL1.MSSQLSERVER;initial catalog=WooCom;user id=sa",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJkMjgyZTE0Ni03OThmLTQ2M2EtYTNhZi0wMmUyOGZlY2FhZDgiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "PlayPowerWooComSelfHosted-IntegrationRuntime",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
