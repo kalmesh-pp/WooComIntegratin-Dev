@@ -38,131 +38,163 @@
 							{
 								"source": {
 									"path": "['Order_Number']"
+								},
+								"sink": {
+									"name": "WC_OrderID",
+									"type": "String"
 								}
 							},
 							{
 								"source": {
 									"path": "['Order_Status']"
+								},
+								"sink": {
+									"name": "WC_OrderStatus",
+									"type": "String"
 								}
 							},
 							{
 								"source": {
 									"path": "['Order_Date']"
+								},
+								"sink": {
+									"name": "WC_Order_Date",
+									"type": "DateTime"
 								}
 							},
 							{
 								"source": {
 									"path": "['Customer_Note']"
+								},
+								"sink": {
+									"name": "WC_Note",
+									"type": "String"
 								}
 							},
 							{
 								"source": {
 									"path": "['Bill_To_ID']"
+								},
+								"sink": {
+									"name": "WC_CustomerBillToID",
+									"type": "String"
 								}
 							},
 							{
 								"source": {
 									"path": "['Ship_To_ID']"
+								},
+								"sink": {
+									"name": "WC_CustomerShipToID",
+									"type": "String"
 								}
 							},
 							{
 								"source": {
 									"path": "['Ship_Code']"
+								},
+								"sink": {
+									"name": "WC_ShipCode",
+									"type": "String"
 								}
 							},
 							{
 								"source": {
 									"path": "['Salesman']"
+								},
+								"sink": {
+									"name": "WC_Slsman",
+									"type": "String"
 								}
 							},
 							{
 								"source": {
 									"path": "['Uf_Order_Code']"
+								},
+								"sink": {
+									"name": "WC_OrderCode",
+									"type": "String"
 								}
 							},
 							{
 								"source": {
 									"path": "['Billing_Email']"
+								},
+								"sink": {
+									"name": "WC_Sold_to_Email",
+									"type": "String"
 								}
 							},
 							{
 								"source": {
 									"path": "['Payment_Method_Title']"
+								},
+								"sink": {
+									"name": "WC_PaymentMethod",
+									"type": "String"
 								}
 							},
 							{
 								"source": {
 									"path": "['Order_Subtotal']"
+								},
+								"sink": {
+									"name": "WC_OrderSubTotal",
+									"type": "Decimal"
 								}
 							},
 							{
 								"source": {
 									"path": "['Shipping_Method_Title']"
+								},
+								"sink": {
+									"name": "WC_Shipping_Method_Title",
+									"type": "String"
 								}
 							},
 							{
 								"source": {
 									"path": "['Order_Shipping']"
+								},
+								"sink": {
+									"name": "WC_OrderShipping",
+									"type": "Decimal"
 								}
 							},
 							{
 								"source": {
 									"path": "['Order_Refund']"
+								},
+								"sink": {
+									"name": "WC_OrderRefund",
+									"type": "Decimal"
 								}
 							},
 							{
 								"source": {
 									"path": "['Order_Total']"
+								},
+								"sink": {
+									"name": "WC_OrderTotal",
+									"type": "Decimal"
 								}
 							},
 							{
 								"source": {
 									"path": "['Order_Total_Tax']"
-								}
-							},
-							{
-								"source": {
-									"path": "['Products']['Product']['Line_Id']"
-								}
-							},
-							{
-								"source": {
-									"path": "['Products']['Product']['Sku']"
-								}
-							},
-							{
-								"source": {
-									"path": "['Products']['Product']['Name']"
-								}
-							},
-							{
-								"source": {
-									"path": "['Products']['Product']['Qty']"
-								}
-							},
-							{
-								"source": {
-									"path": "['Products']['Product']['Item_Price']"
-								}
-							},
-							{
-								"source": {
-									"path": "['Products']['Product']['Config_Class']"
-								}
-							},
-							{
-								"source": {
-									"path": "['Products']['Product']['Atts']['Attr'][0]['Att_Name']"
-								}
-							},
-							{
-								"source": {
-									"path": "['Products']['Product']['Atts']['Attr'][0]['Att_Value']"
+								},
+								"sink": {
+									"name": "WC_OrderTax",
+									"type": "Decimal"
 								}
 							},
 							{
 								"source": {
 									"path": "['Customer_ID']"
+								},
+								"sink": {
+									"name": "Customer_ID",
+									"type": "Int32"
 								}
 							}
 						],
