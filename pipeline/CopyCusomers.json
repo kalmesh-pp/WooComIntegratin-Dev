@@ -1,5 +1,5 @@
 {
-	"name": "CopyTempBillingCusomers_copy1",
+	"name": "CopyCusomers",
 	"properties": {
 		"activities": [
 			{
