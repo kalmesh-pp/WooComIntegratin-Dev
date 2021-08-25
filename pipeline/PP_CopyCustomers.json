@@ -238,7 +238,7 @@
 					"storedProcedureName": "[dbo].[UpdateCustomerAndShipTo]"
 				},
 				"linkedServiceName": {
-					"referenceName": "KalmeshPC_SQLserver",
+					"referenceName": "PP_PPMONWOOCOMSQL1_SQLServer",
 					"type": "LinkedServiceReference"
 				}
 			}
