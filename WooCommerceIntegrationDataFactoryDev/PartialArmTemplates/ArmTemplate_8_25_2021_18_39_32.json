@@ -13,239 +13,98 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/CopyTempBillingCusomers')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
+			"name": "[concat(parameters('factoryName'), '/SqlServerTableTemp_BillingCustomer')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"activities": [
+				"linkedServiceName": {
+					"referenceName": "KalmeshPC_SQLserver",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
 					{
-						"name": "SFTP to tempCustomer",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [
-							{
-								"name": "Source",
-								"value": "/customer-export.xml"
-							},
-							{
-								"name": "Destination",
-								"value": "dbo.Temp_BillingCustomer_XML"
-							}
-						],
-						"typeProperties": {
-							"source": {
-								"type": "XmlSource",
-								"storeSettings": {
-									"type": "SftpReadSettings",
-									"recursive": true,
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "XmlReadSettings",
-									"validationMode": "none",
-									"detectDataType": true,
-									"namespaces": false
-								}
-							},
-							"sink": {
-								"type": "SqlServerSink",
-								"preCopyScript": "truncate table dbo.Temp_BillingCustomer_XML"
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"path": "[['Customer_ID']"
-										},
-										"sink": {
-											"name": "WC_CustomerId",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Terms_Code']"
-										},
-										"sink": {
-											"name": "WC_TermsCode",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Ship_Code']"
-										},
-										"sink": {
-											"name": "WC_ShipCode",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Salesman']"
-										},
-										"sink": {
-											"name": "WC_Salesman",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Tax_Code']"
-										},
-										"sink": {
-											"name": "WC_TaxCode",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Price_Code']"
-										},
-										"sink": {
-											"name": "WC_PriceCode",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Billing']['Bill_To_ID']"
-										},
-										"sink": {
-											"name": "WC_BillToID",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Billing']['Billing_First_Name']"
-										},
-										"sink": {
-											"name": "WC_BillingFirstName",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Billing']['Billing_Last_Name']"
-										},
-										"sink": {
-											"name": "WC_BillingLastName",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Billing']['Billing_Address_1']"
-										},
-										"sink": {
-											"name": "WC_BillingAddress",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Billing']['Billing_Address_2']"
-										},
-										"sink": {
-											"name": "WC_BillingAddress2",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Billing']['Billing_City']"
-										},
-										"sink": {
-											"name": "WC_BillingCity",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Billing']['Billing_State']"
-										},
-										"sink": {
-											"name": "WC_BillingState",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Billing']['Billing_Postcode']"
-										},
-										"sink": {
-											"name": "WC_BillingPostcode",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Billing']['Billing_Country']"
-										},
-										"sink": {
-											"name": "WC_BillingCountry",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Billing']['Billing_Email']"
-										},
-										"sink": {
-											"name": "WC_BillingEmail",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Billing']['Billing_Phone']"
-										},
-										"sink": {
-											"name": "WC_BillingPhone",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Shipping']"
-										},
-										"sink": {
-											"name": "JSON_Shipping",
-											"type": "String"
-										}
-									}
-								],
-								"collectionReference": "$['Customers']['Customer']",
-								"mapComplexValuesToString": true
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "SourceDataset_SFTP",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "DestinationDataset_SQLLocal",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
+						"name": "WC_CustomerId",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WC_TermsCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WC_ShipCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WC_Salesman",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WC_TaxCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WC_PriceCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WC_BillToID",
+						"type": "varchar"
+					},
+					{
+						"name": "WC_BillingFirstName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WC_BillingLastName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WC_BillingCompany",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WC_BillingAddress",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WC_BillingAddress2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WC_BillingCity",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WC_BillingState",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WC_BillingPostcode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WC_BillingCountry",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WC_BillingEmail",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WC_BillingPhone",
+						"type": "nvarchar"
+					},
+					{
+						"name": "XML_shipping",
+						"type": "varchar"
 					}
 				],
-				"annotations": []
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "Temp_BillingCustomer"
+				}
 			},
 			"dependsOn": []
 		},
@@ -458,15 +317,13 @@
 						"inputs": [
 							{
 								"referenceName": "SourceDataset_SFTP",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						],
 						"outputs": [
 							{
 								"referenceName": "SqlServerTableTemp_BillingCustomer",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						]
 					},
@@ -500,7 +357,9 @@
 				],
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SqlServerTableTemp_BillingCustomer')]"
+			]
 		}
 	]
 }
