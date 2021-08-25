@@ -270,7 +270,7 @@
 				}
 			},
 			{
-				"name": "Stored procedure1",
+				"name": "UpdateShipToCustomers",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
