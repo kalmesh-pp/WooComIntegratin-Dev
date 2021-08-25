@@ -1,5 +1,5 @@
 {
-	"name": "SqlServerTableTemp_BillingCustomer_xml",
+	"name": "SqlServerTableTemp_BillingCustomer",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "KalmeshPC_SQLserver",

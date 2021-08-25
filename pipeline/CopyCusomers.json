@@ -210,7 +210,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "SqlServerTableTemp_BillingCustomer_xml",
+						"referenceName": "SqlServerTableTemp_BillingCustomer",
 						"type": "DatasetReference"
 					}
 				]
