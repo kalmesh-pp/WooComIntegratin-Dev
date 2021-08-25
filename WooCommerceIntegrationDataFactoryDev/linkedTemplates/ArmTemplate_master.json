@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'KalmeshPC_SQLserver'"
 		},
+		"PP_PPMONWOOCOMSQL1_SQLServer_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'PP_PPMONWOOCOMSQL1_SQLServer'"
+		},
 		"SFTP_WooComStaging_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'SFTP_WooComStaging'"
@@ -85,6 +89,9 @@
 					},
 					"KalmeshPC_SQLserver_connectionString": {
 						"value": "[parameters('KalmeshPC_SQLserver_connectionString')]"
+					},
+					"PP_PPMONWOOCOMSQL1_SQLServer_connectionString": {
+						"value": "[parameters('PP_PPMONWOOCOMSQL1_SQLServer_connectionString')]"
 					},
 					"SFTP_WooComStaging_properties_typeProperties_host": {
 						"value": "[parameters('SFTP_WooComStaging_properties_typeProperties_host')]"

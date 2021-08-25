@@ -8,6 +8,9 @@
 		"KalmeshPC_SQLserver_connectionString": {
 			"value": ""
 		},
+		"PP_PPMONWOOCOMSQL1_SQLServer_connectionString": {
+			"value": ""
+		},
 		"SFTP_WooComStaging_password": {
 			"value": ""
 		},
