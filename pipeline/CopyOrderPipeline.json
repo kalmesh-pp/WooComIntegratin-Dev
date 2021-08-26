@@ -29,7 +29,8 @@
 						}
 					},
 					"sink": {
-						"type": "SqlServerSink"
+						"type": "SqlServerSink",
+						"preCopyScript": "truncate table [dbo].[Temp_Order]"
 					},
 					"enableStaging": false,
 					"translator": {
@@ -195,6 +196,14 @@
 								"sink": {
 									"name": "Customer_ID",
 									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"path": "['Products']"
+								},
+								"sink": {
+									"name": "JSON_Products"
 								}
 							}
 						],
