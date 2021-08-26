@@ -1,0 +1,112 @@
+{
+	"name": "PP_TempOrder",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "PP_PPMONWOOCOMSQL1_SQLServer",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "Customer_ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "WC_OrderID",
+				"type": "varchar"
+			},
+			{
+				"name": "WC_OrderStatus",
+				"type": "varchar"
+			},
+			{
+				"name": "WC_Order_Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "WC_Note",
+				"type": "varchar"
+			},
+			{
+				"name": "WC_CustomerBillToID",
+				"type": "varchar"
+			},
+			{
+				"name": "WC_CustomerShipToID",
+				"type": "varchar"
+			},
+			{
+				"name": "WC_ShipCode",
+				"type": "varchar"
+			},
+			{
+				"name": "WC_Slsman",
+				"type": "varchar"
+			},
+			{
+				"name": "WC_OrderCode",
+				"type": "varchar"
+			},
+			{
+				"name": "WC_Sold_to_Email",
+				"type": "varchar"
+			},
+			{
+				"name": "WC_PaymentMethod",
+				"type": "varchar"
+			},
+			{
+				"name": "WC_OrderSubTotal",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 0
+			},
+			{
+				"name": "WC_Shipping_Method_Title",
+				"type": "varchar"
+			},
+			{
+				"name": "WC_OrderShipping",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 0
+			},
+			{
+				"name": "WC_OrderRefund",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 0
+			},
+			{
+				"name": "WC_OrderTotal",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 0
+			},
+			{
+				"name": "WC_OrderTax",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 0
+			},
+			{
+				"name": "WC_Freight",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 0
+			},
+			{
+				"name": "JSON_Products",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Temp_Order"
+		}
+	}
+}
