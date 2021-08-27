@@ -10,7 +10,10 @@
 		"typeProperties": {
 			"location": {
 				"type": "SftpLocation",
-				"fileName": "@Concat('Syteline_OrderShippingInfo_', formatDateTime(utcnow(),'yyyyMMdd_HHMM'),'.json')",
+				"fileName": {
+					"value": "@Concat('Syteline_OrderShippingInfo_', formatDateTime(utcnow(),'yyyyMMdd_HHMM'),'.json')",
+					"type": "Expression"
+				},
 				"folderPath": "/processed"
 			}
 		},
