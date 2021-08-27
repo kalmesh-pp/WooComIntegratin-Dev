@@ -25,13 +25,13 @@
 						"type": "JsonSink",
 						"storeSettings": {
 							"type": "SftpWriteSettings",
-							"copyBehavior": "FlattenHierarchy",
+							"copyBehavior": "PreserveHierarchy",
 							"operationTimeout": "01:00:00",
 							"useTempFileRename": true
 						},
 						"formatSettings": {
 							"type": "JsonWriteSettings",
-							"filePattern": "arrayOfObjects"
+							"filePattern": "setOfObjects"
 						}
 					},
 					"enableStaging": false,
