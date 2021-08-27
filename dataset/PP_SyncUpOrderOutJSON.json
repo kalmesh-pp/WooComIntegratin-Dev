@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "SftpLocation",
-				"fileName": "@Concat('SynceUp_', '.json')",
+				"fileName": "@Concat('SyncUp_', formatDateTime(utcnow(),'yyyyMMdd_HHMM'),'.json')",
 				"folderPath": "/Processed_JSON"
 			}
 		},
