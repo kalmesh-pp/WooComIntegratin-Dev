@@ -10,8 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "SftpLocation",
-				"fileName": "@Concat('SyncUp_', formatDateTime(utcnow(),'yyyyMMdd_HHMM'),'.json')",
-				"folderPath": "/Processed_JSON"
+				"fileName": "@Concat('Syteline_OrderShippingInfo_', formatDateTime(utcnow(),'yyyyMMdd_HHMM'),'.json')",
+				"folderPath": "/processed"
 			}
 		},
 		"schema": {}
