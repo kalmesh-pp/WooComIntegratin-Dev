@@ -1,0 +1,19 @@
+{
+	"name": "PP_SyncUpOrderOutJSON",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SFTP_WooComStaging",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "SftpLocation",
+				"fileName": "SynceUp.json",
+				"folderPath": "/Processed_JSON"
+			}
+		},
+		"schema": {}
+	}
+}

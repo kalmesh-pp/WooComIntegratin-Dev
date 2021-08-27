@@ -15,8 +15,105 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"enableStaging": false
-				}
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "select [SytelineOrderNumber]\n      ,[SytelineTrackingNumber]\n      ,[SytelineShipCode]\n      ,[SytelineCarrierName]\n      ,[SytelineOrderStatus]\n      ,[SytelineActualShipDate]\n      ,[SyncupDate]\n      ,[SyncupRequired] from [dbo].[Order] where SyncupRequired=1",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "JsonSink",
+						"storeSettings": {
+							"type": "SftpWriteSettings",
+							"operationTimeout": "01:00:00",
+							"useTempFileRename": true
+						},
+						"formatSettings": {
+							"type": "JsonWriteSettings"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "SytelineOrderNumber",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['SytelineOrderNumber']"
+								}
+							},
+							{
+								"source": {
+									"name": "SytelineTrackingNumber",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['SytelineTrackingNumber']"
+								}
+							},
+							{
+								"source": {
+									"name": "SytelineShipCode",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['SytelineShipCode']"
+								}
+							},
+							{
+								"source": {
+									"name": "SytelineCarrierName",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['SytelineCarrierName']"
+								}
+							},
+							{
+								"source": {
+									"name": "SytelineOrderStatus",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['SytelineOrderStatus']"
+								}
+							},
+							{
+								"source": {
+									"name": "SytelineActualShipDate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"path": "$['SytelineActualShipDate']"
+								}
+							},
+							{
+								"source": {
+									"name": "SyncupDate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"path": "$['SyncupDate']"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "PP_SyncUpOrders",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "PP_SyncUpOrderOutJSON",
+						"type": "DatasetReference"
+					}
+				]
 			}
 		],
 		"annotations": []
