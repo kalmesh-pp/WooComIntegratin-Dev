@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderQuery": "select [SytelineOrderNumber]\n      ,[SytelineTrackingNumber]\n      ,[SytelineShipCode]\n      ,[SytelineCarrierName]\n      ,[SytelineOrderStatus]\n      ,[SytelineActualShipDate]\n      ,[SyncupDate]\n      ,[SyncupRequired] from [dbo].[Order] where SyncupRequired=1",
+						"sqlReaderQuery": "select  [WC_OrderID] as WooCommerceOrderNumber,\n\t\t[SytelineOrderStatus],\n\t\t[SytelineTrackingNumber] as TrackingNumber,\n\t\t[SytelineShipCode] AS ShipCode,\n\t\t[SytelineCarrierName] as CarrierName,\n\t\t[SytelineActualShipDate] as ShipDate\n\t\tfrom [dbo].[Order] where SyncupRequired=1",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -25,6 +25,7 @@
 						"type": "JsonSink",
 						"storeSettings": {
 							"type": "SftpWriteSettings",
+							"copyBehavior": "FlattenHierarchy",
 							"operationTimeout": "01:00:00",
 							"useTempFileRename": true
 						},
@@ -38,38 +39,11 @@
 						"mappings": [
 							{
 								"source": {
-									"name": "SytelineOrderNumber",
+									"name": "WooCommerceOrderNumber",
 									"type": "String"
 								},
 								"sink": {
-									"path": "$['SytelineOrderNumber']"
-								}
-							},
-							{
-								"source": {
-									"name": "SytelineTrackingNumber",
-									"type": "String"
-								},
-								"sink": {
-									"path": "$['SytelineTrackingNumber']"
-								}
-							},
-							{
-								"source": {
-									"name": "SytelineShipCode",
-									"type": "String"
-								},
-								"sink": {
-									"path": "$['SytelineShipCode']"
-								}
-							},
-							{
-								"source": {
-									"name": "SytelineCarrierName",
-									"type": "String"
-								},
-								"sink": {
-									"path": "$['SytelineCarrierName']"
+									"path": "$['WooCommerceOrderNumber']"
 								}
 							},
 							{
@@ -83,20 +57,38 @@
 							},
 							{
 								"source": {
-									"name": "SytelineActualShipDate",
-									"type": "DateTime"
+									"name": "TrackingNumber",
+									"type": "String"
 								},
 								"sink": {
-									"path": "$['SytelineActualShipDate']"
+									"path": "$['TrackingNumber']"
 								}
 							},
 							{
 								"source": {
-									"name": "SyncupDate",
+									"name": "ShipCode",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['ShipCode']"
+								}
+							},
+							{
+								"source": {
+									"name": "CarrierName",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['CarrierName']"
+								}
+							},
+							{
+								"source": {
+									"name": "ShipDate",
 									"type": "DateTime"
 								},
 								"sink": {
-									"path": "$['SyncupDate']"
+									"path": "$['ShipDate']"
 								}
 							}
 						]
