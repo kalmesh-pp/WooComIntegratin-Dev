@@ -11,7 +11,7 @@
 			"location": {
 				"type": "SftpLocation",
 				"fileName": {
-					"value": "@Concat('Syteline_OrderShippingInfo_', formatDateTime(utcnow(),'yyyyMMdd_HHMM'),'.json')",
+					"value": "@Concat('Syteline_OrderShippingInfo_', formatDateTime(utcnow(),'yyyyMMdd_HHmm'),'.json')",
 					"type": "Expression"
 				},
 				"folderPath": "/processed"
