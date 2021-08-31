@@ -216,7 +216,7 @@
 				]
 			},
 			{
-				"name": "UpdateCustomerAndShipToTable",
+				"name": "Update Customer And ShipToTable",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
@@ -243,11 +243,11 @@
 				}
 			},
 			{
-				"name": "Stored procedure1",
+				"name": "Update Billing Customers",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
-						"activity": "UpdateCustomerAndShipToTable",
+						"activity": "Update Customer And ShipToTable",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -270,11 +270,11 @@
 				}
 			},
 			{
-				"name": "Stored procedure2",
+				"name": "Update Customer And ShipTo",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
-						"activity": "Stored procedure1",
+						"activity": "Update Billing Customers",
 						"dependencyConditions": [
 							"Succeeded"
 						]
