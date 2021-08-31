@@ -14,29 +14,11 @@
 		"SFTP_WooComStaging_password": {
 			"value": ""
 		},
-		"WabashValley WooCommerce FTP server_password": {
-			"value": ""
-		},
-		"WooComOutputFTP_password": {
-			"value": ""
-		},
 		"SFTP_WooComStaging_properties_typeProperties_host": {
 			"value": "wabashstaging.sftp.wpengine.com"
 		},
 		"SFTP_WooComStaging_properties_typeProperties_userName": {
 			"value": "wabashstaging-syteline"
-		},
-		"WabashValley WooCommerce FTP server_properties_typeProperties_host": {
-			"value": "108.178.23.138"
-		},
-		"WabashValley WooCommerce FTP server_properties_typeProperties_userName": {
-			"value": "syteline@wabashvalley.com"
-		},
-		"WooComOutputFTP_properties_typeProperties_host": {
-			"value": "108.178.23.138"
-		},
-		"WooComOutputFTP_properties_typeProperties_userName": {
-			"value": "syteline@wabashvalley.com"
 		}
 	}
 }

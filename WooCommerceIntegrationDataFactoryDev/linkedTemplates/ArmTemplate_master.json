@@ -19,14 +19,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'SFTP_WooComStaging'"
 		},
-		"WabashValley WooCommerce FTP server_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'WabashValley WooCommerce FTP server'"
-		},
-		"WooComOutputFTP_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'WooComOutputFTP'"
-		},
 		"SFTP_WooComStaging_properties_typeProperties_host": {
 			"type": "string",
 			"defaultValue": "wabashstaging.sftp.wpengine.com"
@@ -34,22 +26,6 @@
 		"SFTP_WooComStaging_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "wabashstaging-syteline"
-		},
-		"WabashValley WooCommerce FTP server_properties_typeProperties_host": {
-			"type": "string",
-			"defaultValue": "108.178.23.138"
-		},
-		"WabashValley WooCommerce FTP server_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "syteline@wabashvalley.com"
-		},
-		"WooComOutputFTP_properties_typeProperties_host": {
-			"type": "string",
-			"defaultValue": "108.178.23.138"
-		},
-		"WooComOutputFTP_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "syteline@wabashvalley.com"
 		},
 		"containerUri": {
 			"type": "string",
@@ -81,12 +57,6 @@
 					"SFTP_WooComStaging_password": {
 						"value": "[parameters('SFTP_WooComStaging_password')]"
 					},
-					"WabashValley WooCommerce FTP server_password": {
-						"value": "[parameters('WabashValley WooCommerce FTP server_password')]"
-					},
-					"WooComOutputFTP_password": {
-						"value": "[parameters('WooComOutputFTP_password')]"
-					},
 					"KalmeshPC_SQLserver_connectionString": {
 						"value": "[parameters('KalmeshPC_SQLserver_connectionString')]"
 					},
@@ -98,18 +68,6 @@
 					},
 					"SFTP_WooComStaging_properties_typeProperties_userName": {
 						"value": "[parameters('SFTP_WooComStaging_properties_typeProperties_userName')]"
-					},
-					"WabashValley WooCommerce FTP server_properties_typeProperties_host": {
-						"value": "[parameters('WabashValley WooCommerce FTP server_properties_typeProperties_host')]"
-					},
-					"WabashValley WooCommerce FTP server_properties_typeProperties_userName": {
-						"value": "[parameters('WabashValley WooCommerce FTP server_properties_typeProperties_userName')]"
-					},
-					"WooComOutputFTP_properties_typeProperties_host": {
-						"value": "[parameters('WooComOutputFTP_properties_typeProperties_host')]"
-					},
-					"WooComOutputFTP_properties_typeProperties_userName": {
-						"value": "[parameters('WooComOutputFTP_properties_typeProperties_userName')]"
 					}
 				}
 			},
