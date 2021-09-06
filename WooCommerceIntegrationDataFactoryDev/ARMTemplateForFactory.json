@@ -442,8 +442,7 @@
 											"path": "[['Ship_Code']"
 										},
 										"sink": {
-											"name": "WC_ShipCode",
-											"type": "String"
+											"name": "WC_ShipCode"
 										}
 									},
 									{

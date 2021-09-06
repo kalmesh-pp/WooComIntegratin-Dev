@@ -1,0 +1,276 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "WooCommerceIntegrationDataFactoryDev"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/CopyOrderPipeline')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy Order Data",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "XmlSource",
+								"storeSettings": {
+									"type": "SftpReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "XmlReadSettings",
+									"validationMode": "none",
+									"namespaces": true
+								}
+							},
+							"sink": {
+								"type": "SqlServerSink",
+								"preCopyScript": "truncate table [dbo].[Temp_Order]"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"path": "[['Order_Number']"
+										},
+										"sink": {
+											"name": "WC_OrderID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Order_Status']"
+										},
+										"sink": {
+											"name": "WC_OrderStatus",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Order_Date']"
+										},
+										"sink": {
+											"name": "WC_Order_Date",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Customer_Note']"
+										},
+										"sink": {
+											"name": "WC_Note",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Bill_To_ID']"
+										},
+										"sink": {
+											"name": "WC_CustomerBillToID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Ship_To_ID']"
+										},
+										"sink": {
+											"name": "WC_CustomerShipToID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Ship_Code']"
+										},
+										"sink": {
+											"name": "WC_ShipCode"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Salesman']"
+										},
+										"sink": {
+											"name": "WC_Slsman",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Uf_Order_Code']"
+										},
+										"sink": {
+											"name": "WC_OrderCode",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Billing_Email']"
+										},
+										"sink": {
+											"name": "WC_Sold_to_Email",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Payment_Method_Title']"
+										},
+										"sink": {
+											"name": "WC_PaymentMethod",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Order_Subtotal']"
+										},
+										"sink": {
+											"name": "WC_OrderSubTotal",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Shipping_Method_Title']"
+										},
+										"sink": {
+											"name": "WC_Shipping_Method_Title",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Order_Shipping']"
+										},
+										"sink": {
+											"name": "WC_OrderShipping",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Order_Refund']"
+										},
+										"sink": {
+											"name": "WC_OrderRefund",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Order_Total']"
+										},
+										"sink": {
+											"name": "WC_OrderTotal",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Order_Total_Tax']"
+										},
+										"sink": {
+											"name": "WC_OrderTax",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Customer_ID']"
+										},
+										"sink": {
+											"name": "Customer_ID",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Products']"
+										},
+										"sink": {
+											"name": "JSON_Products",
+											"type": "String"
+										}
+									}
+								],
+								"collectionReference": "$['Orders']['Order']",
+								"mapComplexValuesToString": true
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "OrderXMLInputSFTP",
+								"type": "DatasetReference"
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SqlServerTable_Temp_Order",
+								"type": "DatasetReference"
+							}
+						]
+					},
+					{
+						"name": "UpdateOrder",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Copy Order Data",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[UpdateOrder]"
+						},
+						"linkedServiceName": {
+							"referenceName": "KalmeshPC_SQLserver",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": []
+		}
+	]
+}
