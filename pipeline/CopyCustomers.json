@@ -41,6 +41,7 @@
 						"preCopyScript": "truncate table dbo.Temp_BillingCustomer"
 					},
 					"enableStaging": false,
+					"enableSkipIncompatibleRow": true,
 					"translator": {
 						"type": "TabularTranslator",
 						"mappings": [
