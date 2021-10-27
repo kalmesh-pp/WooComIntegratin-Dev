@@ -11,7 +11,7 @@
 			"location": {
 				"type": "SftpLocation",
 				"fileName": "@concat(customer-export, '_', formatDateTime(utcnow(),'yyyy-MM-dd_hhmm'), '.xml')",
-				"folderPath": "/Archive/Test"
+				"folderPath": "/Archive"
 			}
 		}
 	}
