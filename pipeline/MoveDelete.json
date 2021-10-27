@@ -19,8 +19,7 @@
 						"type": "BinarySource",
 						"storeSettings": {
 							"type": "SftpReadSettings",
-							"recursive": true,
-							"wildcardFileName": "*.xml",
+							"recursive": false,
 							"deleteFilesAfterCompletion": true
 						},
 						"formatSettings": {
@@ -39,7 +38,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "AllFiles",
+						"referenceName": "CustomerInputFile",
 						"type": "DatasetReference"
 					}
 				],
