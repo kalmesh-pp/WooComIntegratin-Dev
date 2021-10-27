@@ -1,0 +1,21 @@
+{
+	"name": "OrderFileArchive",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SFTP_WooComStaging",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "SftpLocation",
+				"fileName": {
+					"value": "@concat('order-export', '_', formatDateTime(utcnow(),'yyyy-MM-dd_HHmm'), '.xml')",
+					"type": "Expression"
+				},
+				"folderPath": "/Archive"
+			}
+		}
+	}
+}
