@@ -296,6 +296,60 @@
 					"referenceName": "PP_PPMONWOOCOMSQL1_SQLServer",
 					"type": "LinkedServiceReference"
 				}
+			},
+			{
+				"name": "Archive and Delete Customer File",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "UpdateShipToCustomers",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "BinarySource",
+						"storeSettings": {
+							"type": "SftpReadSettings",
+							"recursive": false,
+							"deleteFilesAfterCompletion": true
+						},
+						"formatSettings": {
+							"type": "BinaryReadSettings"
+						}
+					},
+					"sink": {
+						"type": "BinarySink",
+						"storeSettings": {
+							"type": "SftpWriteSettings",
+							"operationTimeout": "01:00:00",
+							"useTempFileRename": true
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "CustomerInputFile",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "CustomerFileArchive",
+						"type": "DatasetReference"
+					}
+				]
 			}
 		],
 		"annotations": []
