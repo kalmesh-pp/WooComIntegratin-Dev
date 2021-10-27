@@ -10,7 +10,10 @@
 		"typeProperties": {
 			"location": {
 				"type": "SftpLocation",
-				"fileName": "@concat(customer-export, '_', formatDateTime(utcnow(),'yyyy-MM-dd_hhmm'), '.xml')",
+				"fileName": {
+					"value": "@concat('customer-export', '_', formatDateTime(utcnow(),'yyyy-MM-dd_hhmm'), '.xml')",
+					"type": "Expression"
+				},
 				"folderPath": "/Archive"
 			}
 		}
