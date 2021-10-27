@@ -21,10 +21,18 @@
 							"type": "SftpReadSettings",
 							"recursive": true,
 							"wildcardFileName": "*.xml",
-							"deleteFilesAfterCompletion": false
+							"deleteFilesAfterCompletion": true
 						},
 						"formatSettings": {
 							"type": "BinaryReadSettings"
+						}
+					},
+					"sink": {
+						"type": "BinarySink",
+						"storeSettings": {
+							"type": "SftpWriteSettings",
+							"operationTimeout": "01:00:00",
+							"useTempFileRename": true
 						}
 					},
 					"enableStaging": false
@@ -32,6 +40,12 @@
 				"inputs": [
 					{
 						"referenceName": "AllFiles",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "CustomerFileArchive",
 						"type": "DatasetReference"
 					}
 				]

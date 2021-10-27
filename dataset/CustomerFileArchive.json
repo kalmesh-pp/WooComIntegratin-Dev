@@ -1,0 +1,17 @@
+{
+	"name": "CustomerFileArchive",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SFTP_WooComStaging",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "SftpLocation",
+				"folderPath": "/Archive/Test"
+			}
+		}
+	}
+}
