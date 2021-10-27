@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
+				"name": "Archive and Delete Customer File",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -38,7 +38,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "CustomerInputFile",
+						"referenceName": "SourceOrderXMLFile",
 						"type": "DatasetReference"
 					}
 				],
