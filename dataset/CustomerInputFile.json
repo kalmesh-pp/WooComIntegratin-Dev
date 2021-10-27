@@ -1,5 +1,5 @@
 {
-	"name": "AllFiles",
+	"name": "CustomerInputFile",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "SFTP_WooComStaging",
@@ -10,6 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "SftpLocation",
+				"fileName": "customer-export20211027_2306.xml",
 				"folderPath": "/Archive"
 			}
 		}
