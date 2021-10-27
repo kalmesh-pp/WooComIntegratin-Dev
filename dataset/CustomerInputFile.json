@@ -10,8 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "SftpLocation",
-				"fileName": "customer-export20211027_2306.xml",
-				"folderPath": "/Archive"
+				"fileName": "customer-export.xml"
 			}
 		}
 	}
