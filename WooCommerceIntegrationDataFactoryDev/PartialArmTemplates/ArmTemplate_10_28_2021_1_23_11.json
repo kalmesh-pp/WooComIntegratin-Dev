@@ -13,121 +13,6 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/TempOrder')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "KalmeshPC_SQLserver",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "SqlServerTable",
-				"schema": [
-					{
-						"name": "Customer_ID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "WC_OrderID",
-						"type": "varchar"
-					},
-					{
-						"name": "WC_OrderStatus",
-						"type": "varchar"
-					},
-					{
-						"name": "WC_Order_Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "WC_Note",
-						"type": "varchar"
-					},
-					{
-						"name": "WC_CustomerBillToID",
-						"type": "varchar"
-					},
-					{
-						"name": "WC_CustomerShipToID",
-						"type": "varchar"
-					},
-					{
-						"name": "WC_ShipCode",
-						"type": "varchar"
-					},
-					{
-						"name": "WC_Slsman",
-						"type": "varchar"
-					},
-					{
-						"name": "WC_OrderCode",
-						"type": "varchar"
-					},
-					{
-						"name": "WC_Sold_to_Email",
-						"type": "varchar"
-					},
-					{
-						"name": "WC_PaymentMethod",
-						"type": "varchar"
-					},
-					{
-						"name": "WC_OrderSubTotal",
-						"type": "decimal",
-						"precision": 18,
-						"scale": 0
-					},
-					{
-						"name": "WC_Shipping_Method_Title",
-						"type": "varchar"
-					},
-					{
-						"name": "WC_OrderShipping",
-						"type": "decimal",
-						"precision": 18,
-						"scale": 0
-					},
-					{
-						"name": "WC_OrderRefund",
-						"type": "decimal",
-						"precision": 18,
-						"scale": 0
-					},
-					{
-						"name": "WC_OrderTotal",
-						"type": "decimal",
-						"precision": 18,
-						"scale": 0
-					},
-					{
-						"name": "WC_OrderTax",
-						"type": "decimal",
-						"precision": 18,
-						"scale": 0
-					},
-					{
-						"name": "WC_Freight",
-						"type": "decimal",
-						"precision": 18,
-						"scale": 0
-					},
-					{
-						"name": "JSON_Products",
-						"type": "varchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "Temp_Order"
-				}
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/CopyCustomers')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -337,15 +222,13 @@
 						"inputs": [
 							{
 								"referenceName": "SourceDataset_SFTP",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						],
 						"outputs": [
 							{
 								"referenceName": "SqlServerTableTemp_BillingCustomer",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						]
 					},
@@ -474,26 +357,23 @@
 						"inputs": [
 							{
 								"referenceName": "CustomerInputFile",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						],
 						"outputs": [
 							{
 								"referenceName": "CustomerFileArchive",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						]
 					}
 				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/CustomerInputFile')]",
+				"[concat(variables('factoryId'), '/datasets/CustomerFileArchive')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/CopyOrderPipeline')]",
@@ -713,15 +593,13 @@
 						"inputs": [
 							{
 								"referenceName": "OrderXMLInputSFTP",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						],
 						"outputs": [
 							{
 								"referenceName": "SqlServerTable_Temp_Order",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						]
 					},
@@ -796,26 +674,23 @@
 						"inputs": [
 							{
 								"referenceName": "SourceOrderXMLFile",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						],
 						"outputs": [
 							{
 								"referenceName": "OrderFileArchive",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						]
 					}
 				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SourceOrderXMLFile')]",
+				"[concat(variables('factoryId'), '/datasets/OrderFileArchive')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/PP_CopyCustomers')]",
@@ -1027,15 +902,13 @@
 						"inputs": [
 							{
 								"referenceName": "SourceDataset_SFTP",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						],
 						"outputs": [
 							{
 								"referenceName": "PP_SqlServerTableTemp_BillingCustomer",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						]
 					},
@@ -1164,26 +1037,23 @@
 						"inputs": [
 							{
 								"referenceName": "CustomerInputFile",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						],
 						"outputs": [
 							{
 								"referenceName": "CustomerFileArchive",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						]
 					}
 				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/CustomerInputFile')]",
+				"[concat(variables('factoryId'), '/datasets/CustomerFileArchive')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/PP_CopyOrderPipeline')]",
@@ -1404,15 +1274,13 @@
 						"inputs": [
 							{
 								"referenceName": "OrderXMLInputSFTP",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						],
 						"outputs": [
 							{
 								"referenceName": "PP_TempOrder",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						]
 					},
@@ -1487,173 +1355,109 @@
 						"inputs": [
 							{
 								"referenceName": "SourceOrderXMLFile",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						],
 						"outputs": [
 							{
 								"referenceName": "OrderFileArchive",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						]
 					}
 				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
 				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SourceOrderXMLFile')]",
+				"[concat(variables('factoryId'), '/datasets/OrderFileArchive')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CustomerFileArchive')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SFTP_WooComStaging",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "SftpLocation",
+						"fileName": {
+							"value": "@concat('customer-export', '_', formatDateTime(utcnow(),'yyyy-MM-dd_HHmm'), '.xml')",
+							"type": "Expression"
+						},
+						"folderPath": "/Archive"
+					}
+				}
 			},
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/PP_SyncUpOrderPipeline')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
+			"name": "[concat(parameters('factoryName'), '/CustomerInputFile')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"activities": [
-					{
-						"name": "Copy Updated Orders to SFTP",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "SqlServerSource",
-								"sqlReaderQuery": "select  [WC_OrderID] as WooCommerceOrderNumber,\n\t\t[SytelineOrderStatus],\n\t\t[SytelineTrackingNumber] as TrackingNumber,\n\t\t[SytelineShipCode] AS ShipCode,\n\t\t[SytelineCarrierName] as CarrierName,\n\t\t[SytelineActualShipDate] as ShipDate\n\t\tfrom [dbo].[Order] where SyncupRequired=1",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"sink": {
-								"type": "JsonSink",
-								"storeSettings": {
-									"type": "SftpWriteSettings",
-									"operationTimeout": "01:00:00",
-									"useTempFileRename": true
-								},
-								"formatSettings": {
-									"type": "JsonWriteSettings",
-									"filePattern": "arrayOfObjects"
-								}
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "WooCommerceOrderNumber",
-											"type": "String"
-										},
-										"sink": {
-											"path": "$['WooCommerceOrderNumber']"
-										}
-									},
-									{
-										"source": {
-											"name": "SytelineOrderStatus",
-											"type": "String"
-										},
-										"sink": {
-											"path": "$['SytelineOrderStatus']"
-										}
-									},
-									{
-										"source": {
-											"name": "TrackingNumber",
-											"type": "String"
-										},
-										"sink": {
-											"path": "$['TrackingNumber']"
-										}
-									},
-									{
-										"source": {
-											"name": "ShipCode",
-											"type": "String"
-										},
-										"sink": {
-											"path": "$['ShipCode']"
-										}
-									},
-									{
-										"source": {
-											"name": "CarrierName",
-											"type": "String"
-										},
-										"sink": {
-											"path": "$['CarrierName']"
-										}
-									},
-									{
-										"source": {
-											"name": "ShipDate",
-											"type": "DateTime"
-										},
-										"sink": {
-											"path": "$['ShipDate']"
-										}
-									}
-								]
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "PP_SyncUpOrders",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "PP_SyncUpOrderOutJSON",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					},
-					{
-						"name": "UpdateOrderAfterProcessing",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "Copy Updated Orders to SFTP",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[AfterSyncUpUpdateOrderStatus]"
-						},
-						"linkedServiceName": {
-							"referenceName": "PP_PPMONWOOCOMSQL1_SQLServer",
-							"type": "LinkedServiceReference"
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
+				"linkedServiceName": {
+					"referenceName": "SFTP_WooComStaging",
+					"type": "LinkedServiceReference"
 				},
-				"annotations": []
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "SftpLocation",
+						"fileName": "customer-export.xml"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SourceOrderXMLFile')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SFTP_WooComStaging",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "SftpLocation",
+						"fileName": "order-export.xml"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/OrderFileArchive')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SFTP_WooComStaging",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "SftpLocation",
+						"fileName": {
+							"value": "@concat('order-export', '_', formatDateTime(utcnow(),'yyyy-MM-dd_HHmm'), '.xml')",
+							"type": "Expression"
+						},
+						"folderPath": "/Archive"
+					}
+				}
 			},
 			"dependsOn": []
 		}
