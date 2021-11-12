@@ -42,10 +42,10 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@variables('FileExists')",
+						"value": "@activity('Get Metadata Copy Customers').output.exists",
 						"type": "Expression"
 					},
-					"ifFalseActivities": [
+					"ifTrueActivities": [
 						{
 							"name": "PP_CopyCustomers",
 							"type": "ExecutePipeline",
