@@ -1,0 +1,105 @@
+{
+	"name": "pipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "Get Metadata Copy Customers",
+				"type": "GetMetadata",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "SourceDataset_SFTP",
+						"type": "DatasetReference"
+					},
+					"fieldList": [
+						"exists"
+					],
+					"storeSettings": {
+						"type": "SftpReadSettings",
+						"enablePartitionDiscovery": false
+					}
+				}
+			},
+			{
+				"name": "Set isFileExists",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Get Metadata Copy Customers",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "FileExists",
+					"value": {
+						"value": "@activity('Get Metadata Copy Customers').output.exists",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "If Condition1",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "Set isFileExists",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@variables('FileExists')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "If Condition1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": []
+			},
+			{
+				"name": "Set variable2",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "If Condition1",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": []
+			}
+		],
+		"variables": {
+			"FileExists": {
+				"type": "Boolean",
+				"defaultValue": false
+			}
+		},
+		"annotations": []
+	}
+}
