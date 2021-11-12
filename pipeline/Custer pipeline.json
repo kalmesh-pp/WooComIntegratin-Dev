@@ -1,5 +1,5 @@
 {
-	"name": "pipeline",
+	"name": "Custer pipeline",
 	"properties": {
 		"activities": [
 			{
@@ -29,8 +29,8 @@
 				}
 			},
 			{
-				"name": "Set isFileExists",
-				"type": "SetVariable",
+				"name": "If Condition1",
+				"type": "IfCondition",
 				"dependsOn": [
 					{
 						"activity": "Get Metadata Copy Customers",
@@ -41,57 +41,26 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "FileExists",
-					"value": {
-						"value": "@activity('Get Metadata Copy Customers').output.exists",
-						"type": "Expression"
-					}
-				}
-			},
-			{
-				"name": "If Condition1",
-				"type": "IfCondition",
-				"dependsOn": [
-					{
-						"activity": "Set isFileExists",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
 					"expression": {
 						"value": "@variables('FileExists')",
 						"type": "Expression"
-					}
+					},
+					"ifFalseActivities": [
+						{
+							"name": "PP_CopyCustomers",
+							"type": "ExecutePipeline",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "PP_CopyCustomers",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true
+							}
+						}
+					]
 				}
-			},
-			{
-				"name": "Set variable1",
-				"type": "SetVariable",
-				"dependsOn": [
-					{
-						"activity": "If Condition1",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": []
-			},
-			{
-				"name": "Set variable2",
-				"type": "SetVariable",
-				"dependsOn": [
-					{
-						"activity": "If Condition1",
-						"dependencyConditions": [
-							"Failed"
-						]
-					}
-				],
-				"userProperties": []
 			}
 		],
 		"variables": {
