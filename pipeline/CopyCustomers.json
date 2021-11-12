@@ -352,6 +352,12 @@
 				]
 			}
 		],
+		"variables": {
+			"FileName": {
+				"type": "Boolean",
+				"defaultValue": false
+			}
+		},
 		"annotations": []
 	}
 }
