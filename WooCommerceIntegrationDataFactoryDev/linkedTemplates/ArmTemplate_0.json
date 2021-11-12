@@ -123,6 +123,32 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/OrderFileArchive')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SFTP_WooComStaging",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "SftpLocation",
+						"fileName": {
+							"value": "@concat('order-export', '_', formatDateTime(utcnow(),'yyyy-MM-dd_HHmm'), '.xml')",
+							"type": "Expression"
+						},
+						"folderPath": "/Archive"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/SFTP_WooComStaging')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/OrderXMLInputSFTP')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -194,6 +220,28 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/SourceOrderXMLFile')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SFTP_WooComStaging",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "SftpLocation",
+						"fileName": "order-export.xml"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/SFTP_WooComStaging')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/KalmeshPC_SQLserver')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -229,54 +277,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/integrationRuntimes/PlayPowerWooComSelfHosted-IntegrationRuntime')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SourceOrderXMLFile')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "SFTP_WooComStaging",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Binary",
-				"typeProperties": {
-					"location": {
-						"type": "SftpLocation",
-						"fileName": "order-export.xml"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/SFTP_WooComStaging')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/OrderFileArchive')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "SFTP_WooComStaging",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Binary",
-				"typeProperties": {
-					"location": {
-						"type": "SftpLocation",
-						"fileName": {
-							"value": "@concat('order-export', '_', formatDateTime(utcnow(),'yyyy-MM-dd_HHmm'), '.xml')",
-							"type": "Expression"
-						},
-						"folderPath": "/Archive"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/SFTP_WooComStaging')]"
 			]
 		},
 		{
