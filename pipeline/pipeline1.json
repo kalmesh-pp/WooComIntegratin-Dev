@@ -41,52 +41,7 @@
 								},
 								"sink": {
 									"name": "WC_CustomerId",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"path": "['Terms_Code']"
-								},
-								"sink": {
-									"name": "WC_TermsCode",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"path": "['Ship_Code']"
-								},
-								"sink": {
-									"name": "WC_ShipCode",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"path": "['Salesman']"
-								},
-								"sink": {
-									"name": "WC_Salesman",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"path": "['Tax_Code']"
-								},
-								"sink": {
-									"name": "WC_TaxCode",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"path": "['Price_Code']"
-								},
-								"sink": {
-									"name": "WC_PriceCode",
-									"type": "String"
+									"type": "int"
 								}
 							}
 						],
