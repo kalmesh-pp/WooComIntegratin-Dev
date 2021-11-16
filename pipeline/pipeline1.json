@@ -40,8 +40,26 @@
 									"path": "['Customer_ID']"
 								},
 								"sink": {
-									"name": "WC_CustomerId",
-									"type": "int"
+									"name": "Customer_ID",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['Terms_Code']"
+								},
+								"sink": {
+									"name": "Terms_Code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['Ship_Code']"
+								},
+								"sink": {
+									"name": "Ship_Code",
+									"type": "String"
 								}
 							}
 						],
@@ -57,7 +75,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "SqlServerTableTemp_BillingCustomer",
+						"referenceName": "SqlServerTableTemp_C",
 						"type": "DatasetReference"
 					}
 				]
