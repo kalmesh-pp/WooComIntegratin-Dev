@@ -13,7 +13,16 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": [],
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "/c.xml"
+					},
+					{
+						"name": "Destination",
+						"value": "dbo.temp_c"
+					}
+				],
 				"typeProperties": {
 					"source": {
 						"type": "XmlSource",
