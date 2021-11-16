@@ -64,66 +64,6 @@
 								"source": {
 									"path": "['Price_Code']"
 								}
-							},
-							{
-								"source": {
-									"path": "['Billing']['Bill_To_ID']"
-								}
-							},
-							{
-								"source": {
-									"path": "['Billing']['Billing_First_Name']"
-								}
-							},
-							{
-								"source": {
-									"path": "['Billing']['Billing_Last_Name']"
-								}
-							},
-							{
-								"source": {
-									"path": "['Billing']['Billing_Company']"
-								}
-							},
-							{
-								"source": {
-									"path": "['Billing']['Billing_Address_1']"
-								}
-							},
-							{
-								"source": {
-									"path": "['Billing']['Billing_Address_2']"
-								}
-							},
-							{
-								"source": {
-									"path": "['Billing']['Billing_City']"
-								}
-							},
-							{
-								"source": {
-									"path": "['Billing']['Billing_State']"
-								}
-							},
-							{
-								"source": {
-									"path": "['Billing']['Billing_Postcode']"
-								}
-							},
-							{
-								"source": {
-									"path": "['Billing']['Billing_Country']"
-								}
-							},
-							{
-								"source": {
-									"path": "['Billing']['Billing_Email']"
-								}
-							},
-							{
-								"source": {
-									"path": "['Billing']['Billing_Phone']"
-								}
 							}
 						],
 						"collectionReference": "$['Customers']['Customer']",
