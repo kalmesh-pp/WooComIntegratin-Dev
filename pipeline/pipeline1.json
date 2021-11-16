@@ -124,56 +124,6 @@
 								"source": {
 									"path": "['Billing']['Billing_Phone']"
 								}
-							},
-							{
-								"source": {
-									"path": "['Shipping']['Ship_To']['Ship_To_ID']"
-								}
-							},
-							{
-								"source": {
-									"path": "['Shipping']['Ship_To']['Shipping_First_Name']"
-								}
-							},
-							{
-								"source": {
-									"path": "['Shipping']['Ship_To']['Shipping_Last_Name']"
-								}
-							},
-							{
-								"source": {
-									"path": "['Shipping']['Ship_To']['Shipping_Company']"
-								}
-							},
-							{
-								"source": {
-									"path": "['Shipping']['Ship_To']['Shipping_Address_1']"
-								}
-							},
-							{
-								"source": {
-									"path": "['Shipping']['Ship_To']['Shipping_Address_2']"
-								}
-							},
-							{
-								"source": {
-									"path": "['Shipping']['Ship_To']['Shipping_City']"
-								}
-							},
-							{
-								"source": {
-									"path": "['Shipping']['Ship_To']['Shipping_State']"
-								}
-							},
-							{
-								"source": {
-									"path": "['Shipping']['Ship_To']['Shipping_Postcode']"
-								}
-							},
-							{
-								"source": {
-									"path": "['Shipping']['Ship_To']['Shipping_Country']"
-								}
 							}
 						],
 						"collectionReference": "$['Customers']['Customer']",
