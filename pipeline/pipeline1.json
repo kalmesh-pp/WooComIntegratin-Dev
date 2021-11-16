@@ -75,7 +75,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "SqlServerTableTemp_C",
+						"referenceName": "SqlServerTableTemp_BillingCustomer",
 						"type": "DatasetReference"
 					}
 				]
