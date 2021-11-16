@@ -63,13 +63,12 @@
 								}
 							}
 						],
-						"collectionReference": "$['Customers']['Customer']",
-						"mapComplexValuesToString": false
+						"collectionReference": "$['Customers']['Customer']"
 					}
 				},
 				"inputs": [
 					{
-						"referenceName": "SourceDataset_SFTP",
+						"referenceName": "Cust_SFTP_copy",
 						"type": "DatasetReference"
 					}
 				],
