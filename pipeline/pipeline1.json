@@ -13,16 +13,7 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": [
-					{
-						"name": "Source",
-						"value": "/c.xml"
-					},
-					{
-						"name": "Destination",
-						"value": "dbo.temp_c"
-					}
-				],
+				"userProperties": [],
 				"typeProperties": {
 					"source": {
 						"type": "XmlSource",
@@ -46,7 +37,7 @@
 						"mappings": [
 							{
 								"source": {
-									"path": "['Customer_ID']"
+									"path": "$['Customers']['Customer']['Customer_ID']"
 								},
 								"sink": {
 									"name": "Customer_ID",
@@ -55,7 +46,7 @@
 							},
 							{
 								"source": {
-									"path": "['Terms_Code']"
+									"path": "$['Customers']['Customer']['Terms_Code']"
 								},
 								"sink": {
 									"name": "Terms_Code",
@@ -64,15 +55,14 @@
 							},
 							{
 								"source": {
-									"path": "['Ship_Code']"
+									"path": "$['Customers']['Customer']['Ship_Code']"
 								},
 								"sink": {
 									"name": "Ship_Code",
 									"type": "String"
 								}
 							}
-						],
-						"collectionReference": "$['Customers']['Customer']"
+						]
 					}
 				},
 				"inputs": [
