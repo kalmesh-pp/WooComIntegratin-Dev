@@ -31,7 +31,40 @@
 					"sink": {
 						"type": "SqlServerSink"
 					},
-					"enableStaging": false
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "$['Customers']['Customer'][0]['Customer_ID']"
+								},
+								"sink": {
+									"name": "Customer_ID",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Customers']['Customer'][0]['Terms_Code']"
+								},
+								"sink": {
+									"name": "Terms_Code",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Customers']['Customer'][0]['Ship_Code']"
+								},
+								"sink": {
+									"name": "Ship_Code",
+									"type": "Byte[]"
+								}
+							}
+						],
+						"mapComplexValuesToString": false
+					}
 				},
 				"inputs": [
 					{
