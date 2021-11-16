@@ -38,28 +38,141 @@
 							{
 								"source": {
 									"path": "['Customer_ID']"
-								},
-								"sink": {
-									"name": "Customer_ID",
-									"type": "String"
 								}
 							},
 							{
 								"source": {
 									"path": "['Terms_Code']"
-								},
-								"sink": {
-									"name": "Terms_Code",
-									"type": "String"
 								}
 							},
 							{
 								"source": {
 									"path": "['Ship_Code']"
-								},
-								"sink": {
-									"name": "Ship_Code",
-									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['Salesman']"
+								}
+							},
+							{
+								"source": {
+									"path": "['Tax_Code']"
+								}
+							},
+							{
+								"source": {
+									"path": "['Price_Code']"
+								}
+							},
+							{
+								"source": {
+									"path": "['Billing']['Bill_To_ID']"
+								}
+							},
+							{
+								"source": {
+									"path": "['Billing']['Billing_First_Name']"
+								}
+							},
+							{
+								"source": {
+									"path": "['Billing']['Billing_Last_Name']"
+								}
+							},
+							{
+								"source": {
+									"path": "['Billing']['Billing_Company']"
+								}
+							},
+							{
+								"source": {
+									"path": "['Billing']['Billing_Address_1']"
+								}
+							},
+							{
+								"source": {
+									"path": "['Billing']['Billing_Address_2']"
+								}
+							},
+							{
+								"source": {
+									"path": "['Billing']['Billing_City']"
+								}
+							},
+							{
+								"source": {
+									"path": "['Billing']['Billing_State']"
+								}
+							},
+							{
+								"source": {
+									"path": "['Billing']['Billing_Postcode']"
+								}
+							},
+							{
+								"source": {
+									"path": "['Billing']['Billing_Country']"
+								}
+							},
+							{
+								"source": {
+									"path": "['Billing']['Billing_Email']"
+								}
+							},
+							{
+								"source": {
+									"path": "['Billing']['Billing_Phone']"
+								}
+							},
+							{
+								"source": {
+									"path": "['Shipping']['Ship_To']['Ship_To_ID']"
+								}
+							},
+							{
+								"source": {
+									"path": "['Shipping']['Ship_To']['Shipping_First_Name']"
+								}
+							},
+							{
+								"source": {
+									"path": "['Shipping']['Ship_To']['Shipping_Last_Name']"
+								}
+							},
+							{
+								"source": {
+									"path": "['Shipping']['Ship_To']['Shipping_Company']"
+								}
+							},
+							{
+								"source": {
+									"path": "['Shipping']['Ship_To']['Shipping_Address_1']"
+								}
+							},
+							{
+								"source": {
+									"path": "['Shipping']['Ship_To']['Shipping_Address_2']"
+								}
+							},
+							{
+								"source": {
+									"path": "['Shipping']['Ship_To']['Shipping_City']"
+								}
+							},
+							{
+								"source": {
+									"path": "['Shipping']['Ship_To']['Shipping_State']"
+								}
+							},
+							{
+								"source": {
+									"path": "['Shipping']['Ship_To']['Shipping_Postcode']"
+								}
+							},
+							{
+								"source": {
+									"path": "['Shipping']['Ship_To']['Shipping_Country']"
 								}
 							}
 						],
