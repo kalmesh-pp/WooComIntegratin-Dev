@@ -128,10 +128,28 @@
 							},
 							{
 								"source": {
+									"path": "['Billing']['Billing_Company']"
+								},
+								"sink": {
+									"name": "WC_BillingCompany",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
 									"path": "['Billing']['Billing_Address_1']"
 								},
 								"sink": {
 									"name": "WC_BillingAddress",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "['Billing']['Billing_City']"
+								},
+								"sink": {
+									"name": "WC_BillingCity",
 									"type": "String"
 								}
 							},
@@ -177,15 +195,6 @@
 								},
 								"sink": {
 									"name": "WC_BillingPhone",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"path": "['Billing']['Billing_City']"
-								},
-								"sink": {
-									"name": "WC_BillingCity",
 									"type": "String"
 								}
 							},
@@ -296,60 +305,6 @@
 					"referenceName": "KalmeshPC_SQLserver",
 					"type": "LinkedServiceReference"
 				}
-			},
-			{
-				"name": "Archive and Delete Customer File",
-				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "Update Customer And ShipTo",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "BinarySource",
-						"storeSettings": {
-							"type": "SftpReadSettings",
-							"recursive": false,
-							"deleteFilesAfterCompletion": true
-						},
-						"formatSettings": {
-							"type": "BinaryReadSettings"
-						}
-					},
-					"sink": {
-						"type": "BinarySink",
-						"storeSettings": {
-							"type": "SftpWriteSettings",
-							"operationTimeout": "01:00:00",
-							"useTempFileRename": true
-						}
-					},
-					"enableStaging": false
-				},
-				"inputs": [
-					{
-						"referenceName": "CustomerInputFile",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "CustomerFileArchive",
-						"type": "DatasetReference"
-					}
-				]
 			}
 		],
 		"variables": {
