@@ -59,7 +59,7 @@
 								},
 								"sink": {
 									"name": "Ship_Code",
-									"type": "Byte[]"
+									"type": "String"
 								}
 							}
 						],
