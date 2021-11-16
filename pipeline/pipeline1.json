@@ -37,7 +37,7 @@
 						"mappings": [
 							{
 								"source": {
-									"path": "$['Customers']['Customer']['Customer_ID']"
+									"path": "$['Customers']['Customer'][0]['Customer_ID']"
 								},
 								"sink": {
 									"name": "Customer_ID",
@@ -46,7 +46,7 @@
 							},
 							{
 								"source": {
-									"path": "$['Customers']['Customer']['Terms_Code']"
+									"path": "$['Customers']['Customer'][0]['Terms_Code']"
 								},
 								"sink": {
 									"name": "Terms_Code",
@@ -55,14 +55,15 @@
 							},
 							{
 								"source": {
-									"path": "$['Customers']['Customer']['Ship_Code']"
+									"path": "$['Customers']['Customer'][0]['Ship_Code']"
 								},
 								"sink": {
 									"name": "Ship_Code",
 									"type": "String"
 								}
 							}
-						]
+						],
+						"mapComplexValuesToString": true
 					}
 				},
 				"inputs": [
