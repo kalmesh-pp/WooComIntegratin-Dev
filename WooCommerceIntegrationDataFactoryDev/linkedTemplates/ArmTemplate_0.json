@@ -280,6 +280,92 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Customer pipeline')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Get Metadata Copy Customers",
+						"type": "GetMetadata",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "SourceDataset_SFTP",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"fieldList": [
+								"exists"
+							],
+							"storeSettings": {
+								"type": "SftpReadSettings",
+								"recursive": true,
+								"enablePartitionDiscovery": false
+							}
+						}
+					},
+					{
+						"name": "If Condition1",
+						"type": "IfCondition",
+						"dependsOn": [
+							{
+								"activity": "Get Metadata Copy Customers",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"expression": {
+								"value": "@activity('Get Metadata Copy Customers').output.exists",
+								"type": "Expression"
+							},
+							"ifTrueActivities": [
+								{
+									"name": "PP_CopyCustomers",
+									"type": "ExecutePipeline",
+									"dependsOn": [],
+									"userProperties": [],
+									"typeProperties": {
+										"pipeline": {
+											"referenceName": "PP_CopyCustomers",
+											"type": "PipelineReference"
+										},
+										"waitOnCompletion": true,
+										"parameters": {}
+									}
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"variables": {
+					"FileExists": {
+						"type": "Boolean",
+						"defaultValue": false
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SourceDataset_SFTP')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/PP_SqlServerTableTemp_BillingCustomer')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1010,123 +1096,6 @@
 					{
 						"name": "WC_Shipping_Method_Title",
 						"type": "varchar"
-					},
-					{
-						"name": "WC_OrderRefund",
-						"type": "decimal",
-						"precision": 18,
-						"scale": 0
-					},
-					{
-						"name": "WC_OrderTotal",
-						"type": "decimal",
-						"precision": 18,
-						"scale": 0
-					},
-					{
-						"name": "WC_OrderTax",
-						"type": "decimal",
-						"precision": 18,
-						"scale": 0
-					},
-					{
-						"name": "WC_Freight",
-						"type": "decimal",
-						"precision": 18,
-						"scale": 0
-					},
-					{
-						"name": "JSON_Products",
-						"type": "varchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "Temp_Order"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/KalmeshPC_SQLserver')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Table_Temp_Order')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "KalmeshPC_SQLserver",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "SqlServerTable",
-				"schema": [
-					{
-						"name": "Customer_ID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "WC_OrderID",
-						"type": "varchar"
-					},
-					{
-						"name": "WC_OrderStatus",
-						"type": "varchar"
-					},
-					{
-						"name": "WC_Order_Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "WC_Note",
-						"type": "varchar"
-					},
-					{
-						"name": "WC_CustomerBillToID",
-						"type": "varchar"
-					},
-					{
-						"name": "WC_CustomerShipToID",
-						"type": "varchar"
-					},
-					{
-						"name": "WC_ShipCode",
-						"type": "varchar"
-					},
-					{
-						"name": "WC_Slsman",
-						"type": "varchar"
-					},
-					{
-						"name": "WC_OrderCode",
-						"type": "varchar"
-					},
-					{
-						"name": "WC_Sold_to_Email",
-						"type": "varchar"
-					},
-					{
-						"name": "WC_PaymentMethod",
-						"type": "varchar"
-					},
-					{
-						"name": "WC_OrderSubTotal",
-						"type": "decimal",
-						"precision": 18,
-						"scale": 0
-					},
-					{
-						"name": "WC_Shipping_Method_Title",
-						"type": "varchar"
-					},
-					{
-						"name": "WC_OrderShipping",
-						"type": "decimal",
-						"precision": 18,
-						"scale": 0
 					},
 					{
 						"name": "WC_OrderRefund",

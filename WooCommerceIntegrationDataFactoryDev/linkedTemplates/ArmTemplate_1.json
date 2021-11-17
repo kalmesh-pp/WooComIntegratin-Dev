@@ -13,7 +13,7 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/TempOrder')]",
+			"name": "[concat(parameters('factoryName'), '/Table_Temp_Order')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -128,1066 +128,117 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/CopyCustomers')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
+			"name": "[concat(parameters('factoryName'), '/TempOrder')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"activities": [
+				"linkedServiceName": {
+					"referenceName": "KalmeshPC_SQLserver",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
 					{
-						"name": "SFTP to tempCustomer",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [
-							{
-								"name": "Source",
-								"value": "/customer-export.xml"
-							},
-							{
-								"name": "Destination",
-								"value": "dbo.Temp_BillingCustomer"
-							}
-						],
-						"typeProperties": {
-							"source": {
-								"type": "XmlSource",
-								"storeSettings": {
-									"type": "SftpReadSettings",
-									"recursive": true,
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "XmlReadSettings",
-									"validationMode": "none"
-								}
-							},
-							"sink": {
-								"type": "SqlServerSink",
-								"preCopyScript": "truncate table dbo.Temp_BillingCustomer"
-							},
-							"enableStaging": false,
-							"enableSkipIncompatibleRow": true,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"path": "[['Customer_ID']"
-										},
-										"sink": {
-											"name": "WC_CustomerId",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Terms_Code']"
-										},
-										"sink": {
-											"name": "WC_TermsCode",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Ship_Code']"
-										},
-										"sink": {
-											"name": "WC_ShipCode",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Salesman']"
-										},
-										"sink": {
-											"name": "WC_Salesman",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Tax_Code']"
-										},
-										"sink": {
-											"name": "WC_TaxCode",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Price_Code']"
-										},
-										"sink": {
-											"name": "WC_PriceCode",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Billing']['Bill_To_ID']"
-										},
-										"sink": {
-											"name": "WC_BillToID",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Billing']['Billing_First_Name']"
-										},
-										"sink": {
-											"name": "WC_BillingFirstName",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Billing']['Billing_Last_Name']"
-										},
-										"sink": {
-											"name": "WC_BillingLastName",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Billing']['Billing_Address_1']"
-										},
-										"sink": {
-											"name": "WC_BillingAddress",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Billing']['Billing_State']"
-										},
-										"sink": {
-											"name": "WC_BillingState",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Billing']['Billing_Postcode']"
-										},
-										"sink": {
-											"name": "WC_BillingPostcode",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Billing']['Billing_Country']"
-										},
-										"sink": {
-											"name": "WC_BillingCountry",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Billing']['Billing_Email']"
-										},
-										"sink": {
-											"name": "WC_BillingEmail",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Billing']['Billing_Phone']"
-										},
-										"sink": {
-											"name": "WC_BillingPhone",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Billing']['Billing_City']"
-										},
-										"sink": {
-											"name": "WC_BillingCity",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Shipping']"
-										},
-										"sink": {
-											"name": "JSON_Shipping",
-											"type": "String"
-										}
-									}
-								],
-								"collectionReference": "$['Customers']['Customer']",
-								"mapComplexValuesToString": true
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "SourceDataset_SFTP",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "SqlServerTableTemp_BillingCustomer",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
+						"name": "Customer_ID",
+						"type": "int",
+						"precision": 10
 					},
 					{
-						"name": "Update Customer And ShipToTable",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "SFTP to tempCustomer",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[UpdateCustomerAndShipTo]"
-						},
-						"linkedServiceName": {
-							"referenceName": "KalmeshPC_SQLserver",
-							"type": "LinkedServiceReference"
-						}
+						"name": "WC_OrderID",
+						"type": "varchar"
 					},
 					{
-						"name": "Update Billing Customers",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "Update Customer And ShipToTable",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[UpdateBillingCustomers]"
-						},
-						"linkedServiceName": {
-							"referenceName": "KalmeshPC_SQLserver",
-							"type": "LinkedServiceReference"
-						}
+						"name": "WC_OrderStatus",
+						"type": "varchar"
 					},
 					{
-						"name": "Update Customer And ShipTo",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "Update Billing Customers",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[UpdateCustomerAndShipTo]"
-						},
-						"linkedServiceName": {
-							"referenceName": "KalmeshPC_SQLserver",
-							"type": "LinkedServiceReference"
-						}
+						"name": "WC_Order_Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
 					},
 					{
-						"name": "Archive and Delete Customer File",
-						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "Update Customer And ShipTo",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "BinarySource",
-								"storeSettings": {
-									"type": "SftpReadSettings",
-									"recursive": false,
-									"deleteFilesAfterCompletion": true
-								},
-								"formatSettings": {
-									"type": "BinaryReadSettings"
-								}
-							},
-							"sink": {
-								"type": "BinarySink",
-								"storeSettings": {
-									"type": "SftpWriteSettings",
-									"operationTimeout": "01:00:00",
-									"useTempFileRename": true
-								}
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "CustomerInputFile",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "CustomerFileArchive",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
+						"name": "WC_Note",
+						"type": "varchar"
+					},
+					{
+						"name": "WC_CustomerBillToID",
+						"type": "varchar"
+					},
+					{
+						"name": "WC_CustomerShipToID",
+						"type": "varchar"
+					},
+					{
+						"name": "WC_ShipCode",
+						"type": "varchar"
+					},
+					{
+						"name": "WC_Slsman",
+						"type": "varchar"
+					},
+					{
+						"name": "WC_OrderCode",
+						"type": "varchar"
+					},
+					{
+						"name": "WC_Sold_to_Email",
+						"type": "varchar"
+					},
+					{
+						"name": "WC_PaymentMethod",
+						"type": "varchar"
+					},
+					{
+						"name": "WC_OrderSubTotal",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 0
+					},
+					{
+						"name": "WC_Shipping_Method_Title",
+						"type": "varchar"
+					},
+					{
+						"name": "WC_OrderShipping",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 0
+					},
+					{
+						"name": "WC_OrderRefund",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 0
+					},
+					{
+						"name": "WC_OrderTotal",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 0
+					},
+					{
+						"name": "WC_OrderTax",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 0
+					},
+					{
+						"name": "WC_Freight",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 0
+					},
+					{
+						"name": "JSON_Products",
+						"type": "varchar"
 					}
 				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"variables": {
-					"FileName": {
-						"type": "Boolean",
-						"defaultValue": false
-					}
-				},
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/CopyOrderPipeline')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy Order Data",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "XmlSource",
-								"storeSettings": {
-									"type": "SftpReadSettings",
-									"recursive": true,
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "XmlReadSettings",
-									"validationMode": "none",
-									"namespaces": true
-								}
-							},
-							"sink": {
-								"type": "SqlServerSink",
-								"preCopyScript": "truncate table [dbo].[Temp_Order]"
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"path": "[['Order_Number']"
-										},
-										"sink": {
-											"name": "WC_OrderID",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Order_Status']"
-										},
-										"sink": {
-											"name": "WC_OrderStatus",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Order_Date']"
-										},
-										"sink": {
-											"name": "WC_Order_Date",
-											"type": "DateTime"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Customer_Note']"
-										},
-										"sink": {
-											"name": "WC_Note",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Bill_To_ID']"
-										},
-										"sink": {
-											"name": "WC_CustomerBillToID",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Ship_To_ID']"
-										},
-										"sink": {
-											"name": "WC_CustomerShipToID",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Ship_Code']"
-										},
-										"sink": {
-											"name": "WC_ShipCode"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Salesman']"
-										},
-										"sink": {
-											"name": "WC_Slsman",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Uf_Order_Code']"
-										},
-										"sink": {
-											"name": "WC_OrderCode",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Billing_Email']"
-										},
-										"sink": {
-											"name": "WC_Sold_to_Email",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Payment_Method_Title']"
-										},
-										"sink": {
-											"name": "WC_PaymentMethod",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Order_Subtotal']"
-										},
-										"sink": {
-											"name": "WC_OrderSubTotal",
-											"type": "Decimal"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Shipping_Method_Title']"
-										},
-										"sink": {
-											"name": "WC_Shipping_Method_Title",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Order_Shipping']"
-										},
-										"sink": {
-											"name": "WC_OrderShipping",
-											"type": "Decimal"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Order_Refund']"
-										},
-										"sink": {
-											"name": "WC_OrderRefund",
-											"type": "Decimal"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Order_Total']"
-										},
-										"sink": {
-											"name": "WC_OrderTotal",
-											"type": "Decimal"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Order_Total_Tax']"
-										},
-										"sink": {
-											"name": "WC_OrderTax",
-											"type": "Decimal"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Customer_ID']"
-										},
-										"sink": {
-											"name": "Customer_ID",
-											"type": "Int32"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Products']"
-										},
-										"sink": {
-											"name": "JSON_Products",
-											"type": "String"
-										}
-									}
-								],
-								"collectionReference": "$['Orders']['Order']",
-								"mapComplexValuesToString": true
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "OrderXMLInputSFTP",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "SqlServerTable_Temp_Order",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					},
-					{
-						"name": "UpdateOrder",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "Copy Order Data",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[UpdateOrder]"
-						},
-						"linkedServiceName": {
-							"referenceName": "KalmeshPC_SQLserver",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "Archive and Delete Order File",
-						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "UpdateOrder",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "BinarySource",
-								"storeSettings": {
-									"type": "SftpReadSettings",
-									"recursive": false,
-									"deleteFilesAfterCompletion": true
-								},
-								"formatSettings": {
-									"type": "BinaryReadSettings"
-								}
-							},
-							"sink": {
-								"type": "BinarySink",
-								"storeSettings": {
-									"type": "SftpWriteSettings",
-									"operationTimeout": "01:00:00",
-									"useTempFileRename": true
-								}
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "SourceOrderXMLFile",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "OrderFileArchive",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/PP_CopyCustomers')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "SFTP to tempCustomer",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [
-							{
-								"name": "Source",
-								"value": "/customer-export.xml"
-							},
-							{
-								"name": "Destination",
-								"value": "dbo.Temp_BillingCustomer"
-							}
-						],
-						"typeProperties": {
-							"source": {
-								"type": "XmlSource",
-								"storeSettings": {
-									"type": "SftpReadSettings",
-									"recursive": true,
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "XmlReadSettings",
-									"validationMode": "none"
-								}
-							},
-							"sink": {
-								"type": "SqlServerSink",
-								"preCopyScript": "truncate table dbo.Temp_BillingCustomer"
-							},
-							"enableStaging": false,
-							"enableSkipIncompatibleRow": true,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"path": "[['Customer_ID']"
-										},
-										"sink": {
-											"name": "WC_CustomerId",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Terms_Code']"
-										},
-										"sink": {
-											"name": "WC_TermsCode",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Ship_Code']"
-										},
-										"sink": {
-											"name": "WC_ShipCode",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Salesman']"
-										},
-										"sink": {
-											"name": "WC_Salesman",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Tax_Code']"
-										},
-										"sink": {
-											"name": "WC_TaxCode",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Price_Code']"
-										},
-										"sink": {
-											"name": "WC_PriceCode",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Billing']['Bill_To_ID']"
-										},
-										"sink": {
-											"name": "WC_BillToID",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Billing']['Billing_First_Name']"
-										},
-										"sink": {
-											"name": "WC_BillingFirstName",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Billing']['Billing_Last_Name']"
-										},
-										"sink": {
-											"name": "WC_BillingLastName",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Billing']['Billing_Address_1']"
-										},
-										"sink": {
-											"name": "WC_BillingAddress",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Billing']['Billing_State']"
-										},
-										"sink": {
-											"name": "WC_BillingState",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Billing']['Billing_Postcode']"
-										},
-										"sink": {
-											"name": "WC_BillingPostcode",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Billing']['Billing_Country']"
-										},
-										"sink": {
-											"name": "WC_BillingCountry",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Billing']['Billing_Email']"
-										},
-										"sink": {
-											"name": "WC_BillingEmail",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Billing']['Billing_Phone']"
-										},
-										"sink": {
-											"name": "WC_BillingPhone",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Billing']['Billing_City']"
-										},
-										"sink": {
-											"name": "WC_BillingCity",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"path": "[['Shipping']"
-										},
-										"sink": {
-											"name": "JSON_Shipping",
-											"type": "String"
-										}
-									}
-								],
-								"collectionReference": "$['Customers']['Customer']",
-								"mapComplexValuesToString": true
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "SourceDataset_SFTP",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "PP_SqlServerTableTemp_BillingCustomer",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					},
-					{
-						"name": "UpdateCustomerAndShipToTable",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "SFTP to tempCustomer",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[UpdateCustomerAndShipTo]"
-						},
-						"linkedServiceName": {
-							"referenceName": "PP_PPMONWOOCOMSQL1_SQLServer",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "UpdateBillingCustomers",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "UpdateCustomerAndShipToTable",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[UpdateBillingCustomers]"
-						},
-						"linkedServiceName": {
-							"referenceName": "PP_PPMONWOOCOMSQL1_SQLServer",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "UpdateShipToCustomers",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "UpdateBillingCustomers",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[UpdateShipToCustomers]"
-						},
-						"linkedServiceName": {
-							"referenceName": "PP_PPMONWOOCOMSQL1_SQLServer",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "Archive and Delete Customer File",
-						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "UpdateShipToCustomers",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "BinarySource",
-								"storeSettings": {
-									"type": "SftpReadSettings",
-									"recursive": false,
-									"deleteFilesAfterCompletion": true
-								},
-								"formatSettings": {
-									"type": "BinaryReadSettings"
-								}
-							},
-							"sink": {
-								"type": "BinarySink",
-								"storeSettings": {
-									"type": "SftpWriteSettings",
-									"operationTimeout": "01:00:00",
-									"useTempFileRename": true
-								}
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "CustomerInputFile",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "CustomerFileArchive",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"annotations": []
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "Temp_Order"
+				}
 			},
 			"dependsOn": []
 		},
@@ -1664,14 +715,1198 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Customer pipeline')]",
+			"name": "[concat(parameters('factoryName'), '/Customer 15 Mins')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipeline": {
+					"pipelineReference": {
+						"referenceName": "Customer pipeline",
+						"type": "PipelineReference"
+					},
+					"parameters": {}
+				},
+				"type": "TumblingWindowTrigger",
+				"typeProperties": {
+					"frequency": "Minute",
+					"interval": 15,
+					"startTime": "2021-11-12T16:05:00Z",
+					"delay": "00:00:00",
+					"maxConcurrency": 50,
+					"retryPolicy": {
+						"intervalInSeconds": 30
+					},
+					"dependsOn": []
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CopyCustomers')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "Get Metadata Copy Customers",
-						"type": "GetMetadata",
+						"name": "SFTP to tempCustomer",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "/customer-export.xml"
+							},
+							{
+								"name": "Destination",
+								"value": "dbo.Temp_BillingCustomer"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "XmlSource",
+								"storeSettings": {
+									"type": "SftpReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "XmlReadSettings",
+									"validationMode": "none"
+								}
+							},
+							"sink": {
+								"type": "SqlServerSink",
+								"preCopyScript": "truncate table dbo.Temp_BillingCustomer"
+							},
+							"enableStaging": false,
+							"enableSkipIncompatibleRow": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"path": "[['Customer_ID']"
+										},
+										"sink": {
+											"name": "WC_CustomerId",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Terms_Code']"
+										},
+										"sink": {
+											"name": "WC_TermsCode",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Ship_Code']"
+										},
+										"sink": {
+											"name": "WC_ShipCode",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Salesman']"
+										},
+										"sink": {
+											"name": "WC_Salesman",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Tax_Code']"
+										},
+										"sink": {
+											"name": "WC_TaxCode",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Price_Code']"
+										},
+										"sink": {
+											"name": "WC_PriceCode",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Billing']['Bill_To_ID']"
+										},
+										"sink": {
+											"name": "WC_BillToID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Billing']['Billing_First_Name']"
+										},
+										"sink": {
+											"name": "WC_BillingFirstName",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Billing']['Billing_Last_Name']"
+										},
+										"sink": {
+											"name": "WC_BillingLastName",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Billing']['Billing_Company']"
+										},
+										"sink": {
+											"name": "WC_BillingCompany",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Billing']['Billing_Address_1']"
+										},
+										"sink": {
+											"name": "WC_BillingAddress",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Billing']['Billing_City']"
+										},
+										"sink": {
+											"name": "WC_BillingCity",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Billing']['Billing_State']"
+										},
+										"sink": {
+											"name": "WC_BillingState",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Billing']['Billing_Postcode']"
+										},
+										"sink": {
+											"name": "WC_BillingPostcode",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Billing']['Billing_Country']"
+										},
+										"sink": {
+											"name": "WC_BillingCountry",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Billing']['Billing_Email']"
+										},
+										"sink": {
+											"name": "WC_BillingEmail",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Billing']['Billing_Phone']"
+										},
+										"sink": {
+											"name": "WC_BillingPhone",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Shipping']"
+										},
+										"sink": {
+											"name": "JSON_Shipping",
+											"type": "String"
+										}
+									}
+								],
+								"collectionReference": "$['Customers']['Customer']",
+								"mapComplexValuesToString": true
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SourceDataset_SFTP",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SqlServerTableTemp_BillingCustomer",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Update Customer And ShipToTable",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Copy data1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[UpdateCustomerAndShipTo]"
+						},
+						"linkedServiceName": {
+							"referenceName": "KalmeshPC_SQLserver",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Update Billing Customers",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Update Customer And ShipToTable",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[UpdateBillingCustomers]"
+						},
+						"linkedServiceName": {
+							"referenceName": "KalmeshPC_SQLserver",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Update Customer And ShipTo",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Update Billing Customers",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[UpdateCustomerAndShipTo]"
+						},
+						"linkedServiceName": {
+							"referenceName": "KalmeshPC_SQLserver",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "SFTP to tempCustomer",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "XmlSource",
+								"storeSettings": {
+									"type": "SftpReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "XmlReadSettings",
+									"validationMode": "none",
+									"namespaces": true
+								}
+							},
+							"sink": {
+								"type": "SqlServerSink"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"path": "$['Customers']['Customer']['Customer_ID']"
+										},
+										"sink": {
+											"name": "WC_CustomerId",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Customers']['Customer']['Terms_Code']"
+										},
+										"sink": {
+											"name": "WC_TermsCode",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Customers']['Customer']['Ship_Code']"
+										},
+										"sink": {
+											"name": "WC_ShipCode",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Customers']['Customer']['Salesman']"
+										},
+										"sink": {
+											"name": "WC_Salesman",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Customers']['Customer']['Tax_Code']"
+										},
+										"sink": {
+											"name": "WC_TaxCode",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Customers']['Customer']['Price_Code']"
+										},
+										"sink": {
+											"name": "WC_PriceCode",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Customers']['Customer']['Billing']['Bill_To_ID']"
+										},
+										"sink": {
+											"name": "WC_BillToID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Customers']['Customer']['Billing']['Billing_First_Name']"
+										},
+										"sink": {
+											"name": "WC_BillingFirstName",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Customers']['Customer']['Billing']['Billing_Last_Name']"
+										},
+										"sink": {
+											"name": "WC_BillingLastName",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Customers']['Customer']['Billing']['Billing_Company']"
+										},
+										"sink": {
+											"name": "WC_BillingCompany",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Customers']['Customer']['Billing']['Billing_Address_1']"
+										},
+										"sink": {
+											"name": "WC_BillingAddress",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Customers']['Customer']['Billing']['Billing_Address_2']"
+										},
+										"sink": {
+											"name": "WC_BillingAddress2",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Customers']['Customer']['Billing']['Billing_City']"
+										},
+										"sink": {
+											"name": "WC_BillingCity",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Customers']['Customer']['Billing']['Billing_State']"
+										},
+										"sink": {
+											"name": "WC_BillingState",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Customers']['Customer']['Billing']['Billing_Postcode']"
+										},
+										"sink": {
+											"name": "WC_BillingPostcode",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Customers']['Customer']['Billing']['Billing_Country']"
+										},
+										"sink": {
+											"name": "WC_BillingCountry",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Customers']['Customer']['Billing']['Billing_Email']"
+										},
+										"sink": {
+											"name": "WC_BillingEmail",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Customers']['Customer']['Billing']['Billing_Phone']"
+										},
+										"sink": {
+											"name": "WC_BillingPhone",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Customers']['Customer']['Shipping']"
+										},
+										"sink": {
+											"name": "JSON_Shipping",
+											"type": "String"
+										}
+									}
+								],
+								"mapComplexValuesToString": true
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SourceDataset_SFTP",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SqlServerTableTemp_BillingCustomer",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"variables": {
+					"FileName": {
+						"type": "Boolean",
+						"defaultValue": false
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PP_CopyCustomers')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "SFTP to tempCustomer",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "/customer-export.xml"
+							},
+							{
+								"name": "Destination",
+								"value": "dbo.Temp_BillingCustomer"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "XmlSource",
+								"storeSettings": {
+									"type": "SftpReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "XmlReadSettings",
+									"validationMode": "none"
+								}
+							},
+							"sink": {
+								"type": "SqlServerSink",
+								"preCopyScript": "truncate table dbo.Temp_BillingCustomer"
+							},
+							"enableStaging": false,
+							"enableSkipIncompatibleRow": true,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"path": "[['Customer_ID']"
+										},
+										"sink": {
+											"name": "WC_CustomerId",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Terms_Code']"
+										},
+										"sink": {
+											"name": "WC_TermsCode",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Ship_Code']"
+										},
+										"sink": {
+											"name": "WC_ShipCode",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Salesman']"
+										},
+										"sink": {
+											"name": "WC_Salesman",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Tax_Code']"
+										},
+										"sink": {
+											"name": "WC_TaxCode",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Price_Code']"
+										},
+										"sink": {
+											"name": "WC_PriceCode",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Billing']['Bill_To_ID']"
+										},
+										"sink": {
+											"name": "WC_BillToID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Billing']['Billing_First_Name']"
+										},
+										"sink": {
+											"name": "WC_BillingFirstName",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Billing']['Billing_Last_Name']"
+										},
+										"sink": {
+											"name": "WC_BillingLastName",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Billing']['Billing_Address_1']"
+										},
+										"sink": {
+											"name": "WC_BillingAddress",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Billing']['Billing_State']"
+										},
+										"sink": {
+											"name": "WC_BillingState",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Billing']['Billing_Postcode']"
+										},
+										"sink": {
+											"name": "WC_BillingPostcode",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Billing']['Billing_Country']"
+										},
+										"sink": {
+											"name": "WC_BillingCountry",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Billing']['Billing_Email']"
+										},
+										"sink": {
+											"name": "WC_BillingEmail",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Billing']['Billing_Phone']"
+										},
+										"sink": {
+											"name": "WC_BillingPhone",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Billing']['Billing_City']"
+										},
+										"sink": {
+											"name": "WC_BillingCity",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Shipping']"
+										},
+										"sink": {
+											"name": "JSON_Shipping",
+											"type": "String"
+										}
+									}
+								],
+								"collectionReference": "$['Customers']['Customer']",
+								"mapComplexValuesToString": true
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SourceDataset_SFTP",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "PP_SqlServerTableTemp_BillingCustomer",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "UpdateCustomerAndShipToTable",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Copy data1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[UpdateCustomerAndShipTo]"
+						},
+						"linkedServiceName": {
+							"referenceName": "PP_PPMONWOOCOMSQL1_SQLServer",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "UpdateBillingCustomers",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "UpdateCustomerAndShipToTable",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[UpdateBillingCustomers]"
+						},
+						"linkedServiceName": {
+							"referenceName": "PP_PPMONWOOCOMSQL1_SQLServer",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "UpdateShipToCustomers",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "UpdateBillingCustomers",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[UpdateShipToCustomers]"
+						},
+						"linkedServiceName": {
+							"referenceName": "PP_PPMONWOOCOMSQL1_SQLServer",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Archive and Delete Customer File",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "UpdateShipToCustomers",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "BinarySource",
+								"storeSettings": {
+									"type": "SftpReadSettings",
+									"recursive": false,
+									"deleteFilesAfterCompletion": true
+								},
+								"formatSettings": {
+									"type": "BinaryReadSettings"
+								}
+							},
+							"sink": {
+								"type": "BinarySink",
+								"storeSettings": {
+									"type": "SftpWriteSettings",
+									"operationTimeout": "01:00:00",
+									"useTempFileRename": true
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "CustomerInputFile",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "CustomerFileArchive",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "SFTP to tempCustomer",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "XmlSource",
+								"storeSettings": {
+									"type": "SftpReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "XmlReadSettings",
+									"validationMode": "none",
+									"namespaces": true
+								}
+							},
+							"sink": {
+								"type": "SqlServerSink"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"path": "$['Customers']['Customer']['Customer_ID']"
+										},
+										"sink": {
+											"name": "WC_CustomerId",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Customers']['Customer']['Terms_Code']"
+										},
+										"sink": {
+											"name": "WC_TermsCode",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Customers']['Customer']['Ship_Code']"
+										},
+										"sink": {
+											"name": "WC_ShipCode",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Customers']['Customer']['Salesman']"
+										},
+										"sink": {
+											"name": "WC_Salesman",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Customers']['Customer']['Tax_Code']"
+										},
+										"sink": {
+											"name": "WC_TaxCode",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Customers']['Customer']['Price_Code']"
+										},
+										"sink": {
+											"name": "WC_PriceCode",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Customers']['Customer']['Billing']['Bill_To_ID']"
+										},
+										"sink": {
+											"name": "WC_BillToID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Customers']['Customer']['Billing']['Billing_First_Name']"
+										},
+										"sink": {
+											"name": "WC_BillingFirstName",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Customers']['Customer']['Billing']['Billing_Last_Name']"
+										},
+										"sink": {
+											"name": "WC_BillingLastName",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Customers']['Customer']['Billing']['Billing_Company']"
+										},
+										"sink": {
+											"name": "WC_BillingCompany",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Customers']['Customer']['Billing']['Billing_Address_1']"
+										},
+										"sink": {
+											"name": "WC_BillingAddress",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Customers']['Customer']['Billing']['Billing_Address_2']"
+										},
+										"sink": {
+											"name": "WC_BillingAddress2",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Customers']['Customer']['Billing']['Billing_City']"
+										},
+										"sink": {
+											"name": "WC_BillingCity",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Customers']['Customer']['Billing']['Billing_State']"
+										},
+										"sink": {
+											"name": "WC_BillingState",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Customers']['Customer']['Billing']['Billing_Postcode']"
+										},
+										"sink": {
+											"name": "WC_BillingPostcode",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Customers']['Customer']['Billing']['Billing_Country']"
+										},
+										"sink": {
+											"name": "WC_BillingCountry",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Customers']['Customer']['Billing']['Billing_Email']"
+										},
+										"sink": {
+											"name": "WC_BillingEmail",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Customers']['Customer']['Billing']['Billing_Phone']"
+										},
+										"sink": {
+											"name": "WC_BillingPhone",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Customers']['Customer']['Shipping']"
+										},
+										"sink": {
+											"name": "JSON_Shipping",
+											"type": "String"
+										}
+									}
+								],
+								"mapComplexValuesToString": true
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SourceDataset_SFTP",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "PP_SqlServerTableTemp_BillingCustomer",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CopyOrderPipeline')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy Order Data",
+						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "7.00:00:00",
@@ -1682,72 +1917,537 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"dataset": {
-								"referenceName": "SourceDataset_SFTP",
+							"source": {
+								"type": "XmlSource",
+								"storeSettings": {
+									"type": "SftpReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "XmlReadSettings",
+									"validationMode": "none",
+									"namespaces": true
+								}
+							},
+							"sink": {
+								"type": "SqlServerSink",
+								"preCopyScript": "truncate table [dbo].[Temp_Order]"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"path": "[['Order_Number']"
+										},
+										"sink": {
+											"name": "WC_OrderID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Order_Status']"
+										},
+										"sink": {
+											"name": "WC_OrderStatus",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Order_Date']"
+										},
+										"sink": {
+											"name": "WC_Order_Date",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Customer_Note']"
+										},
+										"sink": {
+											"name": "WC_Note",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Bill_To_ID']"
+										},
+										"sink": {
+											"name": "WC_CustomerBillToID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Ship_To_ID']"
+										},
+										"sink": {
+											"name": "WC_CustomerShipToID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Ship_Code']"
+										},
+										"sink": {
+											"name": "WC_ShipCode"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Salesman']"
+										},
+										"sink": {
+											"name": "WC_Slsman",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Uf_Order_Code']"
+										},
+										"sink": {
+											"name": "WC_OrderCode",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Billing_Email']"
+										},
+										"sink": {
+											"name": "WC_Sold_to_Email",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Payment_Method_Title']"
+										},
+										"sink": {
+											"name": "WC_PaymentMethod",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Order_Subtotal']"
+										},
+										"sink": {
+											"name": "WC_OrderSubTotal",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Shipping_Method_Title']"
+										},
+										"sink": {
+											"name": "WC_Shipping_Method_Title",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Order_Shipping']"
+										},
+										"sink": {
+											"name": "WC_OrderShipping",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Order_Refund']"
+										},
+										"sink": {
+											"name": "WC_OrderRefund",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Order_Total']"
+										},
+										"sink": {
+											"name": "WC_OrderTotal",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Order_Total_Tax']"
+										},
+										"sink": {
+											"name": "WC_OrderTax",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Customer_ID']"
+										},
+										"sink": {
+											"name": "Customer_ID",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Products']"
+										},
+										"sink": {
+											"name": "JSON_Products",
+											"type": "String"
+										}
+									}
+								],
+								"collectionReference": "$['Orders']['Order']",
+								"mapComplexValuesToString": true
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "OrderXMLInputSFTP",
 								"type": "DatasetReference",
 								"parameters": {}
-							},
-							"fieldList": [
-								"exists"
-							],
-							"storeSettings": {
-								"type": "SftpReadSettings",
-								"recursive": true,
-								"enablePartitionDiscovery": false
 							}
-						}
+						],
+						"outputs": [
+							{
+								"referenceName": "SqlServerTable_Temp_Order",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
 					},
 					{
-						"name": "If Condition1",
-						"type": "IfCondition",
+						"name": "UpdateOrder",
+						"type": "SqlServerStoredProcedure",
 						"dependsOn": [
 							{
-								"activity": "Get Metadata Copy Customers",
+								"activity": "Copy data1",
 								"dependencyConditions": [
 									"Succeeded"
 								]
 							}
 						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
 						"userProperties": [],
 						"typeProperties": {
-							"expression": {
-								"value": "@activity('Get Metadata Copy Customers').output.exists",
-								"type": "Expression"
-							},
-							"ifTrueActivities": [
-								{
-									"name": "PP_CopyCustomers",
-									"type": "ExecutePipeline",
-									"dependsOn": [],
-									"userProperties": [],
-									"typeProperties": {
-										"pipeline": {
-											"referenceName": "PP_CopyCustomers",
-											"type": "PipelineReference"
-										},
-										"waitOnCompletion": true,
-										"parameters": {}
-									}
-								}
-							]
+							"storedProcedureName": "[[dbo].[UpdateOrder]"
+						},
+						"linkedServiceName": {
+							"referenceName": "KalmeshPC_SQLserver",
+							"type": "LinkedServiceReference"
 						}
+					},
+					{
+						"name": "Archive and Delete Order File",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "UpdateOrder",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "BinarySource",
+								"storeSettings": {
+									"type": "SftpReadSettings",
+									"recursive": false,
+									"deleteFilesAfterCompletion": true
+								},
+								"formatSettings": {
+									"type": "BinaryReadSettings"
+								}
+							},
+							"sink": {
+								"type": "BinarySink",
+								"storeSettings": {
+									"type": "SftpWriteSettings",
+									"operationTimeout": "01:00:00",
+									"useTempFileRename": true
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "SourceOrderXMLFile",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "OrderFileArchive",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Copy Order Data",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "XmlSource",
+								"storeSettings": {
+									"type": "SftpReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "XmlReadSettings",
+									"validationMode": "none",
+									"namespaces": true
+								}
+							},
+							"sink": {
+								"type": "SqlServerSink"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Order_Number']"
+										},
+										"sink": {
+											"name": "WC_OrderID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Order_Status']"
+										},
+										"sink": {
+											"name": "WC_OrderStatus",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Order_Date']"
+										},
+										"sink": {
+											"name": "WC_Order_Date",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Customer_Note']"
+										},
+										"sink": {
+											"name": "WC_Note",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Bill_To_ID']"
+										},
+										"sink": {
+											"name": "$['Orders']['Order']WC_CustomerBillToID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Ship_To_ID']"
+										},
+										"sink": {
+											"name": "WC_CustomerShipToID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Ship_Code']"
+										},
+										"sink": {
+											"name": "WC_ShipCode"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Salesman']"
+										},
+										"sink": {
+											"name": "WC_Slsman",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Uf_Order_Code']"
+										},
+										"sink": {
+											"name": "WC_OrderCode",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Billing_Email']"
+										},
+										"sink": {
+											"name": "WC_Sold_to_Email",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Payment_Method_Title']"
+										},
+										"sink": {
+											"name": "WC_PaymentMethod",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Order_Subtotal']"
+										},
+										"sink": {
+											"name": "WC_OrderSubTotal",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Shipping_Method_Title']"
+										},
+										"sink": {
+											"name": "WC_Shipping_Method_Title",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Order_Shipping']"
+										},
+										"sink": {
+											"name": "WC_OrderShipping",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Order_Refund']"
+										},
+										"sink": {
+											"name": "WC_OrderRefund",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Order_Total']"
+										},
+										"sink": {
+											"name": "WC_OrderTotal",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Order_Total_Tax']"
+										},
+										"sink": {
+											"name": "WC_OrderTax",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Customer_ID']"
+										},
+										"sink": {
+											"name": "Customer_ID",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Products']"
+										},
+										"sink": {
+											"name": "JSON_Products",
+											"type": "String"
+										}
+									}
+								],
+								"mapComplexValuesToString": true
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "OrderXMLInputSFTP",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SqlServerTable_Temp_Order",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
 					}
 				],
 				"policy": {
 					"elapsedTimeMetric": {},
 					"cancelAfter": {}
 				},
-				"variables": {
-					"FileExists": {
-						"type": "Boolean",
-						"defaultValue": false
-					}
-				},
 				"annotations": []
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/PP_CopyCustomers')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Order Pipeline')]",
@@ -1864,37 +2564,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/PP_SyncUpOrderPipeline')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Customer 15 Mins')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipeline": {
-					"pipelineReference": {
-						"referenceName": "Customer pipeline",
-						"type": "PipelineReference"
-					},
-					"parameters": {}
-				},
-				"type": "TumblingWindowTrigger",
-				"typeProperties": {
-					"frequency": "Minute",
-					"interval": 15,
-					"startTime": "2021-11-12T16:05:00Z",
-					"delay": "00:00:00",
-					"maxConcurrency": 50,
-					"retryPolicy": {
-						"intervalInSeconds": 30
-					},
-					"dependsOn": []
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/Customer pipeline')]"
 			]
 		},
 		{
