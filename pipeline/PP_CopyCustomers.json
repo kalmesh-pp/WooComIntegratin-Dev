@@ -219,14 +219,7 @@
 			{
 				"name": "UpdateCustomerAndShipToTable",
 				"type": "SqlServerStoredProcedure",
-				"dependsOn": [
-					{
-						"activity": "SFTP to tempCustomer",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -347,6 +340,208 @@
 				"outputs": [
 					{
 						"referenceName": "CustomerFileArchive",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "XmlSource",
+						"storeSettings": {
+							"type": "SftpReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "XmlReadSettings",
+							"validationMode": "none",
+							"namespaces": true
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "$['Customers']['Customer']['Customer_ID']"
+								},
+								"sink": {
+									"name": "WC_CustomerId",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Customers']['Customer']['Terms_Code']"
+								},
+								"sink": {
+									"name": "WC_TermsCode",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Customers']['Customer']['Ship_Code']"
+								},
+								"sink": {
+									"name": "WC_ShipCode",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Customers']['Customer']['Salesman']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Customers']['Customer']['Tax_Code']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Customers']['Customer']['Price_Code']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Customers']['Customer']['Billing']['Bill_To_ID']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Customers']['Customer']['Billing']['Billing_First_Name']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Customers']['Customer']['Billing']['Billing_Last_Name']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Customers']['Customer']['Billing']['Billing_Company']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Customers']['Customer']['Billing']['Billing_Address_1']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Customers']['Customer']['Billing']['Billing_Address_2']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Customers']['Customer']['Billing']['Billing_City']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Customers']['Customer']['Billing']['Billing_State']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Customers']['Customer']['Billing']['Billing_Postcode']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Customers']['Customer']['Billing']['Billing_Country']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Customers']['Customer']['Billing']['Billing_Email']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Customers']['Customer']['Billing']['Billing_Phone']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Customers']['Customer']['Shipping']['Ship_To']['Ship_To_ID']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Customers']['Customer']['Shipping']['Ship_To']['Shipping_First_Name']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Customers']['Customer']['Shipping']['Ship_To']['Shipping_Last_Name']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Customers']['Customer']['Shipping']['Ship_To']['Shipping_Company']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Customers']['Customer']['Shipping']['Ship_To']['Shipping_Address_1']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Customers']['Customer']['Shipping']['Ship_To']['Shipping_Address_2']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Customers']['Customer']['Shipping']['Ship_To']['Shipping_City']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Customers']['Customer']['Shipping']['Ship_To']['Shipping_State']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Customers']['Customer']['Shipping']['Ship_To']['Shipping_Postcode']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Customers']['Customer']['Shipping']['Ship_To']['Shipping_Country']"
+								}
+							}
+						],
+						"mapComplexValuesToString": true
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_SFTP",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "PP_SqlServerTableTemp_BillingCustomer",
 						"type": "DatasetReference"
 					}
 				]
