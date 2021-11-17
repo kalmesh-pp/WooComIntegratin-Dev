@@ -229,7 +229,7 @@
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
-						"activity": "Copy Order Data",
+						"activity": "Copy data1",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -301,6 +301,143 @@
 				"outputs": [
 					{
 						"referenceName": "OrderFileArchive",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Copy Order Data",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "XmlSource",
+						"storeSettings": {
+							"type": "SftpReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "XmlReadSettings",
+							"validationMode": "none",
+							"namespaces": true
+						}
+					},
+					"sink": {
+						"type": "SqlServerSink"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "$['Orders']['Order']['Order_Number']"
+								},
+								"sink": {
+									"name": "Customer_ID",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Orders']['Order']['Order_Status']"
+								},
+								"sink": {
+									"name": "WC_OrderStatus",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Orders']['Order']['Order_Date']"
+								},
+								"sink": {
+									"name": "WC_Order_Date",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Orders']['Order']['Customer_Note']"
+								},
+								"sink": {
+									"name": "WC_Note",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Orders']['Order']['Products']['Product']['Line_Id']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Orders']['Order']['Products']['Product']['Sku']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Orders']['Order']['Products']['Product']['Name']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Orders']['Order']['Products']['Product']['Qty']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Orders']['Order']['Products']['Product']['Item_Price']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Orders']['Order']['Customer_ID']"
+								},
+								"sink": {
+									"name": "Customer_ID",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Orders']['Order']['Products']['Product']['Atts']['Attr'][0]['Att_Name']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Orders']['Order']['Products']['Product']['Atts']['Attr'][0]['Att_Value']"
+								}
+							}
+						],
+						"mapComplexValuesToString": true
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "OrderXMLInputSFTP",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "SqlServerTable_Temp_Order",
 						"type": "DatasetReference"
 					}
 				]
