@@ -219,7 +219,14 @@
 			{
 				"name": "UpdateCustomerAndShipToTable",
 				"type": "SqlServerStoredProcedure",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Copy data1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -347,7 +354,14 @@
 			{
 				"name": "Copy data1",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "SFTP to tempCustomer",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -407,16 +421,145 @@
 							{
 								"source": {
 									"path": "$['Customers']['Customer']['Salesman']"
+								},
+								"sink": {
+									"name": "WC_Salesman",
+									"type": "String"
 								}
 							},
 							{
 								"source": {
 									"path": "$['Customers']['Customer']['Tax_Code']"
+								},
+								"sink": {
+									"name": "WC_TaxCode",
+									"type": "String"
 								}
 							},
 							{
 								"source": {
 									"path": "$['Customers']['Customer']['Price_Code']"
+								},
+								"sink": {
+									"name": "WC_PriceCode",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Customers']['Customer']['Billing']['Bill_To_ID']"
+								},
+								"sink": {
+									"name": "WC_BillToID",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Customers']['Customer']['Billing']['Billing_First_Name']"
+								},
+								"sink": {
+									"name": "WC_BillingFirstName",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Customers']['Customer']['Billing']['Billing_Last_Name']"
+								},
+								"sink": {
+									"name": "WC_BillingLastName",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Customers']['Customer']['Billing']['Billing_Company']"
+								},
+								"sink": {
+									"name": "WC_BillingCompany",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Customers']['Customer']['Billing']['Billing_Address_1']"
+								},
+								"sink": {
+									"name": "WC_BillingAddress",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Customers']['Customer']['Billing']['Billing_Address_2']"
+								},
+								"sink": {
+									"name": "WC_BillingAddress2",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Customers']['Customer']['Billing']['Billing_City']"
+								},
+								"sink": {
+									"name": "WC_BillingCity",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Customers']['Customer']['Billing']['Billing_State']"
+								},
+								"sink": {
+									"name": "WC_BillingState",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Customers']['Customer']['Billing']['Billing_Postcode']"
+								},
+								"sink": {
+									"name": "WC_BillingPostcode",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Customers']['Customer']['Billing']['Billing_Country']"
+								},
+								"sink": {
+									"name": "WC_BillingCountry",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Customers']['Customer']['Billing']['Billing_Email']"
+								},
+								"sink": {
+									"name": "WC_BillingEmail",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Customers']['Customer']['Billing']['Billing_Phone']"
+								},
+								"sink": {
+									"name": "WC_BillingPhone",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Customers']['Customer']['Shipping']"
+								},
+								"sink": {
+									"name": "JSON_Shipping",
+									"type": "String"
 								}
 							}
 						],
