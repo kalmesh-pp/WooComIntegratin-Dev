@@ -228,7 +228,14 @@
 			{
 				"name": "Update Customer And ShipToTable",
 				"type": "SqlServerStoredProcedure",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Copy data1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -302,7 +309,14 @@
 			{
 				"name": "Copy data1",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "SFTP to tempCustomer",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -491,6 +505,15 @@
 								},
 								"sink": {
 									"name": "WC_BillingPhone",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Customers']['Customer']['Shipping']"
+								},
+								"sink": {
+									"name": "JSON_Shipping",
 									"type": "String"
 								}
 							}
