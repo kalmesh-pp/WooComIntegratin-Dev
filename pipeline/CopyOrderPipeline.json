@@ -350,8 +350,8 @@
 									"path": "$['Orders']['Order']['Order_Number']"
 								},
 								"sink": {
-									"name": "Customer_ID",
-									"type": "Int32"
+									"name": "WC_OrderID",
+									"type": "String"
 								}
 							},
 							{
@@ -383,27 +383,118 @@
 							},
 							{
 								"source": {
-									"path": "$['Orders']['Order']['Products']['Product']['Line_Id']"
+									"path": "$['Orders']['Order']['Bill_To_ID']"
+								},
+								"sink": {
+									"name": "$['Orders']['Order']WC_CustomerBillToID",
+									"type": "String"
 								}
 							},
 							{
 								"source": {
-									"path": "$['Orders']['Order']['Products']['Product']['Sku']"
+									"path": "$['Orders']['Order']['Ship_To_ID']"
+								},
+								"sink": {
+									"name": "WC_CustomerShipToID",
+									"type": "String"
 								}
 							},
 							{
 								"source": {
-									"path": "$['Orders']['Order']['Products']['Product']['Name']"
+									"path": "$['Orders']['Order']['Ship_Code']"
+								},
+								"sink": {
+									"name": "WC_ShipCode"
 								}
 							},
 							{
 								"source": {
-									"path": "$['Orders']['Order']['Products']['Product']['Qty']"
+									"path": "$['Orders']['Order']['Salesman']"
+								},
+								"sink": {
+									"name": "WC_Slsman",
+									"type": "String"
 								}
 							},
 							{
 								"source": {
-									"path": "$['Orders']['Order']['Products']['Product']['Item_Price']"
+									"path": "$['Orders']['Order']['Uf_Order_Code']"
+								},
+								"sink": {
+									"name": "WC_OrderCode",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Orders']['Order']['Billing_Email']"
+								},
+								"sink": {
+									"name": "WC_Sold_to_Email",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Orders']['Order']['Payment_Method_Title']"
+								},
+								"sink": {
+									"name": "WC_PaymentMethod",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Orders']['Order']['Order_Subtotal']"
+								},
+								"sink": {
+									"name": "WC_OrderSubTotal",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Orders']['Order']['Shipping_Method_Title']"
+								},
+								"sink": {
+									"name": "WC_Shipping_Method_Title",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Orders']['Order']['Order_Shipping']"
+								},
+								"sink": {
+									"name": "WC_OrderShipping",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Orders']['Order']['Order_Refund']"
+								},
+								"sink": {
+									"name": "WC_OrderRefund",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Orders']['Order']['Order_Total']"
+								},
+								"sink": {
+									"name": "WC_OrderTotal",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Orders']['Order']['Order_Total_Tax']"
+								},
+								"sink": {
+									"name": "WC_OrderTax",
+									"type": "Decimal"
 								}
 							},
 							{
@@ -417,12 +508,11 @@
 							},
 							{
 								"source": {
-									"path": "$['Orders']['Order']['Products']['Product']['Atts']['Attr'][0]['Att_Name']"
-								}
-							},
-							{
-								"source": {
-									"path": "$['Orders']['Order']['Products']['Product']['Atts']['Attr'][0]['Att_Value']"
+									"path": "$['Orders']['Order']['Products']"
+								},
+								"sink": {
+									"name": "JSON_Products",
+									"type": "String"
 								}
 							}
 						],
