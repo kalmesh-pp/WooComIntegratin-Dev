@@ -1,9 +1,9 @@
 {
-	"name": "test_copy1",
+	"name": "PP Order Pipeline",
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
+				"name": "Copy Multi",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -215,7 +215,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "CopyOrderXMLInputSFTP",
+						"referenceName": "OrderXMLInputSFTP",
 						"type": "DatasetReference"
 					}
 				],
@@ -227,11 +227,11 @@
 				]
 			},
 			{
-				"name": "Copy data1_copy1",
+				"name": "Copy Single",
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Copy data1",
+						"activity": "Copy Multi",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -444,7 +444,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "CopyOrderXMLInputSFTP",
+						"referenceName": "OrderXMLInputSFTP",
 						"type": "DatasetReference"
 					}
 				],
@@ -460,7 +460,7 @@
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
-						"activity": "Copy data1_copy1",
+						"activity": "Copy Single",
 						"dependencyConditions": [
 							"Succeeded"
 						]
