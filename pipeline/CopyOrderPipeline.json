@@ -33,6 +33,7 @@
 						"preCopyScript": "truncate table [dbo].[Temp_Order]"
 					},
 					"enableStaging": false,
+					"enableSkipIncompatibleRow": true,
 					"translator": {
 						"type": "TabularTranslator",
 						"mappings": [
