@@ -196,8 +196,18 @@
 									"name": "Customer_ID",
 									"type": "Int32"
 								}
+							},
+							{
+								"source": {
+									"path": "$['Orders']['Order']['Products']"
+								},
+								"sink": {
+									"name": "JSON_Products",
+									"type": "String"
+								}
 							}
-						]
+						],
+						"mapComplexValuesToString": true
 					}
 				},
 				"inputs": [
