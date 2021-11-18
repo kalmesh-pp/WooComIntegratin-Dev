@@ -221,7 +221,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "SqlServerTable_Temp_Order",
+						"referenceName": "PP_TempOrder",
 						"type": "DatasetReference"
 					}
 				]
@@ -450,7 +450,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "SqlServerTable_Temp_Order",
+						"referenceName": "PP_TempOrder",
 						"type": "DatasetReference"
 					}
 				]
@@ -474,11 +474,8 @@
 					"secureInput": false
 				},
 				"userProperties": [],
-				"typeProperties": {
-					"storedProcedureName": "[dbo].[UpdateOrder]"
-				},
 				"linkedServiceName": {
-					"referenceName": "KalmeshPC_SQLserver",
+					"referenceName": "PP_PPMONWOOCOMSQL1_SQLServer",
 					"type": "LinkedServiceReference"
 				}
 			}
