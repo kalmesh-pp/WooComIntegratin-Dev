@@ -631,6 +631,7 @@
 								"preCopyScript": "truncate table [dbo].[Temp_Order]"
 							},
 							"enableStaging": false,
+							"enableSkipIncompatibleRow": true,
 							"translator": {
 								"type": "TabularTranslator",
 								"mappings": [
@@ -811,7 +812,7 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "OrderXMLInputSFTP",
+								"referenceName": "CopyOrderXMLInputSFTP",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -852,62 +853,6 @@
 						}
 					},
 					{
-						"name": "Archive and Delete Order File",
-						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "UpdateOrder",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "BinarySource",
-								"storeSettings": {
-									"type": "SftpReadSettings",
-									"recursive": false,
-									"deleteFilesAfterCompletion": true
-								},
-								"formatSettings": {
-									"type": "BinaryReadSettings"
-								}
-							},
-							"sink": {
-								"type": "BinarySink",
-								"storeSettings": {
-									"type": "SftpWriteSettings",
-									"operationTimeout": "01:00:00",
-									"useTempFileRename": true
-								}
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "SourceOrderXMLFile",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "OrderFileArchive",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					},
-					{
 						"name": "Copy data1",
 						"type": "Copy",
 						"dependsOn": [
@@ -944,6 +889,7 @@
 								"type": "SqlServerSink"
 							},
 							"enableStaging": false,
+							"enableSkipIncompatibleRow": true,
 							"translator": {
 								"type": "TabularTranslator",
 								"mappings": [
@@ -1123,7 +1069,7 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "OrderXMLInputSFTP",
+								"referenceName": "CopyOrderXMLInputSFTP",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -1144,11 +1090,9 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/OrderXMLInputSFTP')]",
+				"[concat(variables('factoryId'), '/datasets/CopyOrderXMLInputSFTP')]",
 				"[concat(variables('factoryId'), '/datasets/SqlServerTable_Temp_Order')]",
-				"[concat(variables('factoryId'), '/linkedServices/KalmeshPC_SQLserver')]",
-				"[concat(variables('factoryId'), '/datasets/SourceOrderXMLFile')]",
-				"[concat(variables('factoryId'), '/datasets/OrderFileArchive')]"
+				"[concat(variables('factoryId'), '/linkedServices/KalmeshPC_SQLserver')]"
 			]
 		},
 		{
@@ -1291,13 +1235,13 @@
 							},
 							"ifTrueActivities": [
 								{
-									"name": "PP_CopyOrderPipeline",
+									"name": "PP Order Pipeline",
 									"type": "ExecutePipeline",
 									"dependsOn": [],
 									"userProperties": [],
 									"typeProperties": {
 										"pipeline": {
-											"referenceName": "PP_CopyOrderPipeline",
+											"referenceName": "PP Order Pipeline",
 											"type": "PipelineReference"
 										},
 										"waitOnCompletion": true,
@@ -1322,7 +1266,568 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/OrderXMLInputSFTP')]",
-				"[concat(variables('factoryId'), '/pipelines/PP_CopyOrderPipeline')]"
+				"[concat(variables('factoryId'), '/pipelines/PP Order Pipeline')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PP Order Pipeline')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy Multi",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "XmlSource",
+								"storeSettings": {
+									"type": "SftpReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "XmlReadSettings",
+									"validationMode": "none",
+									"namespaces": true
+								}
+							},
+							"sink": {
+								"type": "SqlServerSink",
+								"preCopyScript": "truncate table [dbo].[Temp_Order]"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"path": "[['Order_Number']"
+										},
+										"sink": {
+											"name": "WC_OrderID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Order_Status']"
+										},
+										"sink": {
+											"name": "WC_OrderStatus",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Order_Date']"
+										},
+										"sink": {
+											"name": "WC_Order_Date",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Customer_Note']"
+										},
+										"sink": {
+											"name": "WC_Note",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Bill_To_ID']"
+										},
+										"sink": {
+											"name": "WC_CustomerBillToID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Ship_To_ID']"
+										},
+										"sink": {
+											"name": "WC_CustomerShipToID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"type": "String",
+											"path": "[['Ship_Code']"
+										},
+										"sink": {
+											"name": "WC_ShipCode",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Salesman']"
+										},
+										"sink": {
+											"name": "WC_Slsman",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Uf_Order_Code']"
+										},
+										"sink": {
+											"name": "WC_OrderCode",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Billing_Email']"
+										},
+										"sink": {
+											"name": "WC_Sold_to_Email",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Payment_Method_Title']"
+										},
+										"sink": {
+											"name": "WC_PaymentMethod",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Order_Subtotal']"
+										},
+										"sink": {
+											"name": "WC_OrderSubTotal",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Shipping_Method_Title']"
+										},
+										"sink": {
+											"name": "WC_Shipping_Method_Title",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Order_Shipping']"
+										},
+										"sink": {
+											"name": "WC_OrderShipping",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Order_Refund']"
+										},
+										"sink": {
+											"name": "WC_OrderRefund",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Order_Total']"
+										},
+										"sink": {
+											"name": "WC_OrderTotal",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Order_Total_Tax']"
+										},
+										"sink": {
+											"name": "WC_OrderTax",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Customer_ID']"
+										},
+										"sink": {
+											"name": "Customer_ID",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"path": "[['Products']"
+										},
+										"sink": {
+											"name": "JSON_Products",
+											"type": "String"
+										}
+									}
+								],
+								"collectionReference": "$['Orders']['Order']",
+								"mapComplexValuesToString": true
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "OrderXMLInputSFTP",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "PP_TempOrder",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Copy Single",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Copy Multi",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "XmlSource",
+								"storeSettings": {
+									"type": "SftpReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "XmlReadSettings",
+									"validationMode": "none",
+									"namespaces": true
+								}
+							},
+							"sink": {
+								"type": "SqlServerSink"
+							},
+							"enableStaging": false,
+							"enableSkipIncompatibleRow": true,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Order_Number']"
+										},
+										"sink": {
+											"name": "WC_OrderID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Order_Status']"
+										},
+										"sink": {
+											"name": "WC_OrderStatus",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Order_Date']"
+										},
+										"sink": {
+											"name": "WC_Order_Date",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Customer_Note']"
+										},
+										"sink": {
+											"name": "WC_Note",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Bill_To_ID']"
+										},
+										"sink": {
+											"name": "WC_CustomerBillToID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Ship_To_ID']"
+										},
+										"sink": {
+											"name": "WC_CustomerShipToID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Ship_Code']"
+										},
+										"sink": {
+											"name": "WC_ShipCode",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Salesman']"
+										},
+										"sink": {
+											"name": "WC_Slsman",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Uf_Order_Code']"
+										},
+										"sink": {
+											"name": "WC_OrderCode",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Billing_Email']"
+										},
+										"sink": {
+											"name": "WC_Sold_to_Email",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Payment_Method_Title']"
+										},
+										"sink": {
+											"name": "WC_PaymentMethod",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Order_Subtotal']"
+										},
+										"sink": {
+											"name": "WC_OrderSubTotal",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Shipping_Method_Title']"
+										},
+										"sink": {
+											"name": "WC_Shipping_Method_Title",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Order_Shipping']"
+										},
+										"sink": {
+											"name": "WC_OrderShipping",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Order_Refund']"
+										},
+										"sink": {
+											"name": "WC_OrderRefund",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Order_Total']"
+										},
+										"sink": {
+											"name": "WC_OrderTotal",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Order_Total_Tax']"
+										},
+										"sink": {
+											"name": "WC_OrderTax",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Customer_ID']"
+										},
+										"sink": {
+											"name": "Customer_ID",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Products']"
+										},
+										"sink": {
+											"name": "JSON_Products",
+											"type": "String"
+										}
+									}
+								],
+								"mapComplexValuesToString": true
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "OrderXMLInputSFTP",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "PP_TempOrder",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "UpdateOrder",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Copy Single",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[UpdateOrder]"
+						},
+						"linkedServiceName": {
+							"referenceName": "PP_PPMONWOOCOMSQL1_SQLServer",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Archive and Delete Order File",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "UpdateOrder",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "BinarySource",
+								"storeSettings": {
+									"type": "SftpReadSettings",
+									"recursive": false,
+									"deleteFilesAfterCompletion": true
+								},
+								"formatSettings": {
+									"type": "BinaryReadSettings"
+								}
+							},
+							"sink": {
+								"type": "BinarySink",
+								"storeSettings": {
+									"type": "SftpWriteSettings",
+									"operationTimeout": "01:00:00",
+									"useTempFileRename": true
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "SourceOrderXMLFile",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "OrderFileArchive",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/OrderXMLInputSFTP')]",
+				"[concat(variables('factoryId'), '/datasets/PP_TempOrder')]",
+				"[concat(variables('factoryId'), '/linkedServices/PP_PPMONWOOCOMSQL1_SQLServer')]",
+				"[concat(variables('factoryId'), '/datasets/SourceOrderXMLFile')]",
+				"[concat(variables('factoryId'), '/datasets/OrderFileArchive')]"
 			]
 		},
 		{
@@ -2410,6 +2915,269 @@
 				"[concat(variables('factoryId'), '/datasets/PP_SyncUpOrders')]",
 				"[concat(variables('factoryId'), '/datasets/PP_SyncUpOrderOutJSON')]",
 				"[concat(variables('factoryId'), '/linkedServices/PP_PPMONWOOCOMSQL1_SQLServer')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/test')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "XmlSource",
+								"storeSettings": {
+									"type": "SftpReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "XmlReadSettings",
+									"validationMode": "none",
+									"namespaces": true
+								}
+							},
+							"sink": {
+								"type": "SqlServerSink"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Order_Number']"
+										},
+										"sink": {
+											"name": "WC_OrderID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Order_Status']"
+										},
+										"sink": {
+											"name": "WC_OrderStatus",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Order_Date']"
+										},
+										"sink": {
+											"name": "WC_Order_Date",
+											"type": "DateTime"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Customer_Note']"
+										},
+										"sink": {
+											"name": "WC_Note",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Bill_To_ID']"
+										},
+										"sink": {
+											"name": "WC_CustomerBillToID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Ship_To_ID']"
+										},
+										"sink": {
+											"name": "WC_CustomerShipToID",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Ship_Code']"
+										},
+										"sink": {
+											"name": "WC_ShipCode",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Salesman']"
+										},
+										"sink": {
+											"name": "WC_Slsman",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Uf_Order_Code']"
+										},
+										"sink": {
+											"name": "WC_OrderCode",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Billing_Email']"
+										},
+										"sink": {
+											"name": "WC_Sold_to_Email",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Payment_Method_Title']"
+										},
+										"sink": {
+											"name": "WC_PaymentMethod",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Order_Subtotal']"
+										},
+										"sink": {
+											"name": "WC_OrderSubTotal",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Shipping_Method_Title']"
+										},
+										"sink": {
+											"name": "WC_Shipping_Method_Title",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Order_Shipping']"
+										},
+										"sink": {
+											"name": "WC_OrderShipping",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Order_Refund']"
+										},
+										"sink": {
+											"name": "WC_OrderRefund",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Order_Total']"
+										},
+										"sink": {
+											"name": "WC_OrderTotal",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Order_Total_Tax']"
+										},
+										"sink": {
+											"name": "WC_OrderTax",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Customer_ID']"
+										},
+										"sink": {
+											"name": "Customer_ID",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Products']"
+										},
+										"sink": {
+											"name": "JSON_Products",
+											"type": "String"
+										}
+									}
+								],
+								"mapComplexValuesToString": true
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "CopyOrderXMLInputSFTP",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SqlServerTable_Temp_Order",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/CopyOrderXMLInputSFTP')]",
+				"[concat(variables('factoryId'), '/datasets/SqlServerTable_Temp_Order')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CopyOrderXMLInputSFTP')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SFTP_WooComStaging",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Xml",
+				"typeProperties": {
+					"location": {
+						"type": "SftpLocation",
+						"fileName": "order-export_copy.xml"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/SFTP_WooComStaging')]"
 			]
 		},
 		{
