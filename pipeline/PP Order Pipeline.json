@@ -221,7 +221,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "SqlServerTable_Temp_Order",
+						"referenceName": "PP_TempOrder",
 						"type": "DatasetReference"
 					}
 				]
@@ -450,7 +450,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "SqlServerTable_Temp_Order",
+						"referenceName": "PP_TempOrder",
 						"type": "DatasetReference"
 					}
 				]
@@ -478,9 +478,63 @@
 					"storedProcedureName": "[dbo].[UpdateOrder]"
 				},
 				"linkedServiceName": {
-					"referenceName": "KalmeshPC_SQLserver",
+					"referenceName": "PP_PPMONWOOCOMSQL1_SQLServer",
 					"type": "LinkedServiceReference"
 				}
+			},
+			{
+				"name": "Archive and Delete Order File",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "UpdateOrder",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "BinarySource",
+						"storeSettings": {
+							"type": "SftpReadSettings",
+							"recursive": false,
+							"deleteFilesAfterCompletion": true
+						},
+						"formatSettings": {
+							"type": "BinaryReadSettings"
+						}
+					},
+					"sink": {
+						"type": "BinarySink",
+						"storeSettings": {
+							"type": "SftpWriteSettings",
+							"operationTimeout": "01:00:00",
+							"useTempFileRename": true
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceOrderXMLFile",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "OrderFileArchive",
+						"type": "DatasetReference"
+					}
+				]
 			}
 		],
 		"annotations": []
