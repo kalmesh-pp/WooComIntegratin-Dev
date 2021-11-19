@@ -24,6 +24,7 @@
 					],
 					"storeSettings": {
 						"type": "SftpReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					}
 				}
@@ -47,13 +48,13 @@
 					},
 					"ifTrueActivities": [
 						{
-							"name": "PP_CopyOrderPipeline",
+							"name": "PP Order Pipeline",
 							"type": "ExecutePipeline",
 							"dependsOn": [],
 							"userProperties": [],
 							"typeProperties": {
 								"pipeline": {
-									"referenceName": "PP_CopyOrderPipeline",
+									"referenceName": "PP Order Pipeline",
 									"type": "PipelineReference"
 								},
 								"waitOnCompletion": true
