@@ -25,10 +25,7 @@
 						"type": "JsonSink",
 						"storeSettings": {
 							"type": "SftpWriteSettings",
-							"copyBehavior": {
-								"value": "regexReplace($$,'\\\"','\"')",
-								"type": "Expression"
-							},
+							"copyBehavior": "FlattenHierarchy",
 							"operationTimeout": "01:00:00",
 							"useTempFileRename": true
 						},
