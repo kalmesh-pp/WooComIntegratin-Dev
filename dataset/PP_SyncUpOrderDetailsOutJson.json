@@ -10,10 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "SftpLocation",
-				"fileName": {
-					"value": "@Concat('NonWebOrderFull_', formatDateTime(utcnow(),'yyyyMMdd_HHmm'),'.json')",
-					"type": "Expression"
-				},
+				"fileName": "temp.json",
 				"folderPath": "/OrderDetails"
 			}
 		},
