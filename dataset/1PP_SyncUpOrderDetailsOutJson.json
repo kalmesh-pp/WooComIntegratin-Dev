@@ -1,0 +1,22 @@
+{
+	"name": "1PP_SyncUpOrderDetailsOutJson",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SFTP_WooComStaging",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "SftpLocation",
+				"fileName": {
+					"value": "@Concat('Syteline_OrderShippingInfo_', formatDateTime(utcnow(),'yyyyMMdd_HHmm'),'.json')",
+					"type": "Expression"
+				},
+				"folderPath": "/OrderDetails"
+			}
+		},
+		"schema": {}
+	}
+}
