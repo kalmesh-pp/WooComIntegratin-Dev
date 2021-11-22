@@ -1,0 +1,24 @@
+{
+	"name": "Customer 30 minutes",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "Customer pipeline",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 30,
+				"startTime": "2021-11-22T05:00:00Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}
