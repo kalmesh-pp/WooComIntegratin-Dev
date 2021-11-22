@@ -4411,19 +4411,42 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Customer 15 Mins')]",
+			"name": "[concat(parameters('factoryName'), '/6 AM UTC')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
 				"runtimeState": "Started",
-				"pipeline": {
-					"pipelineReference": {
-						"referenceName": "Customer pipeline",
-						"type": "PipelineReference"
-					},
-					"parameters": {}
-				},
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "PP_SyncUpOrderPipeline",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Day",
+						"interval": 1,
+						"startTime": "2021-11-23T06:00:00Z",
+						"timeZone": "UTC"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/PP_SyncUpOrderPipeline')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Customer 15 Mins')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Stopped",
 				"type": "TumblingWindowTrigger",
 				"typeProperties": {
 					"frequency": "Minute",
@@ -4437,9 +4460,7 @@
 					"dependsOn": []
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/Customer pipeline')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Hourly SyncUp Trigger')]",
@@ -4447,14 +4468,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"runtimeState": "Started",
-				"pipeline": {
-					"pipelineReference": {
-						"referenceName": "PP_SyncUpOrderPipeline",
-						"type": "PipelineReference"
-					},
-					"parameters": {}
-				},
+				"runtimeState": "Stopped",
 				"type": "TumblingWindowTrigger",
 				"typeProperties": {
 					"frequency": "Hour",
@@ -4468,9 +4482,7 @@
 					"dependsOn": []
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/PP_SyncUpOrderPipeline')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Order 15 minutes')]",
@@ -4478,14 +4490,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"runtimeState": "Started",
-				"pipeline": {
-					"pipelineReference": {
-						"referenceName": "Order Pipeline",
-						"type": "PipelineReference"
-					},
-					"parameters": {}
-				},
+				"runtimeState": "Stopped",
 				"type": "TumblingWindowTrigger",
 				"typeProperties": {
 					"frequency": "Minute",
@@ -4499,9 +4504,7 @@
 					"dependsOn": []
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/Order Pipeline')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/KalmeshPC-IntegrationRuntime')]",
@@ -4523,6 +4526,173 @@
 				"typeProperties": {}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PP_SyncUpOrderDetailsPipeline')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy Updated Orders to SFTP",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"sqlReaderQuery": "SELECT orders.Order_id,\n\torders.customer_id,\n\torders.Order_status,\n\torders.Due_date,\n\torders.Created_date,\n\torders.Order_total,\n\torders.Line_subtotal,\n\torders.Shipping_total,\n\torders.Tax_total,\n\torders.Billing_email,\n\torders.Billing_phone,\n\torders.Billing_firstname,\n\torders.Billing_lastname,\n\torders.Billing_address_1, \n\torders.Billing_address_2, \n\torders.Billing_city,\n\torders.Billing_state,\n\torders.Billing_postcode,\n\torders.Shipping_firstname,\n\torders.Shipping_lastname,\n\torders.Shipping_address_1,\n\torders.Shipping_address_2,\n\torders.Shipping_city,\n\torders.Shipping_state,\n\torders.shipping_provider,\n\tproducts.ProductName, \n\tproducts.SKU,\n\tproducts.Price,\n\tproducts.Qty, \n\tproducts.SubTotal\nFROM [dbo].All_Orders orders\nLEFT JOIN dbo.All_OrderItems products\n\tON orders.Order_id = products.Co_num order by Order_id asc\nFOR JSON AUTO",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "JsonSink",
+								"storeSettings": {
+									"type": "SftpWriteSettings",
+									"operationTimeout": "01:00:00",
+									"useTempFileRename": true
+								},
+								"formatSettings": {
+									"type": "JsonWriteSettings",
+									"filePattern": "arrayOfObjects"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "JSON_F52E2B61-18A1-11d1-B105-00805F49916B",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['JSON_F52E2B61-18A1-11d1-B105-00805F49916B']"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "PP_SyncUpOrders",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "PP_SyncUpOrderDetailsOutJson",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/PP_SyncUpOrders')]",
+				"[concat(variables('factoryId'), '/datasets/PP_SyncUpOrderDetailsOutJson')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PP_SyncUpOrderDetailsOutJson')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SFTP_WooComStaging",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "SftpLocation",
+						"fileName": {
+							"value": "@Concat('NoWebOrderFull_', formatDateTime(utcnow(),'yyyyMMdd_HHmm'),'.json')",
+							"type": "Expression"
+						},
+						"folderPath": "/OrderDetails"
+					}
+				},
+				"schema": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/SFTP_WooComStaging')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Customer 30 minutes')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "Customer pipeline",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Minute",
+						"interval": 30,
+						"startTime": "2021-11-22T05:00:00Z",
+						"timeZone": "UTC"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/Customer pipeline')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Order 30 Minutes')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "Order Pipeline",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Minute",
+						"interval": 30,
+						"startTime": "2021-11-22T06:10:00Z",
+						"timeZone": "UTC"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/Order Pipeline')]"
+			]
 		}
 	]
 }

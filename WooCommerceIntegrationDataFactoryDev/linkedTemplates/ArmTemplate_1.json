@@ -13,6 +13,389 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/SqlServerDestinationStore')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "KalmeshPC_SQLserver",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [],
+				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SqlServerOrderTable')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "KalmeshPC_SQLserver",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "WC_CustomerBillToID",
+						"type": "varchar"
+					},
+					{
+						"name": "WC_CustomerShipToID",
+						"type": "varchar"
+					},
+					{
+						"name": "WC_OrderID",
+						"type": "varchar"
+					},
+					{
+						"name": "WC_ShipCode",
+						"type": "varchar"
+					},
+					{
+						"name": "WC_Freight",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 0
+					},
+					{
+						"name": "WC_Slsman",
+						"type": "varchar"
+					},
+					{
+						"name": "WC_OrderCode",
+						"type": "varchar"
+					},
+					{
+						"name": "WC_Sold_to_Email",
+						"type": "varchar"
+					},
+					{
+						"name": "WC_Order_Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "WC_Note",
+						"type": "varchar"
+					},
+					{
+						"name": "WC_PaymentMethod",
+						"type": "varchar"
+					},
+					{
+						"name": "WC_OrderTax",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 0
+					},
+					{
+						"name": "WC_OrderTotal",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 0
+					},
+					{
+						"name": "WC_OrderRefund",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 0
+					},
+					{
+						"name": "WC_OrderSubTotal",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 0
+					},
+					{
+						"name": "WC_Shipping_Method_Title",
+						"type": "varchar"
+					},
+					{
+						"name": "QueueStatusID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Created_Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "CreatedBy",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Modified_Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "ModifyBy",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SytelineOrderNumber",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SytelineTrackingNumber",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SytelineShipCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SytelineCarrierName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SytelineOrderStatus",
+						"type": "nvarchar"
+					},
+					{
+						"name": "SytelineActualShipDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "SyncupDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "SyncupRequired",
+						"type": "bit"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "Order"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SqlServerTableTemp_BillingCustomer')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "KalmeshPC_SQLserver",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "WC_CustomerId",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WC_TermsCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WC_ShipCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WC_Salesman",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WC_TaxCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WC_PriceCode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WC_BillToID",
+						"type": "varchar"
+					},
+					{
+						"name": "WC_BillingFirstName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WC_BillingLastName",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WC_BillingCompany",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WC_BillingAddress",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WC_BillingAddress2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WC_BillingCity",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WC_BillingState",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WC_BillingPostcode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WC_BillingCountry",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WC_BillingEmail",
+						"type": "nvarchar"
+					},
+					{
+						"name": "WC_BillingPhone",
+						"type": "nvarchar"
+					},
+					{
+						"name": "XML_shipping",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "Temp_BillingCustomer"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SqlServerTable_Temp_Order')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "KalmeshPC_SQLserver",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "Customer_ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "WC_OrderID",
+						"type": "varchar"
+					},
+					{
+						"name": "QueueStatus",
+						"type": "varchar"
+					},
+					{
+						"name": "WC_Order_Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "WC_Note",
+						"type": "varchar"
+					},
+					{
+						"name": "WC_CustomerBillToID",
+						"type": "varchar"
+					},
+					{
+						"name": "WC_CustomerShipToID",
+						"type": "varchar"
+					},
+					{
+						"name": "WC_ShipCode",
+						"type": "varchar"
+					},
+					{
+						"name": "WC_Slsman",
+						"type": "varchar"
+					},
+					{
+						"name": "WC_OrderCode",
+						"type": "varchar"
+					},
+					{
+						"name": "WC_Sold_to_Email",
+						"type": "varchar"
+					},
+					{
+						"name": "WC_PaymentMethod",
+						"type": "varchar"
+					},
+					{
+						"name": "WC_OrderSubTotal",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 0
+					},
+					{
+						"name": "WC_Shipping_Method_Title",
+						"type": "varchar"
+					},
+					{
+						"name": "WC_OrderRefund",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 0
+					},
+					{
+						"name": "WC_OrderTotal",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 0
+					},
+					{
+						"name": "WC_OrderTax",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 0
+					},
+					{
+						"name": "WC_Freight",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 0
+					},
+					{
+						"name": "JSON_Products",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "Temp_Order"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Table_Temp_Order')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -798,7 +1181,9 @@
 				},
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SqlServerTableTemp_BillingCustomer')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/CopyOrderPipeline')]",
@@ -1295,7 +1680,9 @@
 				},
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SqlServerTable_Temp_Order')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/PP Order Pipeline')]",
@@ -3159,6 +3546,85 @@
 				},
 				"annotations": []
 			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SqlServerTable_Temp_Order')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PP_SyncUpOrderDetailsPipeline')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy Updated Orders to SFTP",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"sqlReaderQuery": "SELECT orders.Order_id,\n\torders.customer_id,\n\torders.Order_status,\n\torders.Due_date,\n\torders.Created_date,\n\torders.Order_total,\n\torders.Line_subtotal,\n\torders.Shipping_total,\n\torders.Tax_total,\n\torders.Billing_email,\n\torders.Billing_phone,\n\torders.Billing_firstname,\n\torders.Billing_lastname,\n\torders.Billing_address_1, \n\torders.Billing_address_2, \n\torders.Billing_city,\n\torders.Billing_state,\n\torders.Billing_postcode,\n\torders.Shipping_firstname,\n\torders.Shipping_lastname,\n\torders.Shipping_address_1,\n\torders.Shipping_address_2,\n\torders.Shipping_city,\n\torders.Shipping_state,\n\torders.shipping_provider,\n\tproducts.ProductName, \n\tproducts.SKU,\n\tproducts.Price,\n\tproducts.Qty, \n\tproducts.SubTotal\nFROM [dbo].All_Orders orders\nLEFT JOIN dbo.All_OrderItems products\n\tON orders.Order_id = products.Co_num order by Order_id asc\nFOR JSON AUTO",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "JsonSink",
+								"storeSettings": {
+									"type": "SftpWriteSettings",
+									"operationTimeout": "01:00:00",
+									"useTempFileRename": true
+								},
+								"formatSettings": {
+									"type": "JsonWriteSettings",
+									"filePattern": "arrayOfObjects"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "JSON_F52E2B61-18A1-11d1-B105-00805F49916B",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['JSON_F52E2B61-18A1-11d1-B105-00805F49916B']"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "PP_SyncUpOrders",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "PP_SyncUpOrderDetailsOutJson",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
 			"dependsOn": []
 		},
 		{
@@ -3334,30 +3800,29 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Hourly SyncUp Trigger')]",
+			"name": "[concat(parameters('factoryName'), '/6 AM UTC')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
 				"runtimeState": "Started",
-				"pipeline": {
-					"pipelineReference": {
-						"referenceName": "PP_SyncUpOrderPipeline",
-						"type": "PipelineReference"
-					},
-					"parameters": {}
-				},
-				"type": "TumblingWindowTrigger",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "PP_SyncUpOrderPipeline",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
 				"typeProperties": {
-					"frequency": "Hour",
-					"interval": 1,
-					"startTime": "2021-11-13T15:05:00Z",
-					"delay": "00:00:00",
-					"maxConcurrency": 50,
-					"retryPolicy": {
-						"intervalInSeconds": 30
-					},
-					"dependsOn": []
+					"recurrence": {
+						"frequency": "Day",
+						"interval": 1,
+						"startTime": "2021-11-23T06:00:00Z",
+						"timeZone": "UTC"
+					}
 				}
 			},
 			"dependsOn": [
@@ -3365,30 +3830,29 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Customer 15 Mins')]",
+			"name": "[concat(parameters('factoryName'), '/Customer 30 minutes')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
 				"runtimeState": "Started",
-				"pipeline": {
-					"pipelineReference": {
-						"referenceName": "Customer pipeline",
-						"type": "PipelineReference"
-					},
-					"parameters": {}
-				},
-				"type": "TumblingWindowTrigger",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "Customer pipeline",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
 				"typeProperties": {
-					"frequency": "Minute",
-					"interval": 15,
-					"startTime": "2021-11-12T16:05:00Z",
-					"delay": "00:00:00",
-					"maxConcurrency": 50,
-					"retryPolicy": {
-						"intervalInSeconds": 30
-					},
-					"dependsOn": []
+					"recurrence": {
+						"frequency": "Minute",
+						"interval": 30,
+						"startTime": "2021-11-22T05:00:00Z",
+						"timeZone": "UTC"
+					}
 				}
 			},
 			"dependsOn": [
@@ -3396,30 +3860,29 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Order 15 minutes')]",
+			"name": "[concat(parameters('factoryName'), '/Order 30 Minutes')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
 				"runtimeState": "Started",
-				"pipeline": {
-					"pipelineReference": {
-						"referenceName": "Order Pipeline",
-						"type": "PipelineReference"
-					},
-					"parameters": {}
-				},
-				"type": "TumblingWindowTrigger",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "Order Pipeline",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
 				"typeProperties": {
-					"frequency": "Minute",
-					"interval": 15,
-					"startTime": "2021-11-12T16:10:00Z",
-					"delay": "00:00:00",
-					"maxConcurrency": 50,
-					"retryPolicy": {
-						"intervalInSeconds": 30
-					},
-					"dependsOn": []
+					"recurrence": {
+						"frequency": "Minute",
+						"interval": 30,
+						"startTime": "2021-11-22T06:10:00Z",
+						"timeZone": "UTC"
+					}
 				}
 			},
 			"dependsOn": [
