@@ -39,56 +39,11 @@
 						"mappings": [
 							{
 								"source": {
-									"name": "WooCommerceOrderNumber",
+									"name": "JSON_F52E2B61-18A1-11d1-B105-00805F49916B",
 									"type": "String"
 								},
 								"sink": {
-									"path": "$['WooCommerceOrderNumber']"
-								}
-							},
-							{
-								"source": {
-									"name": "SytelineOrderStatus",
-									"type": "String"
-								},
-								"sink": {
-									"path": "$['SytelineOrderStatus']"
-								}
-							},
-							{
-								"source": {
-									"name": "TrackingNumber",
-									"type": "String"
-								},
-								"sink": {
-									"path": "$['TrackingNumber']"
-								}
-							},
-							{
-								"source": {
-									"name": "ShipCode",
-									"type": "String"
-								},
-								"sink": {
-									"path": "$['ShipCode']"
-								}
-							},
-							{
-								"source": {
-									"name": "CarrierName",
-									"type": "String"
-								},
-								"sink": {
-									"path": "$['CarrierName']"
-								}
-							},
-							{
-								"source": {
-									"name": "ShipDate",
-									"type": "DateTime"
-								},
-								"sink": {
-									"path": "$['ShipDate']"
+									"path": "$['JSON_F52E2B61-18A1-11d1-B105-00805F49916B']"
 								}
 							}
 						]
