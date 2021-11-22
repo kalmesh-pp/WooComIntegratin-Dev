@@ -1,0 +1,113 @@
+{
+	"name": "PP_SyncUpOrderDetailsPipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy Updated Orders to SFTP",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "SELECT orders.Order_id,\n\torders.customer_id,\n\torders.Order_status,\n\torders.Due_date,\n\torders.Created_date,\n\torders.Order_total,\n\torders.Line_subtotal,\n\torders.Shipping_total,\n\torders.Tax_total,\n\torders.Billing_email,\n\torders.Billing_phone,\n\torders.Billing_firstname,\n\torders.Billing_lastname,\n\torders.Billing_address_1, \n\torders.Billing_address_2, \n\torders.Billing_city,\n\torders.Billing_state,\n\torders.Billing_postcode,\n\torders.Shipping_firstname,\n\torders.Shipping_lastname,\n\torders.Shipping_address_1,\n\torders.Shipping_address_2,\n\torders.Shipping_city,\n\torders.Shipping_state,\n\torders.shipping_provider,\n\tproducts.ProductName, \n\tproducts.SKU,\n\tproducts.Price,\n\tproducts.Qty, \n\tproducts.SubTotal\nFROM [dbo].All_Orders orders\nLEFT JOIN dbo.All_OrderItems products\n\tON orders.Order_id = products.Co_num order by Order_id asc\nFOR JSON AUTO",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "JsonSink",
+						"storeSettings": {
+							"type": "SftpWriteSettings",
+							"operationTimeout": "01:00:00",
+							"useTempFileRename": true
+						},
+						"formatSettings": {
+							"type": "JsonWriteSettings",
+							"filePattern": "arrayOfObjects"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "WooCommerceOrderNumber",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['WooCommerceOrderNumber']"
+								}
+							},
+							{
+								"source": {
+									"name": "SytelineOrderStatus",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['SytelineOrderStatus']"
+								}
+							},
+							{
+								"source": {
+									"name": "TrackingNumber",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['TrackingNumber']"
+								}
+							},
+							{
+								"source": {
+									"name": "ShipCode",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['ShipCode']"
+								}
+							},
+							{
+								"source": {
+									"name": "CarrierName",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['CarrierName']"
+								}
+							},
+							{
+								"source": {
+									"name": "ShipDate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"path": "$['ShipDate']"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "PP_SyncUpOrders",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "PP_SyncUpOrderDetailsOutJson",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
