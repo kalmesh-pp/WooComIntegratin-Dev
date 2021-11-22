@@ -11,7 +11,7 @@
 			"location": {
 				"type": "SftpLocation",
 				"fileName": {
-					"value": "@Concat('NoWebOrderFull_', formatDateTime(utcnow(),'yyyyMMdd_HHmm'),'.json')",
+					"value": "@Concat('NonWebOrderFull_', formatDateTime(utcnow(),'yyyyMMdd_HHmm'),'.json')",
 					"type": "Expression"
 				},
 				"folderPath": "/OrderDetails"
