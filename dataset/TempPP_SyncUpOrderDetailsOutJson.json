@@ -1,0 +1,19 @@
+{
+	"name": "TempPP_SyncUpOrderDetailsOutJson",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SFTP_WooComStaging",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "SftpLocation",
+				"fileName": "temp.json",
+				"folderPath": "/OrderDetails"
+			}
+		},
+		"schema": {}
+	}
+}
