@@ -25,7 +25,7 @@
 						"referenceName": "PP_SyncUpAll_Orders",
 						"type": "DatasetReference"
 					},
-					"firstRowOnly": false
+					"firstRowOnly": true
 				}
 			},
 			{
@@ -43,7 +43,7 @@
 				"typeProperties": {
 					"variableName": "Object",
 					"value": {
-						"value": "@string(activity('Lookup1').output.value.replace('\\\"', '\"').replace(']\"', ']').replace('\"[', '['))",
+						"value": "@string(activity('Lookup1').output.value)",
 						"type": "Expression"
 					}
 				}
