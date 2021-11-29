@@ -25,7 +25,7 @@
 						"referenceName": "PP_SyncUpAll_Orders",
 						"type": "DatasetReference"
 					},
-					"firstRowOnly": false
+					"firstRowOnly": true
 				}
 			},
 			{
