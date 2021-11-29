@@ -43,7 +43,7 @@
 				"typeProperties": {
 					"variableName": "Object",
 					"value": {
-						"value": "@json(activity('Lookup1').output.JSON_F52E2B61-18A1-11d1-B105-00805F49916B)",
+						"value": "@json(activity('Lookup1').output.product)",
 						"type": "Expression"
 					}
 				}
