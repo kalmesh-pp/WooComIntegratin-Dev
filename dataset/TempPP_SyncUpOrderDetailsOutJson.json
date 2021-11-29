@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "SftpLocation",
-				"fileName": "temp.json",
+				"fileName": "temp1.json",
 				"folderPath": "/OrderDetails"
 			}
 		},
