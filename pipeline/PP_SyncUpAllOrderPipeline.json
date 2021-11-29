@@ -43,7 +43,7 @@
 				"typeProperties": {
 					"variableName": "Object",
 					"value": {
-						"value": "@json(activity('Lookup1').output.value)",
+						"value": "@string(activity('Lookup1').output.value.replace('\\\"', '\"').replace(']\"', ']').replace('\"[', '['))",
 						"type": "Expression"
 					}
 				}
