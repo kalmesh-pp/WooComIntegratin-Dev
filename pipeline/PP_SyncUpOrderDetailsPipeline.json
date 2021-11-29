@@ -17,15 +17,14 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderQuery": "SELECT orders.Order_id as order_id,\n\torders.Customer_id as customer_id,\n\torders.Order_status as order_status,\n\torders.Due_date,\n\torders.Created_date,\n\torders.Order_total,\n\torders.Line_subtotal,\n\torders.Shipping_total,\n\torders.Tax_total,\n\torders.Billing_email,\n\torders.Billing_phone,\n\torders.Billing_firstname,\n\torders.Billing_lastname,\n\torders.Billing_address_1, \n\torders.Billing_address_2, \n\torders.Billing_city,\n\torders.Billing_state,\n\torders.Billing_postcode,\n\torders.Shipping_firstname,\n\torders.Shipping_lastname,\n\torders.Shipping_address_1,\n\torders.Shipping_address_2,\n\torders.Shipping_city,\n\torders.Shipping_state,\n\torders.shipping_provider,\n\t( SELECT products.ProductName, \tproducts.SKU,\tproducts.Price,\tproducts.Qty, \tproducts.SubTotal\n\t\tfrom dbo.All_OrderItems products\n\t\twhere products.Co_num = orders.Order_id\n\t\tfor XML AUTO) as products\nFROM [dbo].All_Orders orders \n",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
 					"sink": {
-						"type": "BinarySink",
+						"type": "JsonSink",
 						"storeSettings": {
 							"type": "SftpWriteSettings",
-							"copyBehavior": "FlattenHierarchy",
+							"copyBehavior": "PreserveHierarchy",
 							"operationTimeout": "01:00:00",
 							"useTempFileRename": true
 						},
@@ -40,29 +39,20 @@
 						"mappings": [
 							{
 								"source": {
-									"name": "order_id",
+									"name": "Order_id",
 									"type": "String"
 								},
 								"sink": {
-									"path": "$['order_id']"
+									"path": "$['Order_id']"
 								}
 							},
 							{
 								"source": {
-									"name": "customer_id",
+									"name": "Order_status",
 									"type": "String"
 								},
 								"sink": {
-									"path": "$['customer_id']"
-								}
-							},
-							{
-								"source": {
-									"name": "order_status",
-									"type": "String"
-								},
-								"sink": {
-									"path": "$['order_status']"
+									"path": "$['Order_status']"
 								}
 							},
 							{
@@ -81,6 +71,15 @@
 								},
 								"sink": {
 									"path": "$['Created_date']"
+								}
+							},
+							{
+								"source": {
+									"name": "Customer_id",
+									"type": "String"
+								},
+								"sink": {
+									"path": "$['Customer_id']"
 								}
 							},
 							{
@@ -256,20 +255,55 @@
 							},
 							{
 								"source": {
-									"name": "shipping_provider",
+									"name": "Shipping_postcode",
 									"type": "String"
 								},
 								"sink": {
-									"path": "$['shipping_provider']"
+									"path": "$['Shipping_postcode']"
 								}
 							},
 							{
 								"source": {
-									"name": "products",
+									"name": "Shipping_provider",
 									"type": "String"
 								},
 								"sink": {
-									"path": "$['products']"
+									"path": "$['Shipping_provider']"
+								}
+							},
+							{
+								"sink": {
+									"path": "$['Co_num']"
+								}
+							},
+							{
+								"sink": {
+									"path": "$['Co_line']"
+								}
+							},
+							{
+								"sink": {
+									"path": "$['ProductName']"
+								}
+							},
+							{
+								"sink": {
+									"path": "$['SKU']"
+								}
+							},
+							{
+								"sink": {
+									"path": "$['Price']"
+								}
+							},
+							{
+								"sink": {
+									"path": "$['Qty']"
+								}
+							},
+							{
+								"sink": {
+									"path": "$['SubTotal']"
 								}
 							}
 						]
@@ -277,7 +311,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "PP_SyncUpOrders",
+						"referenceName": "PP_SyncUpAll_Orders",
 						"type": "DatasetReference"
 					}
 				],

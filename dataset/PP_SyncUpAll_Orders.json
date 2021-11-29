@@ -1,0 +1,159 @@
+{
+	"name": "PP_SyncUpAll_Orders",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "PP_PPMONWOOCOMSQL1_SQLServer",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "WC_CustomerBillToID",
+				"type": "varchar"
+			},
+			{
+				"name": "WC_CustomerShipToID",
+				"type": "varchar"
+			},
+			{
+				"name": "WC_OrderID",
+				"type": "varchar"
+			},
+			{
+				"name": "WC_ShipCode",
+				"type": "varchar"
+			},
+			{
+				"name": "WC_Freight",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 0
+			},
+			{
+				"name": "WC_Slsman",
+				"type": "varchar"
+			},
+			{
+				"name": "WC_OrderCode",
+				"type": "varchar"
+			},
+			{
+				"name": "WC_Sold_to_Email",
+				"type": "varchar"
+			},
+			{
+				"name": "WC_Order_Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "WC_Note",
+				"type": "varchar"
+			},
+			{
+				"name": "WC_PaymentMethod",
+				"type": "varchar"
+			},
+			{
+				"name": "WC_OrderTax",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 0
+			},
+			{
+				"name": "WC_OrderTotal",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 0
+			},
+			{
+				"name": "WC_OrderRefund",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 0
+			},
+			{
+				"name": "WC_OrderSubTotal",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 0
+			},
+			{
+				"name": "WC_Shipping_Method_Title",
+				"type": "varchar"
+			},
+			{
+				"name": "QueueStatusID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Created_Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "CreatedBy",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Modified_Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "ModifyBy",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SytelineOrderNumber",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SytelineTrackingNumber",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SytelineShipCode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SytelineCarrierName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SytelineOrderStatus",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SytelineActualShipDate",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "SyncupDate",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "SyncupRequired",
+				"type": "bit"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "All_Orders"
+		}
+	}
+}
