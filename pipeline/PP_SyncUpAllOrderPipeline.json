@@ -26,7 +26,7 @@
 							{
 								"name": "test",
 								"value": {
-									"value": "@string(json(string(variables('Object'))))",
+									"value": "@string(json(string($$COLUMN:products)))",
 									"type": "Expression"
 								}
 							}
