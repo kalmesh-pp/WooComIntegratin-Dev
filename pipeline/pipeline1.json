@@ -62,7 +62,7 @@
 							"typeProperties": {
 								"source": {
 									"type": "SqlServerSource",
-									"sqlReaderQuery": "SELECT products.ProductName, \tproducts.SKU,\tproducts.Price,\tproducts.Qty, \tproducts.SubTotal\n\t\tfrom dbo.All_OrderItems products\n\t\twhere products.Co_num ='WV00000453'\n\t\tfor JSON AUTO",
+									"sqlReaderQuery": "SELECT products.ProductName, \tproducts.SKU,\tproducts.Price,\tproducts.Qty, \tproducts.SubTotal\n\t\tfrom dbo.All_OrderItems products\n\t\twhere products.Co_num ='WV00000453'\n\t\tfor JSON PATH",
 									"queryTimeout": "02:00:00",
 									"partitionOption": "None"
 								},
@@ -70,6 +70,7 @@
 									"type": "JsonSink",
 									"storeSettings": {
 										"type": "SftpWriteSettings",
+										"copyBehavior": "MergeFiles",
 										"operationTimeout": "01:00:00",
 										"useTempFileRename": true
 									},
