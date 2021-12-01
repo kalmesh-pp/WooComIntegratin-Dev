@@ -22,12 +22,15 @@
 						"partitionOption": "None"
 					},
 					"sink": {
-						"type": "BinarySink",
+						"type": "JsonSink",
 						"storeSettings": {
 							"type": "SftpWriteSettings",
-							"copyBehavior": "FlattenHierarchy",
 							"operationTimeout": "01:00:00",
 							"useTempFileRename": true
+						},
+						"formatSettings": {
+							"type": "JsonWriteSettings",
+							"filePattern": "arrayOfObjects"
 						}
 					},
 					"enableStaging": false
@@ -40,7 +43,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "Binary1",
+						"referenceName": "PP_SyncUpOrderDetailsOutJson",
 						"type": "DatasetReference"
 					}
 				]
