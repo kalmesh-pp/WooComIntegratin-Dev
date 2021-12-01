@@ -1,0 +1,52 @@
+{
+	"name": "PP_All_OrderItems",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "PP_PPMONWOOCOMSQL1_SQLServer",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "Co_num",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Co_line",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "ProductName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "SKU",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Price",
+				"type": "decimal",
+				"precision": 9,
+				"scale": 2
+			},
+			{
+				"name": "Qty",
+				"type": "decimal",
+				"precision": 9,
+				"scale": 2
+			},
+			{
+				"name": "SubTotal",
+				"type": "decimal",
+				"precision": 9,
+				"scale": 2
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "All_OrderItems"
+		}
+	}
+}
