@@ -33,7 +33,7 @@
 				"type": "AppendVariable",
 				"dependsOn": [
 					{
-						"activity": "Lookup1",
+						"activity": "Set variable1",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -42,6 +42,26 @@
 				"userProperties": [],
 				"typeProperties": {
 					"variableName": "Object",
+					"value": {
+						"value": "@json(string(activity('Lookup1').output.value[0].products))",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Lookup1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "app",
 					"value": {
 						"value": "@json(string(activity('Lookup1').output.value[0].products))",
 						"type": "Expression"
