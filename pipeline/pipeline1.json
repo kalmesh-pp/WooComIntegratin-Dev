@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderQuery": "SELECT orders.Order_id as order_id from [dbo].All_Orders orders where Order_id='WV00000530",
+						"sqlReaderQuery": "SELECT orders.Order_id as order_id from [dbo].All_Orders orders where Order_id='WV00000530'",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
