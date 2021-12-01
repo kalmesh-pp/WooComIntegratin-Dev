@@ -24,7 +24,8 @@
 					"dataset": {
 						"referenceName": "PP_All_OrderItems",
 						"type": "DatasetReference"
-					}
+					},
+					"firstRowOnly": false
 				}
 			},
 			{
@@ -38,9 +39,18 @@
 						]
 					}
 				],
-				"userProperties": []
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "Object",
+					"value": ""
+				}
 			}
 		],
+		"variables": {
+			"Object": {
+				"type": "Array"
+			}
+		},
 		"annotations": []
 	}
 }
