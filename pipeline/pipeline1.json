@@ -63,7 +63,7 @@
 								"source": {
 									"type": "SqlServerSource",
 									"sqlReaderQuery": {
-										"value": "@item().order_id",
+										"value": "@SELECT orders.Order_id as order_id from [dbo].All_Orders orders where Order_id=item().order_id",
 										"type": "Expression"
 									},
 									"queryTimeout": "02:00:00",
