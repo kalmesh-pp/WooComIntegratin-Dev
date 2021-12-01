@@ -22,7 +22,7 @@
 							{
 								"name": "formatedValue",
 								"value": {
-									"value": "$$string(json(string(COLUMN:products)))",
+									"value": "string(json(string($$COLUMN:products)))",
 									"type": "Expression"
 								}
 							}
