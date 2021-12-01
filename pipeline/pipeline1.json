@@ -62,7 +62,10 @@
 							"typeProperties": {
 								"source": {
 									"type": "SqlServerSource",
-									"sqlReaderQuery": "select * from All_Orders",
+									"sqlReaderQuery": {
+										"value": "@Select * from All_Orders",
+										"type": "Expression"
+									},
 									"queryTimeout": "02:00:00",
 									"partitionOption": "None"
 								},
