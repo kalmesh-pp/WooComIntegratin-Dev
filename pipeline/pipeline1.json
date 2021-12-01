@@ -265,7 +265,7 @@
 							{
 								"source": {
 									"name": "products",
-									"type": "String"
+									"type": "Object"
 								},
 								"sink": {
 									"path": "$['products']"
