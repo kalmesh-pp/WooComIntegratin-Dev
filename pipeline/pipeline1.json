@@ -55,7 +55,7 @@
 							"typeProperties": {
 								"variableName": "OrderId",
 								"value": {
-									"value": "@item().value().order_id",
+									"value": "@string(item().value().order_id)",
 									"type": "Expression"
 								}
 							}
