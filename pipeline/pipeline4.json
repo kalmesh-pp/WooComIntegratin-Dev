@@ -25,7 +25,7 @@
 						"referenceName": "PP_All_OrderItems",
 						"type": "DatasetReference"
 					},
-					"firstRowOnly": false
+					"firstRowOnly": true
 				}
 			},
 			{
@@ -42,13 +42,16 @@
 				"userProperties": [],
 				"typeProperties": {
 					"variableName": "Object",
-					"value": ""
+					"value": {
+						"value": "@json(activity('Lookup1').output.firstRow.products)",
+						"type": "Expression"
+					}
 				}
 			}
 		],
 		"variables": {
 			"Object": {
-				"type": "Array"
+				"type": "String"
 			}
 		},
 		"annotations": []
