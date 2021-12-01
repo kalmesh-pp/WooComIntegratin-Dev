@@ -62,10 +62,7 @@
 							"typeProperties": {
 								"source": {
 									"type": "SqlServerSource",
-									"sqlReaderQuery": {
-										"value": "@SELECT orders.Order_id as order_id from [dbo].All_Orders orders where Order_id=item().order_id",
-										"type": "Expression"
-									},
+									"sqlReaderQuery": "SELECT products.ProductName, \tproducts.SKU,\tproducts.Price,\tproducts.Qty, \tproducts.SubTotal\n\t\tfrom dbo.All_OrderItems products\n\t\twhere products.Co_num ='WV00000453'\n\t\tfor JSON AUTO",
 									"queryTimeout": "02:00:00",
 									"partitionOption": "None"
 								},
