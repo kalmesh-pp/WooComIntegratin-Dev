@@ -63,7 +63,7 @@
 								"source": {
 									"type": "SqlServerSource",
 									"sqlReaderQuery": {
-										"value": "@item()",
+										"value": "@item().order_id",
 										"type": "Expression"
 									},
 									"queryTimeout": "02:00:00",
