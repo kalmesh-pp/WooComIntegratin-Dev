@@ -3,8 +3,8 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
-				"type": "Copy",
+				"name": "Lookup1",
+				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "7.00:00:00",
@@ -17,276 +17,87 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderStoredProcedureName": "[dbo].[GetAllOrders]",
+						"sqlReaderQuery": "SELECT orders.Order_id as order_id from [dbo].All_Orders orders",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
-					"sink": {
-						"type": "BinarySink",
-						"storeSettings": {
-							"type": "SftpWriteSettings",
-							"copyBehavior": "PreserveHierarchy",
-							"operationTimeout": "01:00:00",
-							"useTempFileRename": true
-						},
-						"formatSettings": {
-							"type": "BinaryWriteSettings",
-							"filePattern": "arrayOfObjects"
-						}
+					"dataset": {
+						"referenceName": "PP_TempOrder",
+						"type": "DatasetReference"
 					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"mappings": [
-							{
-								"source": {
-									"name": "order_id",
-									"type": "String"
-								},
-								"sink": {
-									"path": "$['order_id']"
-								}
-							},
-							{
-								"source": {
-									"name": "customer_id",
-									"type": "String"
-								},
-								"sink": {
-									"path": "$['customer_id']"
-								}
-							},
-							{
-								"source": {
-									"name": "order_status",
-									"type": "String"
-								},
-								"sink": {
-									"path": "$['order_status']"
-								}
-							},
-							{
-								"source": {
-									"name": "Due_date",
-									"type": "DateTime"
-								},
-								"sink": {
-									"path": "$['Due_date']"
-								}
-							},
-							{
-								"source": {
-									"name": "Created_date",
-									"type": "DateTime"
-								},
-								"sink": {
-									"path": "$['Created_date']"
-								}
-							},
-							{
-								"source": {
-									"name": "Order_total",
-									"type": "Decimal"
-								},
-								"sink": {
-									"path": "$['Order_total']"
-								}
-							},
-							{
-								"source": {
-									"name": "Line_subtotal",
-									"type": "Decimal"
-								},
-								"sink": {
-									"path": "$['Line_subtotal']"
-								}
-							},
-							{
-								"source": {
-									"name": "Shipping_total",
-									"type": "Decimal"
-								},
-								"sink": {
-									"path": "$['Shipping_total']"
-								}
-							},
-							{
-								"source": {
-									"name": "Tax_total",
-									"type": "Decimal"
-								},
-								"sink": {
-									"path": "$['Tax_total']"
-								}
-							},
-							{
-								"source": {
-									"name": "Billing_email",
-									"type": "String"
-								},
-								"sink": {
-									"path": "$['Billing_email']"
-								}
-							},
-							{
-								"source": {
-									"name": "Billing_phone",
-									"type": "String"
-								},
-								"sink": {
-									"path": "$['Billing_phone']"
-								}
-							},
-							{
-								"source": {
-									"name": "Billing_firstname",
-									"type": "String"
-								},
-								"sink": {
-									"path": "$['Billing_firstname']"
-								}
-							},
-							{
-								"source": {
-									"name": "Billing_lastname",
-									"type": "String"
-								},
-								"sink": {
-									"path": "$['Billing_lastname']"
-								}
-							},
-							{
-								"source": {
-									"name": "Billing_address_1",
-									"type": "String"
-								},
-								"sink": {
-									"path": "$['Billing_address_1']"
-								}
-							},
-							{
-								"source": {
-									"name": "Billing_address_2",
-									"type": "String"
-								},
-								"sink": {
-									"path": "$['Billing_address_2']"
-								}
-							},
-							{
-								"source": {
-									"name": "Billing_city",
-									"type": "String"
-								},
-								"sink": {
-									"path": "$['Billing_city']"
-								}
-							},
-							{
-								"source": {
-									"name": "Billing_state",
-									"type": "String"
-								},
-								"sink": {
-									"path": "$['Billing_state']"
-								}
-							},
-							{
-								"source": {
-									"name": "Billing_postcode",
-									"type": "String"
-								},
-								"sink": {
-									"path": "$['Billing_postcode']"
-								}
-							},
-							{
-								"source": {
-									"name": "Shipping_firstname",
-									"type": "String"
-								},
-								"sink": {
-									"path": "$['Shipping_firstname']"
-								}
-							},
-							{
-								"source": {
-									"name": "Shipping_lastname",
-									"type": "String"
-								},
-								"sink": {
-									"path": "$['Shipping_lastname']"
-								}
-							},
-							{
-								"source": {
-									"name": "Shipping_address_1",
-									"type": "String"
-								},
-								"sink": {
-									"path": "$['Shipping_address_1']"
-								}
-							},
-							{
-								"source": {
-									"name": "Shipping_address_2",
-									"type": "String"
-								},
-								"sink": {
-									"path": "$['Shipping_address_2']"
-								}
-							},
-							{
-								"source": {
-									"name": "Shipping_city",
-									"type": "String"
-								},
-								"sink": {
-									"path": "$['Shipping_city']"
-								}
-							},
-							{
-								"source": {
-									"name": "Shipping_state",
-									"type": "String"
-								},
-								"sink": {
-									"path": "$['Shipping_state']"
-								}
-							},
-							{
-								"source": {
-									"name": "shipping_provider",
-									"type": "String"
-								},
-								"sink": {
-									"path": "$['shipping_provider']"
-								}
-							},
-							{
-								"source": {
-									"name": "products",
-									"type": "Object"
-								},
-								"sink": {
-									"path": "$['products']"
-								}
-							}
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Lookup1",
+						"dependencyConditions": [
+							"Succeeded"
 						]
 					}
-				},
-				"inputs": [
-					{
-						"referenceName": "SqlServerOrderTable",
-						"type": "DatasetReference"
-					}
 				],
-				"outputs": [
-					{
-						"referenceName": "PP_SyncUpOrderDetailsOutJson",
-						"type": "DatasetReference"
-					}
-				]
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Lookup1').output.value",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "Copy data1",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "SqlServerSource",
+									"sqlReaderQuery": {
+										"value": "@select * from Temp_BillingCustomer where Order_id=item()",
+										"type": "Expression"
+									},
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
+								"sink": {
+									"type": "JsonSink",
+									"storeSettings": {
+										"type": "SftpWriteSettings",
+										"operationTimeout": "01:00:00",
+										"useTempFileRename": true
+									},
+									"formatSettings": {
+										"type": "JsonWriteSettings",
+										"filePattern": "arrayOfObjects"
+									}
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "PP_All_OrderItems",
+									"type": "DatasetReference"
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "PP_SyncUpOrderDetailsOutJson",
+									"type": "DatasetReference"
+								}
+							]
+						}
+					]
+				}
 			}
 		],
 		"annotations": []
