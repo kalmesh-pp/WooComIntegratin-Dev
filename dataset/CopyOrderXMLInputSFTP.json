@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "SftpLocation",
-				"fileName": "order-export.xml"
+				"fileName": "order-export_test.xml"
 			}
 		}
 	}
