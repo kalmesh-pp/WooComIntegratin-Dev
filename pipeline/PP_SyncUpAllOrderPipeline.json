@@ -21,8 +21,12 @@
 						"additionalColumns": [
 							{
 								"name": "formatedValue",
+								"value": "$$COLUMN:products"
+							},
+							{
+								"name": "test",
 								"value": {
-									"value": "string(json(string($$COLUMN:products)))",
+									"value": "@string(json(string(variables('Object'))))",
 									"type": "Expression"
 								}
 							}
@@ -300,7 +304,7 @@
 		],
 		"variables": {
 			"Object": {
-				"type": "Array"
+				"type": "String"
 			}
 		},
 		"annotations": []
