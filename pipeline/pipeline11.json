@@ -332,6 +332,15 @@
 											"sink": {
 												"path": "$['prod']"
 											}
+										},
+										{
+											"source": {
+												"name": "products",
+												"type": "String"
+											},
+											"sink": {
+												"type": "$['products']"
+											}
 										}
 									]
 								}
