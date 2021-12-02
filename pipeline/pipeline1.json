@@ -17,12 +17,12 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderQuery": "SELECT orders.Order_id as order_id\n\tFROM [dbo].All_Orders orders where orders.Order_id in ('WV00000453', 'WV00000454', 'WV00000497') ",
+						"sqlReaderQuery": "SELECT orders.Order_id as order_id,\n\torders.Customer_id as customer_id,\n\torders.Order_status as order_status,\n\torders.Due_date,\n\torders.Created_date,\n\torders.Order_total,\n\torders.Line_subtotal,\n\torders.Shipping_total,\n\torders.Tax_total,\n\torders.Billing_email,\n\torders.Billing_phone,\n\torders.Billing_firstname,\n\torders.Billing_lastname,\n\torders.Billing_address_1, \n\torders.Billing_address_2, \n\torders.Billing_city,\n\torders.Billing_state,\n\torders.Billing_postcode,\n\torders.Shipping_firstname,\n\torders.Shipping_lastname,\n\torders.Shipping_address_1,\n\torders.Shipping_address_2,\n\torders.Shipping_city,\n\torders.Shipping_state,\n\torders.shipping_provider,\n\t( SELECT products.ProductName, \tproducts.SKU,\tproducts.Price,\tproducts.Qty, \tproducts.SubTotal\n\t\tfrom dbo.All_OrderItems products\n\t\twhere products.Co_num = orders.Order_id\n\t\tfor JSON AUTO ) as product\nFROM [dbo].All_Orders orders where orders.Order_id in ('WV00000453', 'WV00000454', 'WV00000497') ",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
 					"dataset": {
-						"referenceName": "PP_TempOrder",
+						"referenceName": "Table_Temp_Order",
 						"type": "DatasetReference"
 					},
 					"firstRowOnly": false
@@ -48,17 +48,60 @@
 					"isSequential": true,
 					"activities": [
 						{
-							"name": "Set variable1",
-							"type": "SetVariable",
+							"name": "Copy data1",
+							"type": "Copy",
 							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
 							"userProperties": [],
 							"typeProperties": {
-								"variableName": "OrderId",
-								"value": {
-									"value": "@string(item().value().order_id)",
-									"type": "Expression"
+								"source": {
+									"type": "SqlServerSource",
+									"sqlReaderStoredProcedureName": "[dbo].[ALLOrder_ITEMS]",
+									"storedProcedureParameters": {
+										"OrderId": {
+											"type": "String",
+											"value": {
+												"value": "@item().Order_id",
+												"type": "Expression"
+											}
+										}
+									},
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
+								"sink": {
+									"type": "JsonSink",
+									"storeSettings": {
+										"type": "SftpWriteSettings",
+										"copyBehavior": "MergeFiles",
+										"operationTimeout": "01:00:00",
+										"useTempFileRename": true
+									},
+									"formatSettings": {
+										"type": "JsonWriteSettings",
+										"filePattern": "arrayOfObjects"
+									}
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "TempOrder",
+									"type": "DatasetReference"
 								}
-							}
+							],
+							"outputs": [
+								{
+									"referenceName": "PP_SyncUpOrderDetailsOutJson",
+									"type": "DatasetReference"
+								}
+							]
 						}
 					]
 				}
@@ -66,6 +109,9 @@
 		],
 		"variables": {
 			"OrderId": {
+				"type": "String"
+			},
+			"Prods": {
 				"type": "String"
 			}
 		},
