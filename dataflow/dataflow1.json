@@ -1,0 +1,28 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "temp_all_order_items",
+						"type": "DatasetReference"
+					},
+					"name": "OrderItems"
+				}
+			],
+			"sinks": [
+				{
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "ParseJSON"
+				}
+			],
+			"script": "source(output(\n\t\tOrder_id as string,\n\t\tOrder_status as string,\n\t\tDue_date as timestamp,\n\t\tCreated_date as timestamp,\n\t\tCustomer_id as string,\n\t\tOrder_total as decimal(9,2),\n\t\tLine_subtotal as decimal(9,2),\n\t\tShipping_total as decimal(9,2),\n\t\tTax_total as decimal(9,2),\n\t\tBilling_email as string,\n\t\tBilling_phone as string,\n\t\tBilling_firstname as string,\n\t\tBilling_lastname as string,\n\t\tBilling_address_1 as string,\n\t\tBilling_address_2 as string,\n\t\tBilling_city as string,\n\t\tBilling_state as string,\n\t\tBilling_postcode as string,\n\t\tShipping_firstname as string,\n\t\tShipping_lastname as string,\n\t\tShipping_address_1 as string,\n\t\tShipping_address_2 as string,\n\t\tShipping_city as string,\n\t\tShipping_state as string,\n\t\tShipping_postcode as string,\n\t\tShipping_provider as string,\n\t\tOrderItems as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> OrderItems\nOrderItems parse(OrderItems = OrderItems ? (ProductName as string, SKU as string) ,\n\tformat: 'json',\n\tdocumentForm: 'documentPerLine') ~> ParseJSON\nParseJSON sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tsaveOrder: 1) ~> sink1"
+		}
+	}
+}

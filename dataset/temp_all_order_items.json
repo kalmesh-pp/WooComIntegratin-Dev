@@ -1,0 +1,137 @@
+{
+	"name": "temp_all_order_items",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "KalmeshPC_SQLserver",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "Order_id",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Order_status",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Due_date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Created_date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Customer_id",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Order_total",
+				"type": "decimal",
+				"precision": 9,
+				"scale": 2
+			},
+			{
+				"name": "Line_subtotal",
+				"type": "decimal",
+				"precision": 9,
+				"scale": 2
+			},
+			{
+				"name": "Shipping_total",
+				"type": "decimal",
+				"precision": 9,
+				"scale": 2
+			},
+			{
+				"name": "Tax_total",
+				"type": "decimal",
+				"precision": 9,
+				"scale": 2
+			},
+			{
+				"name": "Billing_email",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Billing_phone",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Billing_firstname",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Billing_lastname",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Billing_address_1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Billing_address_2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Billing_city",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Billing_state",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Billing_postcode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Shipping_firstname",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Shipping_lastname",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Shipping_address_1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Shipping_address_2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Shipping_city",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Shipping_state",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Shipping_postcode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Shipping_provider",
+				"type": "nvarchar"
+			},
+			{
+				"name": "OrderItems",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "temp_All_Orders_Items"
+		}
+	}
+}
