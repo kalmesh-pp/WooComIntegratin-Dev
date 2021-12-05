@@ -24,9 +24,8 @@
 					"sink": {
 						"type": "JsonSink",
 						"storeSettings": {
-							"type": "SftpWriteSettings",
-							"operationTimeout": "01:00:00",
-							"useTempFileRename": true
+							"type": "AzureBlobStorageWriteSettings",
+							"maxConcurrentConnections": 1
 						},
 						"formatSettings": {
 							"type": "JsonWriteSettings",
@@ -43,7 +42,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "PP_SyncUpOrderDetailsOutJson",
+						"referenceName": "BlobJson1",
 						"type": "DatasetReference"
 					}
 				]
