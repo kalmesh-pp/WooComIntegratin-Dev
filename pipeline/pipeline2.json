@@ -29,7 +29,7 @@
 						},
 						"formatSettings": {
 							"type": "JsonWriteSettings",
-							"filePattern": "setOfObjects"
+							"filePattern": "arrayOfObjects"
 						}
 					},
 					"enableStaging": false
