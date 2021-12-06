@@ -28,7 +28,7 @@
 						"type": "IntegrationRuntimeReference"
 					},
 					"method": "POST",
-					"body": "{\n\"Date\":\"10-23-2021\",\n\"Thread\":\"Thread-1\",\n\"Level\":\"Test\",\n\"Logger\":\"Logger\",\n\"Number\":\"Number-1\",\n\"Message\":\"Message\",\n\"Exception\":\"Exception\",\n\"WooCommID\":\"1234-345\",\n\"FeedType\":\"type-1\",\n\"data\": @activity('Lookup1').output.value()\n}",
+					"body": "{\n\"Date\":\"10-23-2021\",\n\"Thread\":\"Thread-1\",\n\"Level\":\"Test\",\n\"Logger\":\"Logger\",\n\"Number\":\"Number-1\",\n\"Message\":\"Message\",\n\"Exception\":\"Exception\",\n\"WooCommID\":\"1234-345\",\n\"FeedType\":\"type-1\",\n\"data\": @json(string(activity('Lookup1').output.value))\n}",
 					"datasets": [
 						{
 							"referenceName": "ApplicationLogTable",
