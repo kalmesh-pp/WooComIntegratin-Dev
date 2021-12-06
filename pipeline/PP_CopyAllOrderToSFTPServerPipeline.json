@@ -42,7 +42,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "BlobJson1",
+						"referenceName": "BlobAllOrdersJson",
 						"type": "DatasetReference"
 					}
 				]
@@ -121,7 +121,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "BlobJson1",
+						"referenceName": "BlobAllOrdersJson",
 						"type": "DatasetReference"
 					}
 				],

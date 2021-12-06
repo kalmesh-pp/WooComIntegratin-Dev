@@ -6,7 +6,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "BlobJson1",
+						"referenceName": "BlobAllOrdersJson",
 						"type": "DatasetReference"
 					},
 					"name": "source1"
