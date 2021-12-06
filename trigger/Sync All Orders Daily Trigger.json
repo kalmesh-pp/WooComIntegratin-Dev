@@ -1,5 +1,5 @@
 {
-	"name": "Sync All Orders Dailt Trigger",
+	"name": "Sync All Orders Daily Trigger",
 	"properties": {
 		"annotations": [],
 		"runtimeState": "Started",
