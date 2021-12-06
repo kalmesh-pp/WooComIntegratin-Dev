@@ -16,18 +16,12 @@
 				"userProperties": [],
 				"typeProperties": {
 					"url": "https://prod-21.centralus.logic.azure.com:443/workflows/0402ce22065e4993a95c0fc2f38a769f/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=45Dv6t4RACfAXUQUiBdGo5u4NkCI2soByapFn8eHQ8M",
-					"method": "POST",
-					"body": {
-						"Date": "10-23-2021",
-						"Thread": "Thread-1",
-						"Level": "Test",
-						"Logger": "Logger",
-						"Number": "Number-1",
-						"Message": "Message",
-						"Exception": "Exception",
-						"WooCommID": "1234-345",
-						"FeedType": "type-1"
+					"connectVia": {
+						"referenceName": "KalmeshPC-IntegrationRuntime",
+						"type": "IntegrationRuntimeReference"
 					},
+					"method": "POST",
+					"body": "",
 					"datasets": [
 						{
 							"referenceName": "ApplicationLogTable",
