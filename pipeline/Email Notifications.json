@@ -66,7 +66,17 @@
 									"type": "IntegrationRuntimeReference"
 								},
 								"method": "POST",
-								"body": "{\nassa\n}",
+								"body": {
+									"Date": "11",
+									"Thread": "3",
+									"Level": "2",
+									"Logger": "s",
+									"Number": "k",
+									"Message": "1",
+									"Exception": "1",
+									"WooCommID": "id",
+									"FeedType": "1"
+								},
 								"datasets": [
 									{
 										"referenceName": "ApplicationLogTable",
