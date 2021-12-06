@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Lookup1",
+				"name": "Lookup ApplicationLog",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -29,11 +29,11 @@
 				}
 			},
 			{
-				"name": "ForEach1",
+				"name": "For Each Notification Id",
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Lookup1",
+						"activity": "Lookup ApplicationLog",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -42,7 +42,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Lookup1').output.value",
+						"value": "@activity('Lookup ApplicationLog').output.value",
 						"type": "Expression"
 					},
 					"isSequential": true,
@@ -67,11 +67,11 @@
 								},
 								"method": "POST",
 								"body": {
-									"Date": "11",
-									"Thread": "3",
-									"Level": "2",
-									"Logger": "s",
-									"Number": "k",
+									"Date": "@{item().Date}",
+									"Thread": "@{item().Thread}",
+									"Level": "@{item().Level}",
+									"Logger": "@{item().Logger}",
+									"Number": "@{item().Number}",
 									"Message": "@{item().Message}",
 									"Exception": "@{item().Exception}",
 									"WooCommID": "@{item().WooCommID}",
@@ -83,6 +83,49 @@
 										"type": "DatasetReference"
 									}
 								]
+							}
+						},
+						{
+							"name": "ResetNotification",
+							"type": "SqlServerStoredProcedure",
+							"dependsOn": [
+								{
+									"activity": "Web1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"storedProcedureName": "[dbo].[ResetApplicationNotification]",
+								"storedProcedureParameters": {
+									"Number": {
+										"value": {
+											"value": "@item().Number",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"WooCommID": {
+										"value": {
+											"value": "@item().WooCommID",
+											"type": "Expression"
+										},
+										"type": "String"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "KalmeshPC_SQLserver",
+								"type": "LinkedServiceReference"
 							}
 						}
 					]
