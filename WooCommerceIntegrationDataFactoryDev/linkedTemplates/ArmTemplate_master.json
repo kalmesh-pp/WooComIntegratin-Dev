@@ -7,6 +7,14 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "WooCommerceIntegrationDataFactoryDev"
 		},
+		"AzureBlobStorage1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage1'"
+		},
+		"AzureFunctionLinkedService_functionKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'functionKey' of 'AzureFunctionLinkedService'"
+		},
 		"KalmeshPC_SQLserver_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'KalmeshPC_SQLserver'"
@@ -18,6 +26,10 @@
 		"SFTP_WooComStaging_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'SFTP_WooComStaging'"
+		},
+		"AzureFunctionLinkedService_properties_typeProperties_functionAppUrl": {
+			"type": "string",
+			"defaultValue": "https://pp-function-app.azurewebsites.net"
 		},
 		"SFTP_WooComStaging_properties_typeProperties_host": {
 			"type": "string",
@@ -54,14 +66,17 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"AzureBlobStorage1_connectionString": {
+						"value": "[parameters('AzureBlobStorage1_connectionString')]"
+					},
+					"AzureFunctionLinkedService_functionKey": {
+						"value": "[parameters('AzureFunctionLinkedService_functionKey')]"
+					},
 					"SFTP_WooComStaging_password": {
 						"value": "[parameters('SFTP_WooComStaging_password')]"
 					},
-					"KalmeshPC_SQLserver_connectionString": {
-						"value": "[parameters('KalmeshPC_SQLserver_connectionString')]"
-					},
-					"PP_PPMONWOOCOMSQL1_SQLServer_connectionString": {
-						"value": "[parameters('PP_PPMONWOOCOMSQL1_SQLServer_connectionString')]"
+					"AzureFunctionLinkedService_properties_typeProperties_functionAppUrl": {
+						"value": "[parameters('AzureFunctionLinkedService_properties_typeProperties_functionAppUrl')]"
 					},
 					"SFTP_WooComStaging_properties_typeProperties_host": {
 						"value": "[parameters('SFTP_WooComStaging_properties_typeProperties_host')]"
@@ -86,11 +101,37 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"KalmeshPC_SQLserver_connectionString": {
+						"value": "[parameters('KalmeshPC_SQLserver_connectionString')]"
+					},
+					"PP_PPMONWOOCOMSQL1_SQLServer_connectionString": {
+						"value": "[parameters('PP_PPMONWOOCOMSQL1_SQLServer_connectionString')]"
 					}
 				}
 			},
 			"dependsOn": [
 				"[resourceId('Microsoft.Resources/deployments', 'WooCommerceIntegrationDataFactoryDev_ArmTemplate_0')]"
+			]
+		},
+		{
+			"name": "WooCommerceIntegrationDataFactoryDev_ArmTemplate_2",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'WooCommerceIntegrationDataFactoryDev_ArmTemplate_1')]"
 			]
 		}
 	]

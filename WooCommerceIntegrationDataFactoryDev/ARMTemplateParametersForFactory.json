@@ -5,6 +5,12 @@
 		"factoryName": {
 			"value": "WooCommerceIntegrationDataFactoryDev"
 		},
+		"AzureBlobStorage1_connectionString": {
+			"value": ""
+		},
+		"AzureFunctionLinkedService_functionKey": {
+			"value": ""
+		},
 		"KalmeshPC_SQLserver_connectionString": {
 			"value": ""
 		},
@@ -13,6 +19,9 @@
 		},
 		"SFTP_WooComStaging_password": {
 			"value": ""
+		},
+		"AzureFunctionLinkedService_properties_typeProperties_functionAppUrl": {
+			"value": "https://pp-function-app.azurewebsites.net"
 		},
 		"SFTP_WooComStaging_properties_typeProperties_host": {
 			"value": "wabashstaging.sftp.wpengine.com"
