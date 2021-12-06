@@ -1,0 +1,59 @@
+{
+	"name": "ApplicationLogTable",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "KalmeshPC_SQLserver",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Thread",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Level",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Logger",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Number",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Message",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Exception",
+				"type": "nvarchar"
+			},
+			{
+				"name": "WooCommID",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FeedType",
+				"type": "nvarchar"
+			},
+			{
+				"name": "NotificationProcessed",
+				"type": "bit"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "ApplicationLog"
+		}
+	}
+}
