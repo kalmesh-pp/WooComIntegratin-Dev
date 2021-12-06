@@ -75,7 +75,7 @@
 									"Message": "1",
 									"Exception": "1",
 									"WooCommID": "id",
-									"FeedType": "@{item().FeedType"
+									"FeedType": "@{item().FeedType}"
 								},
 								"datasets": [
 									{
