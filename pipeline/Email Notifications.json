@@ -3,41 +3,6 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Web1",
-				"type": "WebActivity",
-				"dependsOn": [
-					{
-						"activity": "Lookup1",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"url": "https://prod-21.centralus.logic.azure.com:443/workflows/0402ce22065e4993a95c0fc2f38a769f/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=45Dv6t4RACfAXUQUiBdGo5u4NkCI2soByapFn8eHQ8M",
-					"connectVia": {
-						"referenceName": "KalmeshPC-IntegrationRuntime",
-						"type": "IntegrationRuntimeReference"
-					},
-					"method": "POST",
-					"body": "{\n\"Date\":\"10-23-2021\",\n\"Thread\":\"Thread-1\",\n\"Level\":\"Test\",\n\"Logger\":\"Logger\",\n\"Number\":\"Number-1\",\n\"Message\":\"Message\",\n\"Exception\":\"Exception\",\n\"WooCommID\":\"1234-345\",\n\"FeedType\":\"type-1\",\n\"data\": @json(string(activity('Lookup1').output.value))\n}",
-					"datasets": [
-						{
-							"referenceName": "ApplicationLogTable",
-							"type": "DatasetReference"
-						}
-					]
-				}
-			},
-			{
 				"name": "Lookup1",
 				"type": "Lookup",
 				"dependsOn": [],
@@ -61,6 +26,54 @@
 						"type": "DatasetReference"
 					},
 					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"activities": [
+						{
+							"name": "Web1",
+							"type": "WebActivity",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"url": "https://prod-21.centralus.logic.azure.com:443/workflows/0402ce22065e4993a95c0fc2f38a769f/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=45Dv6t4RACfAXUQUiBdGo5u4NkCI2soByapFn8eHQ8M",
+								"connectVia": {
+									"referenceName": "KalmeshPC-IntegrationRuntime",
+									"type": "IntegrationRuntimeReference"
+								},
+								"method": "POST",
+								"body": {
+									"Date": "@{@item().Date}",
+									"Thread": "@{@item().Thread}",
+									"Level": "@{@item().Level}",
+									"Logger": "@{@item().Logger}",
+									"Number": "@{@item().Number}",
+									"Message": "@{@item().Message}",
+									"Exception": "@{@item().Exception}",
+									"WooCommID": "@{@item().WooCommID}",
+									"FeedType": "@{@item().FeedType}"
+								},
+								"datasets": [
+									{
+										"referenceName": "ApplicationLogTable",
+										"type": "DatasetReference"
+									}
+								]
+							}
+						}
+					]
 				}
 			}
 		],
