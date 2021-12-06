@@ -72,9 +72,9 @@
 									"Level": "2",
 									"Logger": "s",
 									"Number": "k",
-									"Message": "1",
-									"Exception": "1",
-									"WooCommID": "id",
+									"Message": "@{item().Message}",
+									"Exception": "@{item().Exception}",
+									"WooCommID": "@{item().WooCommID}",
 									"FeedType": "@{item().FeedType}"
 								},
 								"datasets": [
