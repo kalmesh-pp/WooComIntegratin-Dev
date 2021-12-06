@@ -66,17 +66,7 @@
 									"type": "IntegrationRuntimeReference"
 								},
 								"method": "POST",
-								"body": {
-									"Date": "@{@item().Date}",
-									"Thread": "@{@item().Thread}",
-									"Level": "@{@item().Level}",
-									"Logger": "@{@item().Logger}",
-									"Number": "@{@item().Number}",
-									"Message": "@{@item().Message}",
-									"Exception": "@{@item().Exception}",
-									"WooCommID": "@{@item().WooCommID}",
-									"FeedType": "@{@item().FeedType}"
-								},
+								"body": "{\nassa\n}",
 								"datasets": [
 									{
 										"referenceName": "ApplicationLogTable",
