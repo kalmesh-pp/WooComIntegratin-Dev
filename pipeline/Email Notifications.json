@@ -42,7 +42,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Lookup1').output.value",
+						"value": "@activity('Lookup1').output.value()",
 						"type": "Expression"
 					},
 					"isSequential": true,
@@ -89,6 +89,11 @@
 				}
 			}
 		],
+		"variables": {
+			"Items": {
+				"type": "Array"
+			}
+		},
 		"annotations": []
 	}
 }
