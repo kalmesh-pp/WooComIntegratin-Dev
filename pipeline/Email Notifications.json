@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderQuery": "SELECT  Date, Thread, Level, Logger, Number, Message, Exception, WooCommID, FeedType FROM  ApplicationLog  where NotificationProcessed=1",
+						"sqlReaderQuery": "SELECT  Date, Thread, Level, Logger, Number, Message, Exception, WooCommID, FeedType FROM  ApplicationLog  where NotificationProcessed=0",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -105,7 +105,7 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
-								"storedProcedureName": "[dbo].[ResetApplicationNotification]",
+								"storedProcedureName": "[dbo].[UpdateNotificationAsProcessed]",
 								"storedProcedureParameters": {
 									"Number": {
 										"value": {
