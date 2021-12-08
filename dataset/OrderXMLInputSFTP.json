@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "SftpLocation",
-				"fileName": "order-export_nilay.xml"
+				"fileName": "order-export.xml"
 			}
 		}
 	}
