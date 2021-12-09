@@ -164,6 +164,15 @@
 							},
 							{
 								"source": {
+									"path": "['Order_Shipping']"
+								},
+								"sink": {
+									"name": "WC_Freight",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
 									"path": "['Order_Refund']"
 								},
 								"sink": {
@@ -415,6 +424,15 @@
 								},
 								"sink": {
 									"name": "WC_OrderShipping",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Orders']['Order']['Order_Shipping']"
+								},
+								"sink": {
+									"name": "WC_Freight",
 									"type": "Decimal"
 								}
 							},
