@@ -60,7 +60,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "KalmeshPC_SQLserver",
+					"referenceName": "PP_PPMONWOOCOMSQL1_SQLServer",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
@@ -115,7 +115,7 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/KalmeshPC_SQLserver')]"
+				"[concat(variables('factoryId'), '/linkedServices/PP_PPMONWOOCOMSQL1_SQLServer')]"
 			]
 		},
 		{
@@ -2214,6 +2214,15 @@
 									},
 									{
 										"source": {
+											"path": "[['Order_Shipping']"
+										},
+										"sink": {
+											"name": "WC_Freight",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
 											"path": "[['Order_Refund']"
 										},
 										"sink": {
@@ -2472,6 +2481,15 @@
 									},
 									{
 										"source": {
+											"path": "$['Orders']['Order']['Order_Shipping']"
+										},
+										"sink": {
+											"name": "WC_Freight",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
 											"path": "$['Orders']['Order']['Order_Refund']"
 										},
 										"sink": {
@@ -2677,7 +2695,7 @@
 										}
 									},
 									"linkedServiceName": {
-										"referenceName": "KalmeshPC_SQLserver",
+										"referenceName": "PP_PPMONWOOCOMSQL1_SQLServer",
 										"type": "LinkedServiceReference"
 									}
 								}
@@ -2693,7 +2711,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ApplicationLogTable')]",
-				"[concat(variables('factoryId'), '/linkedServices/KalmeshPC_SQLserver')]"
+				"[concat(variables('factoryId'), '/linkedServices/PP_PPMONWOOCOMSQL1_SQLServer')]"
 			]
 		},
 		{

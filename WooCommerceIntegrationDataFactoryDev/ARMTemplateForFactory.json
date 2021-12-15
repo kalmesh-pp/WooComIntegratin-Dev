@@ -774,6 +774,15 @@
 									},
 									{
 										"source": {
+											"path": "[['Order_Shipping']"
+										},
+										"sink": {
+											"name": "WC_Freight",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
 											"path": "[['Order_Refund']"
 										},
 										"sink": {
@@ -1027,6 +1036,15 @@
 										},
 										"sink": {
 											"name": "WC_OrderShipping",
+											"type": "Decimal"
+										}
+									},
+									{
+										"source": {
+											"path": "$['Orders']['Order']['Order_Shipping']"
+										},
+										"sink": {
+											"name": "WC_Freight",
 											"type": "Decimal"
 										}
 									},
@@ -1325,7 +1343,7 @@
 										}
 									},
 									"linkedServiceName": {
-										"referenceName": "KalmeshPC_SQLserver",
+										"referenceName": "PP_PPMONWOOCOMSQL1_SQLServer",
 										"type": "LinkedServiceReference"
 									}
 								}
@@ -1342,7 +1360,7 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ApplicationLogTable')]",
 				"[concat(variables('factoryId'), '/integrationRuntimes/KalmeshPC-IntegrationRuntime')]",
-				"[concat(variables('factoryId'), '/linkedServices/KalmeshPC_SQLserver')]"
+				"[concat(variables('factoryId'), '/linkedServices/PP_PPMONWOOCOMSQL1_SQLServer')]"
 			]
 		},
 		{
@@ -3579,7 +3597,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "KalmeshPC_SQLserver",
+					"referenceName": "PP_PPMONWOOCOMSQL1_SQLServer",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
@@ -3634,7 +3652,7 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/KalmeshPC_SQLserver')]"
+				"[concat(variables('factoryId'), '/linkedServices/PP_PPMONWOOCOMSQL1_SQLServer')]"
 			]
 		},
 		{
@@ -3685,7 +3703,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "SftpLocation",
-						"fileName": "order-export_test.xml"
+						"fileName": "order-export_nilay.xml"
 					}
 				}
 			},
@@ -5579,6 +5597,36 @@
 				"typeProperties": {}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Hourly Email After Order Processed')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "Email Notifications",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Hour",
+						"interval": 1,
+						"startTime": "2021-12-15T17:20:00Z",
+						"timeZone": "UTC"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/Email Notifications')]"
+			]
 		}
 	]
 }
