@@ -1279,7 +1279,7 @@
 									"typeProperties": {
 										"url": "https://prod-21.centralus.logic.azure.com:443/workflows/0402ce22065e4993a95c0fc2f38a769f/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=45Dv6t4RACfAXUQUiBdGo5u4NkCI2soByapFn8eHQ8M",
 										"connectVia": {
-											"referenceName": "KalmeshPC-IntegrationRuntime",
+											"referenceName": "PlayPowerWooComSelfHosted-IntegrationRuntime",
 											"type": "IntegrationRuntimeReference"
 										},
 										"method": "POST",
@@ -1359,7 +1359,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ApplicationLogTable')]",
-				"[concat(variables('factoryId'), '/integrationRuntimes/KalmeshPC-IntegrationRuntime')]",
+				"[concat(variables('factoryId'), '/integrationRuntimes/PlayPowerWooComSelfHosted-IntegrationRuntime')]",
 				"[concat(variables('factoryId'), '/linkedServices/PP_PPMONWOOCOMSQL1_SQLServer')]"
 			]
 		},
@@ -5466,6 +5466,36 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Hourly Email After Order Processed')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "Email Notifications",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Hour",
+						"interval": 1,
+						"startTime": "2021-12-15T17:30:00Z",
+						"timeZone": "UTC"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/Email Notifications')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Hourly SyncUp Trigger')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
@@ -5597,36 +5627,6 @@
 				"typeProperties": {}
 			},
 			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Hourly Email After Order Processed')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "Email Notifications",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Hour",
-						"interval": 1,
-						"startTime": "2021-12-15T17:30:00Z",
-						"timeZone": "UTC"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/Email Notifications')]"
-			]
 		}
 	]
 }
