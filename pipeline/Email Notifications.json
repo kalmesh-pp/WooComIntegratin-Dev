@@ -62,7 +62,7 @@
 							"typeProperties": {
 								"url": "https://prod-21.centralus.logic.azure.com:443/workflows/0402ce22065e4993a95c0fc2f38a769f/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=45Dv6t4RACfAXUQUiBdGo5u4NkCI2soByapFn8eHQ8M",
 								"connectVia": {
-									"referenceName": "KalmeshPC-IntegrationRuntime",
+									"referenceName": "PlayPowerWooComSelfHosted-IntegrationRuntime",
 									"type": "IntegrationRuntimeReference"
 								},
 								"method": "POST",
