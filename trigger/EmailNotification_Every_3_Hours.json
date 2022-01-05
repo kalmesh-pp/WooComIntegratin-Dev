@@ -1,0 +1,24 @@
+{
+	"name": "EmailNotification_Every_3_Hours",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "Email Notifications",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Hour",
+				"interval": 3,
+				"startTime": "2022-01-05T16:26:00Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}
