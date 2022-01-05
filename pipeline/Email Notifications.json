@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderQuery": "SELECT  ID, Date, Thread, Level, Logger, Number, Message, Exception, WooCommID, FeedType \nFROM  ApplicationLog  where \nNotificationProcessed=0 and Level='ERROR'",
+						"sqlReaderQuery": "SELECT  top 1 ID, Date, Thread, Level, Logger, Number, Message, Exception, WooCommID, FeedType \nFROM  ApplicationLog  where \nNotificationProcessed=0 and Level='ERROR'",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
