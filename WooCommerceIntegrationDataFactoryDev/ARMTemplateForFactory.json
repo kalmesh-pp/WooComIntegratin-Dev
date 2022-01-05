@@ -1233,7 +1233,7 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlServerSource",
-								"sqlReaderQuery": "SELECT  Date, Thread, Level, Logger, Number, Message, Exception, WooCommID, FeedType FROM  ApplicationLog  where NotificationProcessed=0",
+								"sqlReaderQuery": "SELECT   ID, Date, Thread, Level, Logger, Number, Message, Exception, WooCommID, FeedType \nFROM  ApplicationLog  where \nNotificationProcessed=0 and Level='ERROR'",
 								"queryTimeout": "02:00:00",
 								"partitionOption": "None"
 							},
@@ -1326,12 +1326,12 @@
 									"typeProperties": {
 										"storedProcedureName": "[[dbo].[UpdateNotificationAsProcessed]",
 										"storedProcedureParameters": {
-											"Number": {
+											"ID": {
 												"value": {
-													"value": "@item().Number",
+													"value": "@item().ID",
 													"type": "Expression"
 												},
-												"type": "String"
+												"type": "Int32"
 											},
 											"WooCommID": {
 												"value": {
@@ -5617,6 +5617,36 @@
 				"typeProperties": {}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/EmailNotification_Every_3_Hours')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "Email Notifications",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Hour",
+						"interval": 3,
+						"startTime": "2022-01-05T16:26:00Z",
+						"timeZone": "UTC"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/Email Notifications')]"
+			]
 		}
 	]
 }
