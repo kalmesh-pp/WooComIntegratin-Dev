@@ -107,12 +107,12 @@
 							"typeProperties": {
 								"storedProcedureName": "[dbo].[UpdateNotificationAsProcessed]",
 								"storedProcedureParameters": {
-									"Number": {
+									"ID": {
 										"value": {
-											"value": "@item().Number",
+											"value": "@item().ID",
 											"type": "Expression"
 										},
-										"type": "String"
+										"type": "Int32"
 									},
 									"WooCommID": {
 										"value": {
