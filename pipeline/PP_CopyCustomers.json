@@ -374,6 +374,7 @@
 						"formatSettings": {
 							"type": "XmlReadSettings",
 							"validationMode": "none",
+							"detectDataType": true,
 							"namespaces": true
 						}
 					},
@@ -464,14 +465,6 @@
 								"sink": {
 									"name": "WC_BillingLastName",
 									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"path": "$['Customers']['Customer']['Billing']['Billing_Company']"
-								},
-								"sink": {
-									"name": "WC_BillingCompany"
 								}
 							},
 							{
