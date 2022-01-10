@@ -475,6 +475,14 @@
 							},
 							{
 								"source": {
+									"path": "$['Customers']['Customer']['Billing']['Billing_Company']"
+								},
+								"sink": {
+									"name": "WC_BillingCompany"
+								}
+							},
+							{
+								"source": {
 									"path": "$['Customers']['Customer']['Billing']['Billing_Address_1']"
 								},
 								"sink": {
