@@ -478,8 +478,7 @@
 									"path": "$['Customers']['Customer']['Billing']['Billing_Company']"
 								},
 								"sink": {
-									"name": "WC_BillingCompany",
-									"type": "String"
+									"name": "WC_BillingCompany"
 								}
 							},
 							{
@@ -552,14 +551,6 @@
 								"sink": {
 									"name": "WC_BillingPhone",
 									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"path": "$['Customers']['Customer']['Billing']['Billing_Company']"
-								},
-								"sink": {
-									"name": "WC_BillingCompany"
 								}
 							},
 							{
