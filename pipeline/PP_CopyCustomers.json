@@ -128,6 +128,15 @@
 							},
 							{
 								"source": {
+									"path": "['Billing']['Billing_Company']"
+								},
+								"sink": {
+									"name": "WC_BillingCompany",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
 									"path": "['Billing']['Billing_Address_1']"
 								},
 								"sink": {
@@ -471,6 +480,15 @@
 								},
 								"sink": {
 									"name": "WC_BillingLastName",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Customers']['Customer']['Billing']['Billing_Company']"
+								},
+								"sink": {
+									"name": "WC_BillingCompany",
 									"type": "String"
 								}
 							},
