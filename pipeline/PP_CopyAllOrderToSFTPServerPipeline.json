@@ -54,7 +54,7 @@
 					{
 						"activity": "Copy All Orders",
 						"dependencyConditions": [
-							"Failed"
+							"Succeeded"
 						]
 					}
 				],
