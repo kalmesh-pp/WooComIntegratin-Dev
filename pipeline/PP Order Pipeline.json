@@ -201,6 +201,15 @@
 							},
 							{
 								"source": {
+									"path": "['Liftgateselected']"
+								},
+								"sink": {
+									"name": "WC_LiftgateSelected",
+									"type": "Boolean"
+								}
+							},
+							{
+								"source": {
 									"path": "['Products']"
 								},
 								"sink": {
@@ -427,6 +436,15 @@
 								"sink": {
 									"name": "Customer_ID",
 									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"path": "$['Orders']['Order']['Liftgateselected']"
+								},
+								"sink": {
+									"name": "WC_LiftgateSelected",
+									"type": "Boolean"
 								}
 							},
 							{
