@@ -14,7 +14,7 @@
 					"value": "@Concat('Syteline_OrderShippingInfo_', formatDateTime(utcnow(),'yyyyMMdd_HHmm'),'.json')",
 					"type": "Expression"
 				},
-				"folderPath": "/processed"
+				"folderPath": "/home/wabashvly/public_html/wp-content/orders/processed"
 			}
 		},
 		"schema": {}
