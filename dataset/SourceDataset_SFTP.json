@@ -10,7 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "SftpLocation",
-				"fileName": "customer-export.xml"
+				"fileName": "customer-export.xml",
+				"folderPath": "/home/wabashvly/public_html/wp-content/orders"
 			}
 		}
 	}
