@@ -14,7 +14,7 @@
 					"value": "@concat('order-export', '_', formatDateTime(utcnow(),'yyyy-MM-dd_HHmm'), '.xml')",
 					"type": "Expression"
 				},
-				"folderPath": "/Archive"
+				"folderPath": "/home/wabashvly/public_html/wp-content/orders/Archive"
 			}
 		}
 	}
