@@ -25,11 +25,11 @@
 		},
 		"SFTP_WooComStaging_properties_typeProperties_host": {
 			"type": "string",
-			"defaultValue": "wabashstaging.sftp.wpengine.com"
+			"defaultValue": "server0.miracle-recreation.com"
 		},
 		"SFTP_WooComStaging_properties_typeProperties_userName": {
 			"type": "string",
-			"defaultValue": "wabashstaging-syteline"
+			"defaultValue": "wabashvly"
 		}
 	},
 	"variables": {
@@ -76,7 +76,7 @@
 				"type": "Sftp",
 				"typeProperties": {
 					"host": "[parameters('SFTP_WooComStaging_properties_typeProperties_host')]",
-					"port": "2222",
+					"port": "25012",
 					"skipHostKeyValidation": true,
 					"authenticationType": "Basic",
 					"userName": "[parameters('SFTP_WooComStaging_properties_typeProperties_userName')]",
@@ -296,7 +296,7 @@
 							"value": "@concat('customer-export', '_', formatDateTime(utcnow(),'yyyy-MM-dd_HHmm'), '.xml')",
 							"type": "Expression"
 						},
-						"folderPath": "/Archive"
+						"folderPath": "/home/wabashvly/public_html/wp-content/orders/Archive"
 					}
 				}
 			},
@@ -318,7 +318,8 @@
 				"typeProperties": {
 					"location": {
 						"type": "SftpLocation",
-						"fileName": "customer-export.xml"
+						"fileName": "customer-export.xml",
+						"folderPath": "/home/wabashvly/public_html/wp-content/orders"
 					}
 				}
 			},
@@ -344,7 +345,7 @@
 							"value": "@concat('order-export', '_', formatDateTime(utcnow(),'yyyy-MM-dd_HHmm'), '.xml')",
 							"type": "Expression"
 						},
-						"folderPath": "/Archive"
+						"folderPath": "/home/wabashvly/public_html/wp-content/orders/Archive"
 					}
 				}
 			},
@@ -366,7 +367,8 @@
 				"typeProperties": {
 					"location": {
 						"type": "SftpLocation",
-						"fileName": "order-export.xml"
+						"fileName": "order-export.xml",
+						"folderPath": "/home/wabashvly/public_html/wp-content/orders"
 					}
 				}
 			},
@@ -389,7 +391,7 @@
 					"location": {
 						"type": "SftpLocation",
 						"fileName": "AllOrders.json",
-						"folderPath": "/OrderDetails"
+						"folderPath": "/home/wabashvly/public_html/wp-content/orders/OrderDetails"
 					}
 				},
 				"schema": {}
@@ -416,7 +418,7 @@
 							"value": "@Concat('Syteline_OrderShippingInfo_', formatDateTime(utcnow(),'yyyyMMdd_HHmm'),'.json')",
 							"type": "Expression"
 						},
-						"folderPath": "/processed"
+						"folderPath": "/home/wabashvly/public_html/wp-content/orders/processed"
 					}
 				},
 				"schema": {}
@@ -439,7 +441,8 @@
 				"typeProperties": {
 					"location": {
 						"type": "SftpLocation",
-						"fileName": "customer-export.xml"
+						"fileName": "customer-export.xml",
+						"folderPath": "/home/wabashvly/public_html/wp-content/orders"
 					}
 				}
 			},
@@ -461,7 +464,8 @@
 				"typeProperties": {
 					"location": {
 						"type": "SftpLocation",
-						"fileName": "order-export.xml"
+						"fileName": "order-export.xml",
+						"folderPath": "/home/wabashvly/public_html/wp-content/orders"
 					}
 				}
 			},

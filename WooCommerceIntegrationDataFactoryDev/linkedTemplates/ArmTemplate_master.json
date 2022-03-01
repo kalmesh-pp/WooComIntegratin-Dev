@@ -33,11 +33,11 @@
 		},
 		"SFTP_WooComStaging_properties_typeProperties_host": {
 			"type": "string",
-			"defaultValue": "wabashstaging.sftp.wpengine.com"
+			"defaultValue": "server0.miracle-recreation.com"
 		},
 		"SFTP_WooComStaging_properties_typeProperties_userName": {
 			"type": "string",
-			"defaultValue": "wabashstaging-syteline"
+			"defaultValue": "wabashvly"
 		},
 		"containerUri": {
 			"type": "string",
