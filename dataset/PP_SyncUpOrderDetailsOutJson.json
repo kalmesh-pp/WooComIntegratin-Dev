@@ -11,7 +11,7 @@
 			"location": {
 				"type": "SftpLocation",
 				"fileName": "AllOrders.json",
-				"folderPath": "/OrderDetails"
+				"folderPath": "/home/wabashvly/public_html/wp-content/orders/OrderDetails"
 			}
 		},
 		"schema": {}
